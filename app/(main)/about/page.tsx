@@ -5,12 +5,13 @@ const AboutPage = () => {
     return (
         <>
             <Head>
-                <title>About CMS - Contract Monitoring System</title>
+                <title>About Mingo Hotel Kayunga Ltd</title>
                 <meta
                     name="description"
-                    content="Learn more about the Contract Monitoring System (CMS), its purpose, features, and how it enhances transparency in government projects."
+                    content="Learn more about Mingo Hotel Kayunga Ltd, a cozy 2-star hotel in Kayunga, Uganda, offering modern amenities, warm hospitality, and access to top attractions like the Source of the Nile and Mehta Golf Club."
                 />
             </Head>
+
             <AboutTabs />
         </>
     );

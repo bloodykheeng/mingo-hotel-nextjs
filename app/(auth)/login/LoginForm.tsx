@@ -98,7 +98,7 @@ const LoginPage = () => {
                 <div className="w-full sm:w-96 md:w-[28rem] lg:w-[32rem] shadow-lg rounded-lg bg-white dark:bg-gray-800 p-6">
                     <div className="text-center mb-6">
                         <Image
-                            src="/ppda/ppda_white-removebg-preview.png"
+                            src="/mingo-hotel-logo/mongo-hotel-logo.png"
                             alt="logo"
                             width={140}
                             height={30}
@@ -106,7 +106,7 @@ const LoginPage = () => {
                             className="w-full dark:hidden"
                         />
                         <Image
-                            src="/ppda/ppda_fb-removebg-preview.png"
+                            src="/mingo-hotel-logo/mongo-hotel-logo.png"
                             alt="logo"
                             width={140}
                             height={30}
@@ -114,12 +114,12 @@ const LoginPage = () => {
                             className="hidden w-full dark:block"
                         />
                         <h2 className="text-gray-900 dark:text-gray-100 text-3xl font-semibold mb-2">Login</h2>
-                        {/* <p className="text-gray-600 text-sm">
+                        <p className="text-gray-600 text-sm">
                             Don't have an account?
                             <Link href="/register" className="ml-2 text-blue-500 hover:underline">
                                 Register please!
                             </Link>
-                        </p> */}
+                        </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)}>

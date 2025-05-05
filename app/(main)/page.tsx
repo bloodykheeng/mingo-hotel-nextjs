@@ -10,19 +10,31 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import { Metadata } from "next";
 
+import HomePage from "@/components/home/HomePage"
+
 export const metadata: Metadata = {
-  title: "Contract Monitoring System (CMS)",
-  description: "A platform for tracking and monitoring government contracts to ensure transparency and accountability.",
-  keywords: ["Contract Monitoring", "CMS", "Government Projects", "Transparency", "Accountability", "PPDA"],
+  title: "Mingo Hotel Kayunga Ltd",
+  description: "Mingo Hotel Kayunga Ltd is a 2-star hotel in Kayunga, Uganda, offering modern comfort, traditional charm, and access to top regional attractions.",
+  keywords: [
+    "Mingo Hotel",
+    "Kayunga Hotels",
+    "Uganda Travel",
+    "Affordable Accommodation",
+    "Hotel with Restaurant",
+    "Tourism in Kayunga",
+    "Source of the Nile",
+    "Mehta Golf Club",
+  ],
   robots: "index, follow",
 };
+
 
 
 export default function Home() {
   return (
     <>
       <ScrollUp />
-      <Hero />
+      <HomePage />
       {/* <Features />
       <Brands />
       <AboutSectionOne />

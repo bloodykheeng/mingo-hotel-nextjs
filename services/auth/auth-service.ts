@@ -6,9 +6,9 @@ export async function getSanctumCsrf() {
 }
 
 export async function postTologin(data: { email: string; password: string }) {
-  const response = await axiosAPI.post("/webApplogin", data);
-  // setNewHeaders(response);
-  // setProfileHeaders(response);
+  const response = await axiosAPI.post("/login", data);
+  setNewHeaders(response);
+  setProfileHeaders(response);
   return response;
 }
 
@@ -27,10 +27,7 @@ export async function postToValidateWebOtp(data: {
   return response;
 }
 
-export async function postToUpdateUserProfile(data: any) {
-  const response = await axiosAPI.post(`postToUpdateUserProfile`, data);
-  return response;
-}
+
 
 export async function postToRegister(data: any) {
   const response = await axiosAPI.post("/register", data);

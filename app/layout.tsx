@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "primereact/resources/themes/lara-light-blue/theme.css";
+// import "primereact/resources/themes/lara-light-blue/theme.css";
+import "primereact/resources/themes/lara-light-amber/theme.css";
+
 
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import PrimeReactProvider from "@/providers/PrimeReactProvider"
@@ -18,10 +20,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = {
-  title: "PPDA Contract Monitoring System | %s",
+  title: "Mingo Hotel Kayunga Ltd | %s",
   description:
-    "The PPDA Contract Monitoring System (CMS) is a digital platform that enables Civil Society Organizations (CSOs) to track and report on government projects in real-time, ensuring transparency and accountability in public procurement.",
+    "Mingo Hotel Kayunga Ltd is a charming 2-star hotel located in the heart of Kayunga, Uganda. Blending modern comfort with local warmth, the hotel offers cozy rooms, exceptional dining, and convenient access to top attractions like Mehta Golf Club and the Source of the Nile.",
 };
+
 
 export default function RootLayout({
   children,
@@ -39,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link id="theme-link" rel="stylesheet" href="/themes/lara-light-blue/theme.css" />
+        <link id="theme-link" rel="stylesheet" href="/themes/lara-light-amber/theme.css" />
       </head>
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <NextJsProgressBar />

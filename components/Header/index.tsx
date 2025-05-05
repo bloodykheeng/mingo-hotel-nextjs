@@ -1,21 +1,30 @@
 "use client";
+
+import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import useAuthContext from "@/providers/AuthProvider";
 
 const Header = () => {
+
+  const { getUserQuery, logoutMutation } = useAuthContext();
+  const loggedInUserData = getUserQuery?.data?.data;
+
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  console.log("🚀 ~ Header ~ hamburgerRef: xx", hamburgerRef?.current)
+
   const usePathName = usePathname();
 
   // Handle sticky nav on scroll
-  const handleStickyNavbar = () => {
+  const handleStickyNavbar: () => void = () => {
     setSticky(window.scrollY >= 80);
   };
 
@@ -26,22 +35,36 @@ const Header = () => {
     };
   }, []);
 
-  // Handle click outside to close menu
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+
+
+  // Use useMemo to create a memoized version of the click handler
+  const handleClickOutside = useMemo(() => {
+    return (event: MouseEvent) => {
+      // Check if click is outside both menu and hamburger button
+      const isOutsideMenu = menuRef.current && !menuRef.current.contains(event.target as Node);
+      const clickedHamburgerButton = hamburgerRef.current && hamburgerRef.current.contains(event.target as Node);
+
+      // If clicking outside menu AND outside hamburger button → close the menu
+      if (isOutsideMenu && !clickedHamburgerButton && navbarOpen) {
+        console.log("🚀 ~ yah am in:", clickedHamburgerButton);
         setNavbarOpen(false);
         setOpenIndex(-1);
       }
     };
+  }, [navbarOpen]); // Include navbarOpen in dependencies
+
+  // Use the memoized handler in useEffect
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]); // Use the memoized handler as dependency
 
-  const navbarToggleHandler = () => {
-    setNavbarOpen(!navbarOpen);
+  const navbarToggleHandler = (e: React.MouseEvent) => {
+    // e.stopPropagation(); // Stop event bubbling
+    console.log("🚀 ~ navbarOpen: out", navbarOpen)
+    setNavbarOpen(prev => !prev);
   };
 
   const handleSubmenu = (index: number) => {
@@ -57,7 +80,7 @@ const Header = () => {
     <header
       className={`header left-0 top-0 z-40 flex w-full items-center ${sticky
         ? "dark:bg-transparent dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
-        : "absolute bg-transparent"
+        : "absolute bg-transparent hidden"
         }`}
     >
       <div className="container">
@@ -70,7 +93,7 @@ const Header = () => {
                 }`}
             >
               <Image
-                src="/ppda/ppda_white-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -78,7 +101,7 @@ const Header = () => {
                 className="w-full dark:hidden"
               />
               <Image
-                src="/ppda/ppda_fb-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -91,6 +114,7 @@ const Header = () => {
           <div className="flex w-full items-center justify-between px-4">
             {/* Hamburger Button */}
             <button
+              ref={hamburgerRef}
               onClick={navbarToggleHandler}
               className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
             >
@@ -171,20 +195,36 @@ const Header = () => {
 
               {/* Mobile-only sign in/up */}
               <div className="mt-4 border-t pt-4 lg:hidden">
-                {/* <Link
+                <Link
                   href="/signin"
                   className="block w-full text-center py-2 text-base font-medium text-dark hover:opacity-70 dark:text-white"
                   onClick={closeMenus}
                 >
                   Sign In
-                </Link> */}
-                <Link
-                  href="/login"
-                  className="block w-full text-center mt-2 bg-primary py-2 rounded text-white font-medium hover:bg-opacity-90"
-                  onClick={closeMenus}
-                >
-                  Login
                 </Link>
+
+
+                {getUserQuery.isLoading ? (
+                  <div className="flex justify-center py-2">
+                    <i className="pi pi-spinner pi-spin text-primary text-xl"></i>
+                  </div>
+                ) : loggedInUserData ? (
+                  <Link
+                    href="/dashboard"
+                    className="block w-full text-center mt-2 bg-primary py-2 rounded text-white font-medium hover:bg-opacity-90"
+                    onClick={closeMenus}
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="block w-full text-center mt-2 bg-primary py-2 rounded text-white font-medium hover:bg-opacity-90"
+                    onClick={closeMenus}
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
 
               {/* Mobile-only theme toggle */}
@@ -195,18 +235,31 @@ const Header = () => {
 
             {/* Desktop sign in/up */}
             <div className="hidden lg:flex items-center">
-              {/* <Link
+              <Link
                 href="/signin"
                 className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white"
               >
                 Sign In
-              </Link> */}
-              <Link
-                href="/login"
-                className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
-              >
-                Login
               </Link>
+
+
+              {getUserQuery.isLoading ? (
+                <i className="pi pi-spinner pi-spin text-primary text-xl"></i>
+              ) : loggedInUserData ? (
+                <Link
+                  href="/dashboard"
+                  className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
+                >
+                  Login
+                </Link>
+              )}
 
               {/* Desktop theme toggle */}
               <div className="hidden lg:block">

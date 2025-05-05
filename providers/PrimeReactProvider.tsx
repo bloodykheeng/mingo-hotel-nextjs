@@ -17,8 +17,8 @@ function ThemeSync() {
         if (!theme || !changeTheme) return; // Avoid SSR issues
 
         const linkId = "theme-link";
-        const newTheme = theme === "dark" ? "lara-dark-blue" : "lara-light-blue";
-        const currentTheme = newTheme === "lara-dark-blue" ? "lara-light-blue" : "lara-dark-blue";
+        const newTheme = theme === "dark" ? "lara-dark-amber" : "lara-light-amber";
+        const currentTheme = newTheme === "lara-dark-amber" ? "lara-light-amber" : "lara-dark-amber";
 
         changeTheme(currentTheme, newTheme, linkId, () => {
             const existingLinks = document.querySelectorAll(`link[id="${linkId}"]`);

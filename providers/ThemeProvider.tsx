@@ -11,49 +11,64 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children, defaultTheme }: { children: React.ReactNode, defaultTheme: any }) {
+export function ThemeProvider({
+    children,
+    defaultTheme = 'light'
+}: {
+    children: React.ReactNode;
+    defaultTheme?: Theme | any;
+}) {
+    // Use saved theme from cookies or fall back to provided default
+    const [theme, setTheme] = useState<Theme>(() => {
+        const savedTheme = Cookies.get('theme') as Theme;
+        return savedTheme || defaultTheme;
+    });
 
-    const savedTheme = Cookies.get("theme") as Theme;
-    const [theme, setTheme] = useState<Theme>(defaultTheme ?? savedTheme ?? "light");
-
-    useEffect(() => {
+    const applyTheme = (themeValue: Theme) => {
         const html = document.documentElement;
-        if (savedTheme) {
-            setTheme(savedTheme);
+        const isDark = themeValue === 'dark';
+
+        // Add/remove classes
+        html.classList.toggle('dark', isDark);
+        html.classList.toggle('light', !isDark);
+
+        // Set color scheme
+        html.style.colorScheme = themeValue;
+
+        // Set data attribute
+        html.setAttribute('data-theme', themeValue);
+
+        // Save to cookies
+        Cookies.set('theme', themeValue, { expires: 365 });
+
+        // Dynamically load Highcharts theme
+        const existingLink = document.getElementById('highcharts-theme') as HTMLLinkElement | null;
+
+        if (isDark) {
+            if (!existingLink) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.id = 'highcharts-theme';
+                link.href = '/highcharts/dark-unica.css';
+                document.head.appendChild(link);
+            }
         } else {
-            Cookies.set("theme", theme, { expires: 365 }); // set initial default theme
+            if (existingLink) {
+                existingLink.remove();
+            }
         }
 
-        if (savedTheme === "dark") {
-            html.classList.add("dark");
-            html.classList.remove("light");
-            html.style.colorScheme = "dark";
-            html.setAttribute("data-theme", 'dark'); // Set data-theme attribute
-        } else {
-            html.classList.add("light");
-            html.classList.remove("dark");
-            html.style.colorScheme = "light";
-            html.setAttribute("data-theme", 'light'); // Set data-theme attribute
-        }
-    }, []);
+    };
 
+    // Apply theme on initial render
+    useEffect(() => {
+        applyTheme(theme);
+    }, [theme]);
+
+    // Handler for theme changes
     const handleSetTheme = (newTheme: Theme) => {
         setTheme(newTheme);
-        Cookies.set("theme", newTheme, { expires: 365 }); // Store for a year
-
-        const html = document.documentElement;
-
-        if (newTheme === "dark") {
-            html.classList.add("dark");
-            html.classList.remove("light");
-            html.style.colorScheme = "dark";
-            html.setAttribute("data-theme", 'dark'); // Set data-theme attribute
-        } else {
-            html.classList.add("light");
-            html.classList.remove("dark");
-            html.style.colorScheme = "light";
-            html.setAttribute("data-theme", 'light'); // Set data-theme attribute
-        }
+        applyTheme(newTheme);
     };
 
     return (
