@@ -15,14 +15,14 @@ interface CreateRecordDialogProps {
     visible: boolean;
     onHide: () => void;
     initialData?: any;
-    usersCategory: string;
+
 }
 
 const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
     visible,
     onHide,
     initialData,
-    usersCategory
+
 }) => {
     const queryClient = useQueryClient();
     const primeReactToast = usePrimeReactToast();
@@ -65,7 +65,7 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
 
     return (
         <Dialog
-            header={`Create ${usersCategory === "cso_users" ? "CSO User" : "PPDA User"}`}
+            header={`Create Users`}
             visible={visible}
             onHide={onHide}
             style={{ minWidth: "50vw" }}
@@ -80,7 +80,6 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
                     handleFormSubmit={handleFormSubmit}
                     formMutation={createMutation}
                     initialData={initialData}
-                    usersCategory={usersCategory}
                 />
 
                 {createMutation.isPending && (

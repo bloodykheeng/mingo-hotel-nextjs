@@ -22,12 +22,12 @@ import {
 } from "@/services/users/users-service";
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
-import MaterialUiLoaderLottie from "@/assets/oag-lotties/material-ui-loading-lottie.json";
-import SnailErrorLottie from "@/assets/oag-lotties/snail-error-lottie.json";
-// import SateLiteLottie from "@/assets/oag-lotties/satelite-loading-lottie.json";
-// import FileLoadingLottie from "@/assets/oag-lotties/FileLoadingLottie.json";
-import SkeletonLoadingLottie from "@/assets/oag-lotties/SkeletonLoadingLottie.json";
-import NoDataLottie from "@/assets/oag-lotties/nodata.json";
+import MaterialUiLoaderLottie from "@/assets/lottie-files/material-ui-loading-lottie.json";
+import SnailErrorLottie from "@/assets/lottie-files/snail-error-lottie.json";
+// import SateLiteLottie from "@/assets/lottie-files/satelite-loading-lottie.json";
+// import FileLoadingLottie from "@/assets/lottie-files/FileLoadingLottie.json";
+import SkeletonLoadingLottie from "@/assets/lottie-files/SkeletonLoadingLottie.json";
+import NoDataLottie from "@/assets/lottie-files/nodata.json";
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -53,7 +53,7 @@ import { usePrimeReactToast } from "@/providers/PrimeReactToastProvider";
 
 
 
-function RecordsList({ usersCategory }: { usersCategory: string }) {
+function RecordsList() {
 
     const primeReactToast = usePrimeReactToast();
 
@@ -69,8 +69,8 @@ function RecordsList({ usersCategory }: { usersCategory: string }) {
 
     // Fetch data using useQuery
     const getAllUsersQuery = useQuery({
-        queryKey: ["users", currentPage, rowsPerPage, globalSearchTearm, "paginate", usersCategory], // Include page and search term in query key
-        queryFn: (queryprops) => getAllUsers({ ...queryprops, page: currentPage, rowsPerPage, search: globalSearchTearm, paginate: true, usersCategory }),
+        queryKey: ["users", currentPage, rowsPerPage, globalSearchTearm, "paginate",], // Include page and search term in query key
+        queryFn: (queryprops) => getAllUsers({ ...queryprops, page: currentPage, rowsPerPage, search: globalSearchTearm, paginate: true, }),
     });
     console.log("🚀 ~ RecordsList ~ getAllUsersQuery:", getAllUsersQuery)
 
@@ -174,25 +174,7 @@ function RecordsList({ usersCategory }: { usersCategory: string }) {
         { field: "role", header: "Role" },
         { field: "status", header: "Status" },
         { field: "gender", header: "Gender" },
-        ...(
-            ["ppda_users", "cso_users"].includes(usersCategory)
-                ? [{
-                    field: "regional_office.name",
-                    header: "Regional Office",
-                    body: (rowData: User) => getNestedValue(rowData, "regional_office.name") || "N/A"
-                }]
-                : []
-        ),
-        ...(
-            usersCategory === "cso_users"
-                ? [{
-                    field: "cso.name",
-                    header: "CSO",
-                    body: (rowData: User) => getNestedValue(rowData, "cso.name") || "N/A",
-                    visible: true
-                }]
-                : []
-        ),
+
         {
             field: "created_at",
             header: "Created At",
@@ -385,7 +367,7 @@ function RecordsList({ usersCategory }: { usersCategory: string }) {
                     <CreateRecordDialog
                         visible={showCreateRecord}
                         onHide={() => setShowCreateRecord(false)}
-                        usersCategory={usersCategory}
+
                     />
 
 
@@ -396,7 +378,7 @@ function RecordsList({ usersCategory }: { usersCategory: string }) {
                             setShowEditRecord(false)
                         }}
                         initialData={selectedItem}
-                        usersCategory={usersCategory}
+
                     />
 
                 </Card>

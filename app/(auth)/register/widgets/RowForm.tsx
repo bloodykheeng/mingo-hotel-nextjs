@@ -16,11 +16,13 @@ import { Calendar } from "primereact/calendar";
 import { InputNumber } from "primereact/inputnumber";
 import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUploadPicker";
 
+import moment from 'moment';
+
 // ✅ Validation Schema
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
     email: z.string().email("Invalid email format").nullable().optional(),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     gender: z.enum(["Male", "Female", "Prefer not to say"], {
         required_error: "Please select your gender",
     }).nullable(),
@@ -28,9 +30,7 @@ const formSchema = z.object({
         .regex(/^\d{12}$/, "Invalid phone number. Must be 12 digits only, e.g., 256123123123")
         .nullable().optional(),
     allow_notifications: z.boolean().default(true),
-    status: z.enum(["active", "deactive"]).default("deactive"),
-    device_token: z.string().nullable().optional(),
-    web_app_firebase_token: z.string().nullable().optional(),
+    status: z.enum(["active", "deactive"]).default("active"),
     agree: z.boolean().refine((val) => val === true, {
         message: "You must agree to the Terms & Conditions",
     }),
@@ -43,6 +43,28 @@ const formSchema = z.object({
         status: z.enum(["new", "existing"])
     }).nullable().optional(),
     photo_url: z.string().nullable().optional(),
+}).superRefine((data, ctx) => {
+    // Validate date_of_birth is in the past
+    if (data.date_of_birth && data.date_of_birth > new Date()) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Date of birth must be in the past",
+            path: ["date_of_birth"]
+        });
+    }
+
+    // You can add additional validations here if needed
+    // For example, ensuring age is reasonable (e.g., < 120 years)
+    if (data.date_of_birth) {
+        const calculatedAge = moment().diff(moment(data.date_of_birth), 'years');
+        if (calculatedAge > 120) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Age cannot be greater than 120 years",
+                path: ["date_of_birth"]
+            });
+        }
+    }
 });
 
 // ✅ TypeScript Type for Form Fields
@@ -50,14 +72,12 @@ type FormData = z.infer<typeof formSchema>;
 
 const defaultValues: FormData = {
     name: "",
-    email: null,
+    email: "",
     password: "",
     gender: "Prefer not to say",
     phone: null,
     allow_notifications: true,
-    status: "deactive",
-    device_token: null,
-    web_app_firebase_token: null,
+    status: "active",
     agree: false,
     nationality: null,
     age: null,
@@ -224,24 +244,6 @@ const RowForm: React.FC<{
                             {errors.nationality && <small className="p-error">{errors.nationality.message}</small>}
                         </div>
 
-                        {/* Age */}
-                        <div className="p-field">
-                            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Age</label>
-                            <Controller
-                                name="age"
-                                control={control}
-                                render={({ field }) => (
-                                    <InputNumber
-                                        {...field}
-                                        min={0}
-                                        max={120}
-                                        className={`w-full ${errors.age ? "p-invalid" : ""}`}
-                                    />
-                                )}
-                            />
-                            {errors.age && <small className="p-error">{errors.age.message}</small>}
-                        </div>
-
                         {/* Date of Birth */}
                         <div className="p-field">
                             <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Date of Birth</label>
@@ -257,14 +259,57 @@ const RowForm: React.FC<{
                                         yearNavigator
                                         yearRange="1900:2025"
                                         className={`w-full ${errors.date_of_birth ? "p-invalid" : ""}`}
+                                        value={field.value ? moment(field.value).toDate() : null}
+                                        onChange={(e) => {
+                                            e.value ? field.onChange(moment(e.value).toDate()) : null;
+
+                                            const dateValue = e.value ? moment(e.value).toDate() : null;
+
+                                            const calculateAge = (birthDate: any) => {
+                                                if (!birthDate) return null;
+
+                                                const birth = moment(birthDate);
+                                                const now = moment();
+
+                                                return now.diff(birth, 'years');
+                                            };
+
+                                            const age = calculateAge(dateValue)
+
+                                            console.log("🚀 ~  testing on change age :", age)
+                                            console.log("🚀 ~  testing on change age : e.value", dateValue)
+
+                                            setValue('age', age);
+                                        }}
                                     />
                                 )}
                             />
                             {errors.date_of_birth && <small className="p-error">{errors.date_of_birth.message}</small>}
                         </div>
 
-                        {/* Status */}
+                        {/* Age */}
                         <div className="p-field">
+                            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Age</label>
+                            <Controller
+                                name="age"
+                                control={control}
+                                render={({ field }) => (
+                                    <InputNumber
+                                        {...field}
+                                        min={0}
+                                        max={120}
+                                        className={`w-full ${errors.age ? "p-invalid" : ""}`}
+                                        disabled={true}
+                                    />
+                                )}
+                            />
+                            {errors.age && <small className="p-error">{errors.age.message}</small>}
+                        </div>
+
+
+
+                        {/* Status */}
+                        {/* <div className="p-field">
                             <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Status</label>
                             <Controller
                                 name="status"
@@ -278,7 +323,7 @@ const RowForm: React.FC<{
                                 )}
                             />
                             {errors.status && <small className="p-error">{errors.status.message}</small>}
-                        </div>
+                        </div> */}
 
                         {/* Allow Notifications */}
                         <div className="p-field">
@@ -300,37 +345,7 @@ const RowForm: React.FC<{
                             )}
                         </div>
 
-                        {/* Device Token */}
-                        <div className="p-field">
-                            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Device Token</label>
-                            <Controller
-                                name="device_token"
-                                control={control}
-                                render={({ field }) => (
-                                    <InputText
-                                        {...field}
-                                        className={`w-full ${errors.device_token ? "p-invalid" : ""}`}
-                                    />
-                                )}
-                            />
-                            {errors.device_token && <small className="p-error">{errors.device_token.message}</small>}
-                        </div>
 
-                        {/* Web App Firebase Token */}
-                        <div className="p-field">
-                            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Web App Firebase Token</label>
-                            <Controller
-                                name="web_app_firebase_token"
-                                control={control}
-                                render={({ field }) => (
-                                    <InputText
-                                        {...field}
-                                        className={`w-full ${errors.web_app_firebase_token ? "p-invalid" : ""}`}
-                                    />
-                                )}
-                            />
-                            {errors.web_app_firebase_token && <small className="p-error">{errors.web_app_firebase_token.message}</small>}
-                        </div>
 
                         {/* Password */}
                         <div className="p-field">

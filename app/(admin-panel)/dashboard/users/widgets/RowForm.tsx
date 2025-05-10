@@ -19,8 +19,7 @@ import { RadioButton } from "primereact/radiobutton";
 
 
 import { getAllUserAssignableRoles } from "@/services/users/user-roles-service";
-import { getAllRegionalOffices } from "@/services/regional-offices/regional-offices-service";
-import { getAllCSOs, } from "@/services/csos/csos-service";
+
 
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
@@ -63,19 +62,7 @@ const formSchema = z
     allow_notifications: z.boolean().optional().nullable(),
     status: z.enum(["active", "deactive"]),
     // regional_offices: z.array(z.object({ id: z.number(), name: z.string() }).passthrough()).optional(),
-    regional_office: z
-      .object({ id: z.number(), name: z.string() })
-      .passthrough()
-      .optional()
-      .nullable(),
-    cso: z
-      .object({
-        id: z.number().min(1, "CSO ID is required"),
-        name: z.string().min(1, "CSO name is required"),
-      })
-      .passthrough()
-      .optional()
-      .nullable(),
+
     role: z.string().min(1, "Role is required"),
   }).superRefine((data, ctx) => {
     const ppdaRoles = ["PPDA Admin", "PPDA Officer"];
@@ -89,22 +76,7 @@ const formSchema = z
     //   });
     // }
 
-    if ((ppdaRoles.includes(data.role) || csoRoles.includes(data.role)) && !data.regional_office) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["regional_office"],
-        message: "Regional Office is required for this role.",
-      });
-    }
 
-
-    if (csoRoles.includes(data.role) && !data.cso) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["cso"],
-        message: "CSO is required for this role.",
-      });
-    }
 
     // ✅ Conditionally require password if not editing
     if (data?.editing === true && (data?.password && data?.password?.length < 6)) {
@@ -144,8 +116,7 @@ const defaultValues: FormData = {
   status: "active", // Must be exactly "active" | "deactive"
 
   // regional_offices: undefined,
-  regional_office: undefined,
-  cso: undefined, // Required for local users
+
   role: "",
 };
 
@@ -157,7 +128,7 @@ type FormData = z.infer<typeof formSchema>;
 
 
 
-const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, formMutation: any, initialData: FormData, usersCategory: string, }> = ({ handleFormSubmit, formMutation, initialData = defaultValues, usersCategory }) => {
+const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, formMutation: any, initialData: FormData, }> = ({ handleFormSubmit, formMutation, initialData = defaultValues, }) => {
   const {
     register,
     handleSubmit,
@@ -181,10 +152,7 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
   console.log("🚀 ~ allValuesInForm:", allValuesInForm)
 
   const role = watch("role");
-  const showRegionalOffices = ["PPDA Admin", "PPDA Officer"].includes(role) || ["CSO Admin", "CSO Monitor", "CSO Verifier", "CSO Approver"].includes(role);
-  const showCSO = ["CSO Admin", "CSO Monitor", "CSO Verifier", "CSO Approver"].includes(role);
 
-  const regional_office = watch("regional_office");
 
 
 
@@ -224,30 +192,15 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
 
   // ✅ Fetch roles from API
   const rolesQuery = useQuery({
-    queryKey: ["roles", usersCategory],
-    queryFn: (queryParams) => getAllUserAssignableRoles({ ...queryParams, usersCategory }),
+    queryKey: ["roles"],
+    queryFn: (queryParams) => getAllUserAssignableRoles({ ...queryParams }),
   });
   console.log("🚀 ~ rolesQuery:", rolesQuery)
 
   useHandleQueryError(rolesQuery);
 
 
-  // ✅ Fetch regional offices from API
-  const regionalOfficesQuery = useQuery({
-    queryKey: ["regional-offices"],
-    queryFn: () => getAllRegionalOffices(),
-  });
 
-  useHandleQueryError(regionalOfficesQuery);
-
-  // ✅ Fetch CSOs from API
-  const csosQuery = useQuery({
-    queryKey: ["csos", "regional_office", regional_office],
-    queryFn: () => getAllCSOs({ regional_office_id: regional_office?.id }),
-    enabled: !!regional_office && showCSO
-  });
-
-  useHandleQueryError(csosQuery);
 
 
 
@@ -439,12 +392,7 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
                     onChange={(e) => {
                       field.onChange(e.value);
 
-                      setDropdownRegionalOffices([])
-                      setDropdownCSOs([]);
 
-                      // Clear in form state
-                      setValue("regional_office", null);
-                      setValue("cso", null);
                     }}
                     dropdown
                     disabled={rolesQuery?.isLoading}
@@ -458,158 +406,8 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
             {rolesQuery?.isLoading && <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />}
           </div>
 
-          {/* {showRegionalOffices && (
-            <>
-              <div className="p-field">
-                <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Regional Offices</label>
-                <Controller
-                  name="regional_offices"
-                  control={control}
-                  render={({ field }) => {
-                    // ✅ Handle search & filtering
-                    const fetchRegionalOfficeSuggestions = (event: any) => {
-                      const query = event.query.toLowerCase();
-                      const filtered =
-                        regionalOfficesQuery?.data?.data?.data?.filter((office: any) =>
-                          office?.name?.toLowerCase().includes(query)
-                        ) || [];
-                      setDropdownRegionalOffices(filtered);
-                    };
-
-                    return (
-                      <AutoComplete
-                        {...field}
-                        multiple // ✅ Multi-select mode
-                        suggestions={dropdownRegionalOffices}
-                        completeMethod={fetchRegionalOfficeSuggestions} // ✅ Enables search filtering
-                        field="name"
-                        value={field.value}
-                        onChange={(e) => field.onChange(e.value)}
-                        placeholder="Search & Select Regional Offices"
-                        className={`w-full ${errors.regional_offices ? "p-invalid" : ""}`}
-                        disabled={regionalOfficesQuery?.isLoading}
-                        dropdown
-                      />
-                    );
-                  }}
-                />
-                {errors.regional_offices && <small className="p-error">{errors?.regional_offices?.message?.toString()}</small>}
-                {regionalOfficesQuery?.isLoading && <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />}
-              </div>
-            </>
-          )} */}
 
 
-          {showRegionalOffices && (
-            <div className="p-field col-span-3">
-              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Regional Office</label>
-              <Controller
-                name="regional_office"
-                control={control}
-                render={({ field }) => {
-                  // ✅ Handle search & filtering
-                  const fetchRegionalOfficeSuggestions = (event: any) => {
-                    const query = event.query.toLowerCase();
-
-                    // Get the currently selected regional office (single object)
-                    const selectedId = field.value?.id || null;
-
-                    // Filter out the already selected option
-                    const filtered =
-                      regionalOfficesQuery?.data?.data?.data?.filter(
-                        (office: any) =>
-                          office?.name?.toLowerCase().includes(query) &&
-                          office.id !== selectedId // Exclude selected one
-                      ) || [];
-
-                    setDropdownRegionalOffices(filtered);
-                  };
-
-                  return (
-                    <AutoComplete
-                      {...field}
-                      suggestions={dropdownRegionalOffices}
-                      completeMethod={fetchRegionalOfficeSuggestions} // ✅ Enables search filtering
-                      field="name"
-                      value={field.value || null} // Ensure value is null when not selected
-                      onChange={(e) => {
-                        field.onChange(e.value)
-
-                        setDropdownCSOs([]);
-
-                        // Clear in form state
-                        setValue("cso", null);
-
-                      }}
-                      placeholder="Search & Select Regional Office"
-                      className={`w-full ${errors.regional_office ? "p-invalid" : ""}`}
-                      disabled={regionalOfficesQuery?.isLoading}
-                      dropdown
-                    />
-                  );
-                }}
-              />
-              {errors.regional_office && <small className="p-error">{errors?.regional_office?.message?.toString()}</small>}
-              {regionalOfficesQuery?.isLoading && <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />}
-            </div>
-          )}
-
-
-
-
-          {showCSO && (
-            <>
-              <div className="p-field col-span-3">
-                <label htmlFor="cso" className="block text-gray-900 dark:text-gray-100 font-medium mb-1">
-                  Civil Society Organization (CSO)
-                </label>
-                <Controller
-                  name="cso"
-                  control={control}
-                  render={({ field }) => {
-                    // ✅ Handle search & filtering
-                    const fetchSuggestions = (event: any) => {
-                      const query = event.query.toLowerCase();
-
-                      // Get the currently selected CSO (single object)
-                      const selectedId = field.value?.id || null;
-
-                      // Filter out the already selected CSO
-                      const filtered =
-                        csosQuery?.data?.data?.data?.filter(
-                          (cso: any) =>
-                            cso?.name?.toLowerCase().includes(query) &&
-                            cso.id !== selectedId // Exclude selected one
-                        ) || [];
-
-                      setDropdownCSOs(filtered);
-                    };
-
-
-                    return (
-                      <AutoComplete
-                        {...field}
-                        multiple={false} // ✅ Single-select mode
-                        suggestions={dropdownCSOs}
-                        completeMethod={fetchSuggestions} // ✅ Enables search filtering
-                        field="name"
-                        value={field.value}
-                        onChange={(e) => {
-                          field.onChange(e.value);
-                        }}
-                        dropdown
-                        disabled={csosQuery?.isLoading || !regional_office}
-                        placeholder="Select CSO"
-                        className={`w-full ${errors.cso ? "p-invalid" : ""}`}
-                      />
-                    );
-                  }}
-                />
-                {errors.cso && <small className="p-error">{errors?.cso?.message?.toString()}</small>}
-                {csosQuery?.isLoading && regional_office && <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />}
-              </div>
-            </>
-          )}
 
 
 

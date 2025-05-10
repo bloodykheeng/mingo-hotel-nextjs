@@ -21,14 +21,12 @@ interface EditRecordDialogProps {
     visible: boolean;
     onHide: () => void;
     initialData: any; // Required for editing
-    usersCategory: string;
 }
 
 const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
     visible,
     onHide,
     initialData,
-    usersCategory,
 }) => {
     const queryClient = useQueryClient();
     const primeReactToast = usePrimeReactToast();
@@ -103,7 +101,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
 
     return (
         <Dialog
-            header={`Edit ${usersCategory === "cso_users" ? "CSO User" : "PPDA User"}`}
+            header={`Edit User`}
             visible={visible}
             onHide={onHide}
             style={{ minWidth: "50vw" }}
@@ -118,7 +116,6 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
                     handleFormSubmit={handleFormSubmit}
                     formMutation={editMutation}
                     initialData={{ ...defaultValues, ...initialData, allow_notifications: initialData?.allow_notifications ? true : false }}
-                    usersCategory={usersCategory}
                 />
 
                 {editMutation.isPending && (

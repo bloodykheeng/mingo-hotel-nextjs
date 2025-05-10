@@ -38,3 +38,10 @@ export async function postToUpdateUserProfile(data: any) {
   const response = await axiosAPI.post(`postToUpdateUserProfile`, data);
   return response;
 }
+
+export async function postToRegisterUser(data: any) {
+  const response = await axiosAPI.post(`register`, data, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return response;
+}

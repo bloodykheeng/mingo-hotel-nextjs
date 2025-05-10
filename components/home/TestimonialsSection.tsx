@@ -53,7 +53,10 @@ const TestimonialsSection: React.FC = () => {
     };
 
     return (
-        <div className="py-16 bg-cover bg-center" style={{ backgroundImage: 'url(/images/hotel-exterior-blur.jpg)' }}>
+        <div className="relative py-16 bg-cover bg-center" style={{ backgroundImage: 'url(/assets/img/carousel-2.jpg)' }}>
+            {/* Dark overlay - positioned absolutely within the relative parent */}
+            <div className="absolute inset-0 bg-[#0F172B] opacity-70"></div>
+
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <Slider {...settings} className="testimonial-slider">

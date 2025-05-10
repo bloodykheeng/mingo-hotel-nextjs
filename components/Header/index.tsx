@@ -235,13 +235,6 @@ const Header = () => {
 
             {/* Desktop sign in/up */}
             <div className="hidden lg:flex items-center">
-              <Link
-                href="/signin"
-                className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white"
-              >
-                Sign In
-              </Link>
-
 
               {getUserQuery.isLoading ? (
                 <i className="pi pi-spinner pi-spin text-primary text-xl"></i>
@@ -253,12 +246,21 @@ const Header = () => {
                   Dashboard
                 </Link>
               ) : (
-                <Link
-                  href="/login"
-                  className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
-                >
-                  Login
-                </Link>
+                <>
+                  <Link
+                    href="/register"
+                    className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white"
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
+                  >
+                    Login
+                  </Link>
+                </>
+
               )}
 
               {/* Desktop theme toggle */}

@@ -8,6 +8,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePrimeReactToast } from "@/providers/PrimeReactToastProvider";
 import useHandleMutationError from "@/hooks/useHandleMutationError";
 
+import Image from "next/image";
+import Link from "next/link";
+
 import {
     getAllUsers,
     getUserById,
@@ -15,6 +18,7 @@ import {
     updateUser,
     deleteUserById,
     postToBulkDestroyUsers,
+    postToRegisterUser,
 } from "@/services/users/users-service";
 
 import RowForm from "./widgets/RowForm"; // Make sure this points to your form component
@@ -33,11 +37,11 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
     const router = useRouter();
 
     const createMutation = useMutation({
-        mutationFn: postUser,
+        mutationFn: postToRegisterUser,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users"] });
             primeReactToast.success("User created successfully");
-            router.push("/dashboard/users");
+            router.push("/login");
         }
     });
 
@@ -71,10 +75,6 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
             );
         }
 
-        // Optional token fields
-        if (data.device_token) formData.append("device_token", data.device_token);
-        if (data.web_app_firebase_token) formData.append("web_app_firebase_token", data.web_app_firebase_token);
-
         // Handle photo upload
         if (data.photo && data.photo.status === "new" && data.photo.file) {
             formData.append("photo", data.photo.file);
@@ -86,24 +86,59 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
     };
 
     return (
-        <div className="relative">
-            <RowForm
-                handleFormSubmit={handleFormSubmit}
-                formMutation={createMutation}
-                initialData={initialData}
-            />
+        <div className="flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+            <div className="w-full m-1 lg:m-4 shadow-lg rounded-lg bg-white dark:bg-gray-800 p-6 relative">
+                {/* Logo and Heading */}
+                <div className="text-center flex items-center justify-center flex-col mb-6">
 
-            {createMutation.isPending && (
-                <div className="absolute inset-0 flex justify-center items-center bg-white/70 z-10">
-                    <ProgressSpinner
-                        style={{ width: "40px", height: "40px" }}
-                        strokeWidth="4"
-                        animationDuration="1s"
+                    <Image
+                        src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                        alt="logo"
+                        width={140}
+                        height={30}
+                        style={{ height: "40px", width: "auto" }}
+                        className="w-full dark:hidden"
                     />
+                    <Image
+                        src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                        alt="logo"
+                        width={140}
+                        height={30}
+                        style={{ height: "40px", width: "auto" }}
+                        className="hidden w-full dark:block"
+                    />
+
+
+                    <h2 className="text-gray-900 dark:text-gray-100 text-3xl font-semibold mb-2">Register</h2>
+                    <p className="text-gray-600 text-sm">
+                        Already have an account?
+                        <Link href="/login" className="ml-2 text-blue-500 hover:underline">
+                            Login here!
+                        </Link>
+                    </p>
                 </div>
-            )}
+
+                {/* Form */}
+                <RowForm
+                    handleFormSubmit={handleFormSubmit}
+                    formMutation={createMutation}
+                    initialData={initialData}
+                />
+
+                {/* Loading Overlay */}
+                {createMutation.isPending && (
+                    <div className="absolute inset-0 flex justify-center items-center bg-white/70 dark:bg-black/70   z-10">
+                        <ProgressSpinner
+                            style={{ width: "40px", height: "40px" }}
+                            strokeWidth="4"
+                            animationDuration="1s"
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
+
 };
 
 export default CreateRecord;

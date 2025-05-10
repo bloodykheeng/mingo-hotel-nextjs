@@ -10,17 +10,11 @@ interface PageProps {
 }
 
 async function Page({ params, searchParams }: PageProps) {
-    const { usersCategory } = await searchParams;
-
-    if (!usersCategory) {
-        return notFound(); // Trigger Next.js 404 page if userCategory is missing
-    }
-
 
     return (
         <div>
             <PageBreadcrumb pageTitle="Users" />
-            <UserList usersCategory={usersCategory} />
+            <UserList />
         </div>
     )
 }

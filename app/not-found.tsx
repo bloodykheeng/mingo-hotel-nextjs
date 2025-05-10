@@ -13,14 +13,14 @@ const NotFound = () => {
             <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 md:p-12">
                 {/* Logo - Light/Dark Mode */}
                 <Image
-                    src="/ppda/ppda_white-removebg-preview.png"
+                    src="/mingo-hotel-logo/mongo-hotel-logo.png"
                     alt="PPDA Logo"
                     width={140}
                     height={30}
                     className="w-auto h-10 dark:hidden"
                 />
                 <Image
-                    src="/ppda/ppda_fb-removebg-preview.png"
+                    src="/mingo-hotel-logo/mongo-hotel-logo.png"
                     alt="PPDA Logo"
                     width={140}
                     height={30}
@@ -28,7 +28,7 @@ const NotFound = () => {
                 />
 
                 {/* Error Code */}
-                <span className="text-blue-500 dark:text-blue-400 text-4xl font-extrabold">404</span>
+                <span className="text-brand-500 dark:text-brand-600 text-4xl font-extrabold">404</span>
                 <h1 className="text-gray-900 dark:text-gray-100 text-3xl md:text-5xl font-bold mt-2">
                     Page Not Found
                 </h1>
@@ -41,7 +41,7 @@ const NotFound = () => {
                     href="/"
                     className="mt-6 flex w-full max-w-sm items-center space-x-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 p-4 transition hover:bg-gray-200 dark:hover:bg-gray-600"
                 >
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-500">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500">
                         <i className="pi pi-home text-white text-2xl"></i>
                     </div>
                     <div>
@@ -55,7 +55,7 @@ const NotFound = () => {
                     onClick={() => router.back()}
                     className="mt-4 flex w-full max-w-sm items-center space-x-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 p-4 transition hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
                 >
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-500">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500">
                         <i className="pi pi-angle-double-left text-white text-2xl"></i>
                     </div>
                     <div>

@@ -189,7 +189,7 @@ const AppSidebar: React.FC = () => {
                         <div>
                           <button
                             onClick={() => handleNestedSubmenuToggle(categoryIndex, itemIndex, subItem.name)}
-                            className={`menu-dropdown-item flex justify-between items-center w-full hover:bg-gray-100 dark:hover:bg-gray-800 ${isNestedOpen || hasActiveNestedItem ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" : ""
+                            className={`menu-dropdown-item flex justify-between items-center w-full hover:bg-orange-100 dark:hover:bg-brand-400 ${isNestedOpen || hasActiveNestedItem ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" : ""
                               }`}
                           >
                             {subItem.icon && <span className="mr-2">{subItem.icon}</span>}
@@ -203,7 +203,7 @@ const AppSidebar: React.FC = () => {
                                 <li key={`${categoryIndex}-${itemIndex}-${subIndex}-${nestedIndex}-${nestedItem.name}`}>
                                   <Link
                                     href={nestedItem.path}
-                                    className={`menu-dropdown-item hover:bg-gray-100 dark:hover:bg-gray-800 ${isActive(nestedItem.path)
+                                    className={`menu-dropdown-item hover:bg-orange-100 dark:hover:bg-brand-400 ${isActive(nestedItem.path)
                                       ? "menu-dropdown-item-active bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400"
                                       : ""
                                       }`}
@@ -219,7 +219,7 @@ const AppSidebar: React.FC = () => {
                       ) : (
                         <Link
                           href={subItem.path || "#"}
-                          className={`menu-dropdown-item hover:bg-gray-100 dark:hover:bg-gray-800 ${subItem.path && isActive(subItem.path)
+                          className={`menu-dropdown-item hover:bg-orange-100 dark:hover:bg-brand-400 ${subItem.path && isActive(subItem.path)
                             ? "menu-dropdown-item-active bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400"
                             : ""
                             }`}
@@ -262,7 +262,7 @@ const AppSidebar: React.FC = () => {
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
-                src="/ppda/ppda_white-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -270,7 +270,7 @@ const AppSidebar: React.FC = () => {
                 className="w-full dark:hidden"
               />
               <Image
-                src="/ppda/ppda_fb-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -281,7 +281,7 @@ const AppSidebar: React.FC = () => {
           ) : (
             <>
               <Image
-                src="/ppda/ppda_white-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={80}
                 height={30}
@@ -289,7 +289,7 @@ const AppSidebar: React.FC = () => {
                 className="w-full dark:hidden"
               />
               <Image
-                src="/ppda/ppda_fb-removebg-preview.png"
+                src="/mingo-hotel-logo/mongo-hotel-logo.png"
                 alt="logo"
                 width={80}
                 height={30}

@@ -40,6 +40,8 @@ type LoginFormInputs = z.infer<typeof loginSchema>;
 const LoginPage = () => {
 
 
+
+    const router = useRouter();
     const queryClient = useQueryClient();
     // const router = useRouter();
     const primeReactToast = usePrimeReactToast();
@@ -78,8 +80,13 @@ const LoginPage = () => {
                 password: prev?.password ?? "", // Ensure password is always defined
             }));
 
+            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({ queryKey: ["logged-in-user"] });
 
-            setShowOTPDialog(true);
+            router.push('/')
+
+
+            // setShowOTPDialog(true);
         },
     });
 
@@ -229,7 +236,7 @@ const LoginPage = () => {
 
 
 
-            <OtpDiaglog setShowOTPDialog={setShowOTPDialog} showOTPDialog={showOTPDialog} loginDetails={loginDetails} setLoginDetails={setLoginDetails} />
+            {/* <OtpDiaglog setShowOTPDialog={setShowOTPDialog} showOTPDialog={showOTPDialog} loginDetails={loginDetails} setLoginDetails={setLoginDetails} /> */}
         </>
     );
 };

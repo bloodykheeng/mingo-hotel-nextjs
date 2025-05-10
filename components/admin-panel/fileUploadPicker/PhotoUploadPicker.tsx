@@ -90,7 +90,7 @@ const PhotoUploaderPicker: React.FC<PhotoUploaderPickerProps> = ({
 
     return (
         <div className="flex flex-col gap-3">
-            <label className="font-medium text-gray-700">Photo</label>
+            {/* <label className="font-medium text-gray-700">Photo</label> */}
 
             {/* Show preview if we have a photo */}
             {currentPhoto && (

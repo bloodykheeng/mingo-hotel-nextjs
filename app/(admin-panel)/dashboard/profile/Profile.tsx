@@ -12,11 +12,11 @@ import useAuthContext from "@/providers/AuthProvider";
 
 import { useRouter } from 'nextjs-toploader/app';
 
-import MaterialUiLoaderLottie from "@/assets/oag-lotties/material-ui-loading-lottie.json";
-import SnailErrorLottie from "@/assets/oag-lotties/snail-error-lottie.json";
-// import SateLiteLottie from "@/assets/oag-lotties/satelite-loading-lottie.json";
-// import FileLoadingLottie from "@/assets/oag-lotties/FileLoadingLottie.json";
-import SkeletonLoadingLottie from "@/assets/oag-lotties/SkeletonLoadingLottie.json";
+import MaterialUiLoaderLottie from "@/assets/lottie-files/material-ui-loading-lottie.json";
+import SnailErrorLottie from "@/assets/lottie-files/snail-error-lottie.json";
+// import SateLiteLottie from "@/assets/lottie-files/satelite-loading-lottie.json";
+// import FileLoadingLottie from "@/assets/lottie-files/FileLoadingLottie.json";
+import SkeletonLoadingLottie from "@/assets/lottie-files/SkeletonLoadingLottie.json";
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 

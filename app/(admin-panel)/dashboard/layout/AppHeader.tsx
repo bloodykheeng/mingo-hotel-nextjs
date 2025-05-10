@@ -1,7 +1,6 @@
 "use client";
 import { ThemeToggleButton } from "@/components/admin-panel/common/ThemeToggleButton";
 import NotificationDropdown from "@/components/admin-panel/header/NotificationDropdown";
-import NotificationsSidebar from "@/components/admin-panel/notifications-sidebar/NotificationsSidebar"
 import UserDropdown from "@/components/admin-panel/header/UserDropdown";
 import { useSidebar } from "@/providers/SidebarContextProvider";
 import Image from "next/image";
@@ -87,7 +86,7 @@ const AppHeader: React.FC = () => {
           <Link href="/" className="lg:hidden">
 
             <Image
-              src="/ppda/ppda_white-removebg-preview.png"
+              src="/mingo-hotel-logo/mongo-hotel-logo.png"
               alt="logo"
               width={140}
               height={30}
@@ -95,7 +94,7 @@ const AppHeader: React.FC = () => {
               className="w-full dark:hidden"
             />
             <Image
-              src="/ppda/ppda_fb-removebg-preview.png"
+              src="/mingo-hotel-logo/mongo-hotel-logo.png"
               alt="logo"
               width={140}
               height={30}
@@ -137,7 +136,6 @@ const AppHeader: React.FC = () => {
 
             {/* <NotificationDropdown /> */}
 
-            <NotificationsSidebar />
             {/* <!-- Notification Menu Area --> */}
           </div>
           {/* <!-- User Area --> */}
