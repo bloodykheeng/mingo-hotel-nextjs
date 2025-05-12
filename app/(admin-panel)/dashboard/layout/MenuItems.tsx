@@ -97,6 +97,11 @@ export const getMenuItems = (logggedInUser: any): MenuCategory[] => {
           name: "Settings",
           subItems: [
             {
+              icon: <i className="pi pi-star" />, // You can choose a different icon if desired
+              name: "Features",
+              path: "/dashboard/features"
+            },
+            {
               icon: <i className="pi pi-users" />,
               name: "Roles",
               path: "/dashboard/roles"

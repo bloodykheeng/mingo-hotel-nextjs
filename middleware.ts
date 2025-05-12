@@ -18,6 +18,8 @@ const routeGroups = {
   // Routes accessible only by system admin
   systemAdminOnly: [
     // "/dashboard/users",
+    "/dashboard/rooms",
+    "/dashboard/features",
     "/dashboard/faqs",
     "/dashboard/roles",
     "/dashboard/audit-trail"
