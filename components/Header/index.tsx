@@ -78,10 +78,12 @@ const Header = () => {
 
   return (
     <header
-      className={`header left-0 top-0 z-40 flex w-full items-center ${sticky
-        ? "dark:bg-transparent dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
-        : "absolute bg-transparent hidden"
-        }`}
+      // className={`header left-0 top-0 z-40 flex w-full items-center ${sticky
+      //   ? "dark:bg-transparent dark:shadow-sticky-dark fixed z-[9999] bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+      //   : "absolute bg-transparent hidden"
+      //   }`}
+      className={`header left-0 top-0 z-40 flex w-full items-center bg-white dark:bg-transparent`}
+
     >
       <div className="container">
         <div className="relative -mx-4 flex items-center justify-between">
@@ -89,8 +91,11 @@ const Header = () => {
           <div className="w-60 max-w-full px-4 xl:mr-12">
             <Link
               href="/"
-              className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"
+              // className={`header-logo block w-full ${sticky ? "py-5 lg:py-2" : "py-8"
+              //   }`}
+              className={`header-logo block w-full py-2
                 }`}
+
             >
               <Image
                 src="/mingo-hotel-logo/mongo-hotel-logo.png"

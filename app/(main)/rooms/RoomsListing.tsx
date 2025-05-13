@@ -103,7 +103,7 @@ function RoomsListing() {
 
     // Navigate to room details
     const handleViewDetails = (roomId: number) => {
-        router.push(`/rooms/${roomId}`);
+        router.push(`/rooms/view/?roomId=${roomId}`);
     };
 
     // Get room image from attachments

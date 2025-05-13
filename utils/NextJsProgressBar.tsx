@@ -6,7 +6,7 @@ import NextTopLoader from 'nextjs-toploader';
 function NextJsProgressBar() {
     return (<>
         {/* <NextNProgress /> */}
-        <NextTopLoader showSpinner={false} />
+        <NextTopLoader showSpinner={false} zIndex={16000} />
     </>
 
 
