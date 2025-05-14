@@ -85,7 +85,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
         if (!loggedInUserData) {
             // Save current path to redirect back after login
             const returnPath = `/rooms/view/?roomId=${roomId}`;
-            router.push(`/auth/login?returnPath=${encodeURIComponent(returnPath)}`);
+            router.push(`/login?returnPath=${encodeURIComponent(returnPath)}`);
             return;
         }
 

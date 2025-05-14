@@ -44,6 +44,7 @@ const formSchema = z
   .object({
     name: z.string().min(3, "Name must be at least 3 characters"),
     email: z.string().email("Invalid email format"),
+    address: z.string().min(3, "Address must be at least 3 characters"),
     // password: z.string().min(6, "Password must be at least 6 characters"),
     password: z.string().optional(), // ✅ make it optional first
     editing: z.boolean().optional().nullable(),
@@ -107,6 +108,7 @@ const defaultValues: FormData = {
 
   name: "", // Empty string for user input
   email: "", // Empty email
+  address: "",
   password: "", // Empty password
   gender: "Prefer not to say", // Default to 'Prefer not to say'
   // agree_to_terms: false, // Default to false (user must check it)
@@ -247,6 +249,17 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
               render={({ field }) => <InputText {...field} type="email" className={`w-full ${errors.email ? "p-invalid" : ""}`} />}
             />
             {errors.email && <small className="p-error">{errors.email.message}</small>}
+          </div>
+
+          {/* address*/}
+          <div className="p-field">
+            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Address</label>
+            <Controller
+              name="address"
+              control={control}
+              render={({ field }) => <InputText {...field} className={`w-full ${errors.address ? "p-invalid" : ""}`} />}
+            />
+            {errors.address && <small className="p-error">{errors.address.message}</small>}
           </div>
 
           {/* Phone Number */}

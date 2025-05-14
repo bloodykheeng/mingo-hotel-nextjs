@@ -55,6 +55,8 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
 
         // Core user fields
         formData.append("name", data.name);
+        formData.append("address", data.address);
+
 
         // Optional fields with null checking
         if (data.email) formData.append("email", data.email);

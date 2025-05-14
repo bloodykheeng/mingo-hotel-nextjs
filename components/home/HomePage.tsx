@@ -9,6 +9,8 @@ import TestimonialsSection from './TestimonialsSection';
 import TeamStaffSection from './TeamStaffSection';
 import NewsletterSection from './NewsletterSection';
 
+import RoomCategoriesSection from "./room-categories/RoomCategoriesSection"
+
 import Newsletter from './Newsletter';
 import Footer from './Footer';
 
@@ -27,7 +29,8 @@ function HomePage() {
                 exceptional comfort, convenience, and unforgettable local charm. Whether you're traveling for
                 leisure or business, our hotel promises a stay like no other."
             />
-            <RoomsSection />
+            {/* <RoomsSection /> */}
+            <RoomCategoriesSection />
             <ServicesSection />
             <TestimonialsSection />
             <TeamStaffSection />

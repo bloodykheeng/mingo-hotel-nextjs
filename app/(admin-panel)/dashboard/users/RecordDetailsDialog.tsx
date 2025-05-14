@@ -50,6 +50,7 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                             <p><strong>Name:</strong> {selectedRecord?.name || "N/A"}</p>
                             <p><strong>Email:</strong> {selectedRecord?.email || "N/A"}</p>
+                            <p><strong>Address:</strong> {selectedRecord?.address || "N/A"}</p>
                             <p><strong>Phone:</strong> {selectedRecord?.phone || "N/A"}</p>
                             <p><strong>Gender:</strong> {selectedRecord?.gender || "N/A"}</p>
                             <p><strong>Role:</strong> {selectedRecord?.role || "N/A"}</p>

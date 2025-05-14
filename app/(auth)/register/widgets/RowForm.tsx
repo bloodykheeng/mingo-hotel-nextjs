@@ -22,6 +22,7 @@ import moment from 'moment';
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
     email: z.string().email("Invalid email format").nullable().optional(),
+    address: z.string().min(3, "Address must be at least 3 characters"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     gender: z.enum(["Male", "Female", "Prefer not to say"], {
         required_error: "Please select your gender",
@@ -72,6 +73,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const defaultValues: FormData = {
     name: "",
+    address: "",
     email: "",
     password: "",
     gender: "Prefer not to say",
@@ -181,6 +183,17 @@ const RowForm: React.FC<{
                                 render={({ field }) => <InputText {...field} type="email" className={`w-full ${errors.email ? "p-invalid" : ""}`} />}
                             />
                             {errors.email && <small className="p-error">{errors.email.message}</small>}
+                        </div>
+
+                        {/* address*/}
+                        <div className="p-field">
+                            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Address</label>
+                            <Controller
+                                name="address"
+                                control={control}
+                                render={({ field }) => <InputText {...field} className={`w-full ${errors.address ? "p-invalid" : ""}`} />}
+                            />
+                            {errors.address && <small className="p-error">{errors.address.message}</small>}
                         </div>
 
                         {/* Phone Number */}

@@ -24,8 +24,28 @@ import {
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 import { useQuery } from "@tanstack/react-query";
 
+import { getAllRoomCategorys } from "@/services/room-categories/room-categories-service";
+
 
 import FileUploaderPicker from "@/components/admin-panel/fileUploadPicker/FileUploadPicker";
+
+/**
+ * Helper function to validate required fields in a Zod schema
+ * @param val The value to validate
+ * @param ctx The Zod context for error reporting
+ * @param fieldName The name of the field for the error message
+ * @returns The value if valid, z.NEVER if invalid
+ */
+const requireField = (val: any, ctx: z.RefinementCtx, fieldName: string) => {
+  if (!!val === false) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `${fieldName} is required`,
+    });
+    return z.NEVER;
+  }
+  return val;
+};
 
 // ✅ Define Form Schema
 const formSchema = z.object({
@@ -33,6 +53,9 @@ const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   status: z.enum(["active", "deactive"]),
   room_type: z.string(),
+  room_category: z.object({ id: z.number(), name: z.string() })
+    .nullable()
+    .superRefine((val, ctx) => requireField(val, ctx, "Room Category is required")),
   price: z.number().min(0, "Price must be a positive number"),
   stars: z.number().min(0).max(5, "Stars must be between 0 and 5"),
   booked: z.boolean().default(false),
@@ -71,6 +94,7 @@ const defaultValues: FormData = {
   description: "",
   status: 'active',
   room_type: 'accommodation',
+  room_category: null,
   price: 0,
   stars: 0,
   booked: false,
@@ -115,9 +139,11 @@ const RoomForm: React.FC<{
     // Watch values
     const features = watch("features");
     const attachments = watch("attachments") || [];
+    const selectedRoomCategory = watch("room_category");
 
     // Features dropdown state
     const [dropdownFeatures, setDropdownFeatures] = useState([]);
+    const [roomCategorySuggestions, setRoomCategorySuggestions] = useState([]);
 
     // ✅ Fetch features from API
     const featuresQuery = useQuery({
@@ -126,6 +152,14 @@ const RoomForm: React.FC<{
     });
 
     useHandleQueryError(featuresQuery);
+
+    // Query to fetch all room categories
+    const roomCategoriesQuery = useQuery({
+      queryKey: ["room-categories"],
+      queryFn: getAllRoomCategorys,
+    });
+
+    useHandleQueryError(roomCategoriesQuery);
 
     // Merge existing attachments with current ones
     useEffect(() => {
@@ -199,6 +233,62 @@ const RoomForm: React.FC<{
                 )}
               />
             </div>
+
+            <div className="p-field">
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">
+                Room Category
+              </label>
+              <Controller
+                name="room_category"
+                control={control}
+                render={({ field }) => {
+                  // Handler to fetch suggestions filtered by input
+                  const fetchRoomCategorySuggestions = (event: any) => {
+                    const query = event.query.toLowerCase();
+
+                    // Exclude the currently selected room category from suggestions
+                    const selectedId = field.value?.id || null;
+
+                    const filtered =
+                      roomCategoriesQuery?.data?.data?.data?.filter(
+                        (item: any) =>
+                          item?.name?.toLowerCase().includes(query) &&
+                          item.id !== selectedId
+                      ) || [];
+
+                    setRoomCategorySuggestions(filtered);
+                  };
+
+                  return (
+                    <AutoComplete
+                      {...field}
+                      multiple={false}
+                      suggestions={roomCategorySuggestions}
+                      completeMethod={fetchRoomCategorySuggestions}
+                      field="name"
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.value);
+
+                        // Clear other dependent suggestions or fields here if any
+                        // e.g. setDistrictSuggestions([]); setValue("district", null); etc.
+                      }}
+                      dropdown
+                      disabled={roomCategoriesQuery?.isLoading}
+                      placeholder="Search & Select Room Category"
+                      className={`w-full ${errors.room_category ? "p-invalid" : ""}`}
+                    />
+                  );
+                }}
+              />
+              {errors.room_category && (
+                <small className="p-error">{errors.room_category.message?.toString()}</small>
+              )}
+              {roomCategoriesQuery?.isLoading && (
+                <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />
+              )}
+            </div>
+
 
 
             {/* Name */}
