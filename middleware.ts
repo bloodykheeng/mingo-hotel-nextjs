@@ -20,6 +20,7 @@ const routeGroups = {
     // "/dashboard/users",
     "/dashboard/rooms",
     "/dashboard/features",
+    "/dashboard/room-categories",
     "/dashboard/faqs",
     "/dashboard/roles",
     "/dashboard/audit-trail"
