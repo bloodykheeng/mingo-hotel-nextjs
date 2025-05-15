@@ -1,7 +1,7 @@
 "use client";
 
 import "regenerator-runtime/runtime";
-import React, { useState } from "react";
+import React, { useState, JSX } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,6 +11,22 @@ import { useRouter } from 'nextjs-toploader/app';
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
+
+import {
+  FaWifi,
+  FaTv,
+  FaBed,
+  FaCoffee,
+  FaUtensils,
+  FaConciergeBell,
+  FaBath,
+  FaSwimmingPool,
+  FaParking,
+  FaRProject,
+  FaVolumeUp,
+  FaSpa,
+} from "react-icons/fa";
+
 
 import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUploadPicker";
 
@@ -91,71 +107,69 @@ const FeatureForm: React.FC<{
       { label: "Deactive", value: "deactive" },
     ];
 
-    // ✅ PrimeReact Icon Options
-    const iconOptions = [
-      { label: "pi pi-wifi", value: "pi pi-wifi" },
-      { label: "pi pi-heart", value: "pi pi-heart" },
-      { label: "pi pi-star", value: "pi pi-star" },
-      { label: "pi pi-home", value: "pi pi-home" },
-      { label: "pi pi-car", value: "pi pi-car" },
-      { label: "pi pi-desktop", value: "pi pi-desktop" },
-      { label: "pi pi-gift", value: "pi pi-gift" },
-      { label: "pi pi-sun", value: "pi pi-sun" },
-      { label: "pi pi-moon", value: "pi pi-moon" },
-      { label: "pi pi-info-circle", value: "pi pi-info-circle" },
-      { label: "pi pi-check-circle", value: "pi pi-check-circle" },
-      { label: "pi pi-key", value: "pi pi-key" },
-      { label: "pi pi-lock", value: "pi pi-lock" },
-      { label: "pi pi-camera", value: "pi pi-camera" },
-      { label: "pi pi-video", value: "pi pi-video" },
-      { label: "pi pi-map", value: "pi pi-map" },
-      { label: "pi pi-phone", value: "pi pi-phone" },
-      { label: "pi pi-envelope", value: "pi pi-envelope" },
-      { label: "pi pi-calendar", value: "pi pi-calendar" },
-      { label: "pi pi-clock", value: "pi pi-clock" },
-      { label: "pi pi-globe", value: "pi pi-globe" },
-      { label: "pi pi-language", value: "pi pi-language" },
-      { label: "pi pi-users", value: "pi pi-users" },
-      { label: "pi pi-user", value: "pi pi-user" },
-      { label: "pi pi-cog", value: "pi pi-cog" },
-      { label: "pi pi-wrench", value: "pi pi-wrench" },
-      { label: "pi pi-bolt", value: "pi pi-bolt" },
-      { label: "pi pi-shopping-cart", value: "pi pi-shopping-cart" },
-      { label: "pi pi-tag", value: "pi pi-tag" },
-      { label: "pi pi-ticket", value: "pi pi-ticket" },
-      { label: "pi pi-thumbs-up", value: "pi pi-thumbs-up" },
-      { label: "pi pi-bell", value: "pi pi-bell" },
-      { label: "pi pi-bookmark", value: "pi pi-bookmark" },
-      { label: "pi pi-book", value: "pi pi-book" },
-      { label: "pi pi-briefcase", value: "pi pi-briefcase" },
-      { label: "pi pi-coffee", value: "pi pi-coffee" },
-      { label: "pi pi-compass", value: "pi pi-compass" },
-      { label: "pi pi-credit-card", value: "pi pi-credit-card" },
-      { label: "pi pi-database", value: "pi pi-database" },
-      { label: "pi pi-flag", value: "pi pi-flag" },
+    // Define a type for the icon values
+    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
+      'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' | 'massage';
+
+    // Define the option type
+    interface IconOption {
+      label: string;
+      value: IconKey; // Now value must be one of the IconKey types
+    }
+
+    // Use the type for your array
+    const iconOptions: IconOption[] = [
+      { label: "Wi-Fi", value: "wifi" },
+      { label: "TV", value: "tv" },
+      { label: "Bed", value: "bed" },
+      { label: "Breakfast", value: "breakfast" },
+      { label: "Dinner", value: "dinner" },
+      { label: "Buffet", value: "buffet" },
+      { label: "Bathroom", value: "bathroom" },
+      { label: "Swimming Pool", value: "swimming pool" },
+      { label: "Parking", value: "parking" },
+      { label: "Projector", value: "projector" },
+      { label: "Speakers", value: "speakers" },
+      { label: "Massage", value: "massage" },
     ];
 
-    // Custom template for displaying icons in dropdown
-    const iconTemplate = (option: { label: string, value: string }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <i className={option.value}></i>
-          <span>{option.label}</span>
-        </div>
-      );
+    // Use the same type for your iconMap
+    const iconMap: Record<IconKey, React.ReactNode> = {
+      wifi: <FaWifi />,
+      tv: <FaTv />,
+      bed: <FaBed />,
+      breakfast: <FaCoffee />,
+      dinner: <FaUtensils />,
+      buffet: <FaConciergeBell />,
+      bathroom: <FaBath />,
+      "swimming pool": <FaSwimmingPool />,
+      parking: <FaParking />,
+      projector: <FaRProject />,
+      speakers: <FaVolumeUp />,
+      massage: <FaSpa />,
     };
 
-    // Selected icon value template
-    const selectedIconTemplate = (option: { label: string, value: string }) => {
+    // Template for the selected value
+    const selectedIconTemplate = (option: IconOption | null) => {
       if (option) {
         return (
           <div className="flex items-center gap-2">
-            <i className={option.value}></i>
+            {iconMap[option.value]}
             <span>{option.label}</span>
           </div>
         );
       }
       return <span>Select an icon</span>;
+    };
+
+    // Template for each item in the dropdown list
+    const itemIconTemplate = (option: IconOption) => {
+      return (
+        <div className="flex items-center gap-2">
+          {iconMap[option.value]}
+          <span>{option.label}</span>
+        </div>
+      );
     };
 
     return (
@@ -189,7 +203,7 @@ const FeatureForm: React.FC<{
                     value={field.value}
                     options={iconOptions}
                     onChange={(e) => field.onChange(e.value)}
-                    itemTemplate={iconTemplate}
+                    itemTemplate={itemIconTemplate}
                     valueTemplate={selectedIconTemplate}
                     placeholder="Select an icon"
                     className="w-full"

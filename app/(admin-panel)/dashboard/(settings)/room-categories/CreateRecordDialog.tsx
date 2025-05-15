@@ -58,6 +58,7 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
         const formData = new FormData();
         // Add basic fields for a feature
         formData.append("name", data.name);
+        formData.append("icon", data.icon);
         formData.append("description", data.description || "");
         formData.append("status", data.status || "");
 

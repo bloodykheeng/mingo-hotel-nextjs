@@ -19,7 +19,6 @@ import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUp
 // ✅ Define Form Schema
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
-  icon: z.string().nullable().optional(),
   photo: z.object({
     file: z.instanceof(File).optional(),
     previewUrl: z.string(),
@@ -28,11 +27,22 @@ const formSchema = z.object({
   photo_url: z.string().nullable().optional(),
   status: z.enum(["active", "deactive"]),
   description: z.string().optional(),
+  icon: z.enum([
+    "single room",
+    "double room",
+    "two bed room",
+    "deluxe room",
+    "executive room",
+    "master room",
+    "conference hall",
+    "other"
+  ]),
 });
 
 // ✅ Default Form Values
 const defaultValues: FormData = {
   name: "",
+  icon: "single room",
   photo: null,
   photo_url: null,
   status: 'active',
@@ -94,6 +104,16 @@ const FeatureForm: React.FC<{
       { label: "Deactive", value: "deactive" },
     ];
 
+    const iconOptions = [
+      { label: "Single Room", value: "single room" },
+      { label: "Double Room", value: "double room" },
+      { label: "Two Bed Room", value: "two bed room" },
+      { label: "Deluxe Room", value: "deluxe room" },
+      { label: "Executive Room", value: "executive room" },
+      { label: "Master Room", value: "master room" },
+      { label: "Conference Hall", value: "conference hall" },
+      { label: "Other", value: "other" },
+    ];
 
 
     // Custom template for displaying icons in dropdown
@@ -158,6 +178,29 @@ const FeatureForm: React.FC<{
                 )}
               />
             </div>
+            {/* Icon Dropdown */}
+            <div className="col-span-3">
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">
+                Icon
+              </label>
+              <Controller
+                name="icon"
+                control={control}
+                render={({ field }) => (
+                  <Dropdown
+                    value={field.value}
+                    options={iconOptions}
+                    onChange={(e) => field.onChange(e.value)}
+                    placeholder="Select icon"
+                    className="w-full"
+                  />
+                )}
+              />
+              {errors.icon && (
+                <small className="p-error">{errors?.icon?.message?.toString()}</small>
+              )}
+            </div>
+
 
 
 

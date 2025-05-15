@@ -39,7 +39,7 @@ const RoomCategoriesSection: React.FC = () => {
 
     useHandleQueryError(getRoomCategoriesQuery);
 
-    const roomCategories = getRoomCategoriesQuery?.data?.data || [];
+    const roomCategories = getRoomCategoriesQuery?.data?.data?.data || [];
 
     // Fallback data in case API call fails or returns empty
     const fallbackCategories: RoomCategoryProps[] = [

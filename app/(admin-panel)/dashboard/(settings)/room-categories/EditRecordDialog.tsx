@@ -57,6 +57,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
         formData.append("_method", "PUT");
 
         formData.append("name", data.name);
+        formData.append("icon", data.icon);
         formData.append("description", data.description || "");
         formData.append("status", data.status || "");
 
