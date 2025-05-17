@@ -129,9 +129,14 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
             attachment => attachment.type.toLowerCase() === 'photo'
         );
 
-        return photoAttachment
-            ? `${process.env.NEXT_PUBLIC_BASE_URL}${photoAttachment.file_path}`
-            : "https://via.placeholder.com/600x400?text=No+Image";
+        // return photoAttachment
+        //     ? `${process.env.NEXT_PUBLIC_BASE_URL}${photoAttachment.file_path}`
+        //     : "https://via.placeholder.com/600x400?text=No+Image";
+
+        // Default image if photo_url is not available
+        const defaultPhoto = room?.photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${room?.photo_url}` : "/assets/img/room-1.jpg";
+
+        return defaultPhoto
     };
 
     // Get first 3 room features

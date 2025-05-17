@@ -31,7 +31,7 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
     };
 
     // Default image if photo_url is not available
-    const imageUrl = photo_url || "/assets/img/room-1.jpg";
+    const imageUrl = photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${photo_url}` : "/assets/img/room-1.jpg";
 
     return (
         <div className="bg-white dark:bg-gray-800 shadow-sm overflow-hidden rounded-lg">
@@ -42,7 +42,7 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
                     className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
                 />
                 <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
-                    ${price}/night
+                    UGX {price}/night
                 </div>
                 {status && (
                     <div className={`absolute top-4 right-4 py-1 px-3 font-medium ${status.toLowerCase() === 'active' ? 'bg-green-500' : 'bg-red-500'

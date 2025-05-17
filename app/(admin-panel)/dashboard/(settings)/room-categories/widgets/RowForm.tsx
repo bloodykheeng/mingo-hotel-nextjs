@@ -12,6 +12,7 @@ import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { InputTextarea } from "primereact/inputtextarea";
+import { InputNumber } from "primereact/inputnumber";
 
 
 import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUploadPicker";
@@ -19,6 +20,7 @@ import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUp
 // ✅ Define Form Schema
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
+  price: z.number().min(0, "Price must be a positive number"),
   photo: z.object({
     file: z.instanceof(File).optional(),
     previewUrl: z.string(),
@@ -42,6 +44,7 @@ const formSchema = z.object({
 // ✅ Default Form Values
 const defaultValues: FormData = {
   name: "",
+  price: 0,
   icon: "single room",
   photo: null,
   photo_url: null,
@@ -199,6 +202,28 @@ const FeatureForm: React.FC<{
               {errors.icon && (
                 <small className="p-error">{errors?.icon?.message?.toString()}</small>
               )}
+            </div>
+
+            {/* Price */}
+            <div className="col-span-1">
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Price</label>
+              <Controller
+                name="price"
+                control={control}
+                render={({ field }) => (
+                  <InputNumber
+                    inputId={field.name}
+                    value={field.value}
+                    onValueChange={(e) => field.onChange(e.value)}
+                    mode="currency"
+                    currency="UGX"
+                    locale="en-UG"
+                    className={`w-full ${errors.price ? "p-invalid" : ""}`}
+                  />
+
+                )}
+              />
+              {errors.price && <small className="p-error">{errors.price.message}</small>}
             </div>
 
 
