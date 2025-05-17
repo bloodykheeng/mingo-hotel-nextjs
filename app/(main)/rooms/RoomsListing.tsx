@@ -83,6 +83,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
     interface Room {
         id: number;
         name: string;
+        photo_url?: string;
         description: string;
         room_type: string;
         status: string;
