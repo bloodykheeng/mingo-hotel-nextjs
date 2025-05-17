@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useState, JSX } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
@@ -10,6 +10,7 @@ import { DataTablePageEvent } from 'primereact/datatable';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
+import { Image } from 'primereact/image';
 
 
 import { useRouter } from 'nextjs-toploader/app';
@@ -35,6 +36,18 @@ import NoDataLottie from "@/assets/lottie-files/nodata.json";
 
 import InlineExpandableText from "@/components/helpers/InlineExpandableText"
 import moment from 'moment'
+
+import {
+    FaBed,
+    FaCouch,
+    FaHotel,
+    FaDoorOpen,
+    FaStar,
+    FaUsers,
+    FaLayerGroup,
+} from "react-icons/fa";
+import { MdMeetingRoom } from "react-icons/md";
+import { BsQuestionCircle } from "react-icons/bs";
 
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useQuery } from "@tanstack/react-query";
@@ -116,6 +129,17 @@ function RecordsList() {
     };
 
 
+    const roomTypeIconsMap: Record<string, JSX.Element> = {
+        "single room": <FaBed className="text-xl" />,
+        "double room": <FaBed className="text-xl" />,
+        "two bed room": <FaLayerGroup className="text-xl" />,
+        "deluxe room": <FaStar className="text-xl" />,
+        "executive room": <FaCouch className="text-xl" />,
+        "master room": <FaHotel className="text-xl" />,
+        "conference hall": <MdMeetingRoom className="text-xl" />,
+        other: <BsQuestionCircle className="text-xl" />,
+    };
+
     // FormData reference from earlier:
     // type FormData = {
     //   name: string;
@@ -160,34 +184,30 @@ function RecordsList() {
             header: "Name",
             body: (rowData) => <span className="font-semibold">{rowData.name}</span>
         },
+
         {
             field: "icon",
             header: "Icon",
-            body: (rowData) => (
-                <span>
-                    {rowData.icon ? (
-                        <i className={`${rowData.icon} text-xl mr-2`}></i>
-                    ) : (
-                        "No Icon"
-                    )}
-                </span>
-            )
+            body: (rowData) => {
+                const icon = rowData?.icon ? roomTypeIconsMap[rowData.icon.toLowerCase()] : "No Icon";
+                return <span>{icon}</span>;
+            },
         },
         {
             field: "photo_url",
             header: "Photo",
-            type: "image",
             body: (rowData) => (
-                <div className="flex justify-center">
+                <div className="flex justify-center items-center">
                     {rowData.photo_url ? (
-                        <img
+                        <Image
                             src={`${process.env.NEXT_PUBLIC_BASE_URL}${rowData.photo_url}`}
-                            alt={rowData.name}
-                            className="h-10 w-10 object-cover rounded-full"
+                            alt={rowData.name || "Photo"}
+                            imageClassName="h-10 w-10 object-cover rounded-full"
+                            preview
                         />
                     ) : (
                         <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
-                            <i className="pi pi-image text-gray-500"></i>
+                            <i className="pi pi-image text-gray-500 text-lg"></i>
                         </div>
                     )}
                 </div>

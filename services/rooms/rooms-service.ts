@@ -35,3 +35,8 @@ export async function postToBulkDestroyRooms(data: any) {
   });
   return response;
 }
+
+export async function postToCheckRoomAvailability(data: any) {
+  const response = await axiosAPI.post(`check-room-availability`, data);
+  return response;
+}

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Carousel from './Carousel'
-import BookingForm from './BookingForm';
+import CreateBooking from './room-booking/CreateBooking';
 import AboutUs from './AboutUs';
 import ServicesSection from './ServicesSection';
 import RoomsSection from './RoomsSection'
@@ -20,7 +20,7 @@ function HomePage() {
         <div className="bg-gray-50 dark:bg-gray-900">
             <Carousel />
 
-            <BookingForm />
+            <CreateBooking />
 
             <AboutUs
                 hotelName="Mingo Hotel Kayunga"

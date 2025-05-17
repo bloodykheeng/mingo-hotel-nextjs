@@ -26,7 +26,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getAllRoomCategorys } from "@/services/room-categories/room-categories-service";
 
-
+import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUploadPicker";
 import FileUploaderPicker from "@/components/admin-panel/fileUploadPicker/FileUploadPicker";
 
 /**
@@ -62,6 +62,12 @@ const formSchema = z.object({
   number_of_adults: z.number().min(1, "At least 1 adult required"),
   number_of_children: z.number().min(0, "Number of children cannot be negative"),
   features: z.array(z.object({ id: z.number(), name: z.string() }).passthrough()).optional(),
+  photo: z.object({
+    file: z.instanceof(File).optional(),
+    previewUrl: z.string(),
+    status: z.enum(["new", "existing"])
+  }).nullable().optional(),
+  photo_url: z.string().nullable().optional(),
   attachments: z
     .array(
       z.object({
@@ -100,6 +106,7 @@ const defaultValues: FormData = {
   booked: false,
   number_of_adults: 1,
   number_of_children: 0,
+  photo_url: null,
   features: [],
   attachments: [],
   room_attachments: []
@@ -140,6 +147,11 @@ const RoomForm: React.FC<{
     const features = watch("features");
     const attachments = watch("attachments") || [];
     const selectedRoomCategory = watch("room_category");
+
+    // Get current photo from form state
+    const photo = watch("photo");
+    // Get existing photo path
+    const existingPhoto = watch("photo_url");
 
     // Features dropdown state
     const [dropdownFeatures, setDropdownFeatures] = useState([]);
@@ -484,6 +496,16 @@ const RoomForm: React.FC<{
               />
               {errors.features && <small className="p-error">{errors?.features?.message?.toString()}</small>}
               {featuresQuery?.isLoading && <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />}
+            </div>
+
+            {/* Photo Upload */}
+            <div className="sm:col-span-3 md:col-span-3 lg:col-span-3">
+              <PhotoUploadPicker
+                setValue={setValue}
+                photo={photo}
+                existingPhoto={existingPhoto}
+                fieldName="photo"
+              />
             </div>
 
             {/* File Upload */}

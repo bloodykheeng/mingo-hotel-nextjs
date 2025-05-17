@@ -28,9 +28,26 @@ import { Rating } from "primereact/rating";
 
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
-function RoomsListing() {
+interface RoomsListingProps {
+    checkIn?: string;
+    checkOut?: string;
+    adults?: string;
+    children?: string;
+}
+
+function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps) {
     const router = useRouter();
-    const [filters, setFilters] = useState<FilterFormValues>(defaultFilterValues);
+
+    const searchParamsAsDefaults: Partial<FilterFormValues> = {
+        number_of_adults: adults ? parseInt(adults) : undefined,
+        number_of_children: children ? parseInt(children) : undefined,
+        // if you want to include date filters, add them to FilterFormValues and defaultFilterValues too
+    };
+
+    const [filters, setFilters] = useState<FilterFormValues>({
+        ...defaultFilterValues,
+        ...searchParamsAsDefaults,
+    });
 
     // Fetch Rooms data using useInfiniteQuery with filters
     const {

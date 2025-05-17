@@ -59,6 +59,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
 
         // Basic fields
         formData.append("name", data?.name);
+        formData.append("room_category_id", data?.room_category?.id);
         formData.append("description", data?.description);
         formData.append("status", data?.status);
         formData.append("room_type", data?.room_type);
@@ -70,6 +71,24 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
 
         // Features array as JSON
         formData.append("features", JSON.stringify(data?.features ?? []));
+
+        // Handle photo upload
+        if (data.photo) {
+            const photoStatus = data?.photo?.status;
+
+            // For new photos, append the file
+            if (photoStatus === "new" && data?.photo?.file) {
+                formData.append("photo[file_path]", data.photo.file);
+                formData.append("photo[type]", "image");
+                formData.append("photo[status]", "new");
+            }
+            // // For existing photos, append the existing path info
+            // else if (photoStatus === "existing") {
+            //     formData.append("photo[file_path]", data.logo_url || "");
+            //     formData.append("photo[type]", "image");
+            //     formData.append("photo[status]", "existing");
+            // }
+        }
 
         // Append attachments with their captions
         if (data.attachments && data.attachments.length > 0) {
@@ -130,6 +149,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
     };
 
     const features = initialData?.room_features?.map((item: any) => item?.feature)
+    console.log("🚀 ~dfesfse initialData:", initialData)
 
     return (
         <Dialog

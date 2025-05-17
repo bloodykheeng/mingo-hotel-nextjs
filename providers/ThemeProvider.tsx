@@ -41,22 +41,22 @@ export function ThemeProvider({
         // Save to cookies
         Cookies.set('theme', themeValue, { expires: 365 });
 
-        // Dynamically load Highcharts theme
-        const existingLink = document.getElementById('highcharts-theme') as HTMLLinkElement | null;
+        // // Dynamically load Highcharts theme
+        // const existingLink = document.getElementById('highcharts-theme') as HTMLLinkElement | null;
 
-        if (isDark) {
-            if (!existingLink) {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.id = 'highcharts-theme';
-                link.href = '/highcharts/dark-unica.css';
-                document.head.appendChild(link);
-            }
-        } else {
-            if (existingLink) {
-                existingLink.remove();
-            }
-        }
+        // if (isDark) {
+        //     if (!existingLink) {
+        //         const link = document.createElement('link');
+        //         link.rel = 'stylesheet';
+        //         link.id = 'highcharts-theme';
+        //         link.href = '/highcharts/dark-unica.css';
+        //         document.head.appendChild(link);
+        //     }
+        // } else {
+        //     if (existingLink) {
+        //         existingLink.remove();
+        //     }
+        // }
 
     };
 

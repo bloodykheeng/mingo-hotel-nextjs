@@ -5,6 +5,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
 import { Accordion, AccordionTab } from "primereact/accordion";
+import { Image } from "primereact/image"
 import AttachementsFiles from "@/components/admin-panel/attachements/AttachementsFiles"
 
 import moment from "moment";
@@ -66,12 +67,13 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
             maximizable
         >
             <div className="flex flex-col items-center p-6">
-                {selectedRecord?.logo_url ? (
-                    <Avatar
-                        image={`${process.env.NEXT_PUBLIC_BASE_URL}${selectedRecord.logo_url}`}
-                        size="xlarge"
-                        shape="circle"
-                        className="mb-4"
+                {selectedRecord?.photo_url ? (
+
+                    <Image
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectedRecord.photo_url}`}
+                        alt={selectedRecord?.name}
+                        className="h-10 w-10 object-cover rounded-full"
+                        preview
                     />
                 ) : (
                     <Avatar

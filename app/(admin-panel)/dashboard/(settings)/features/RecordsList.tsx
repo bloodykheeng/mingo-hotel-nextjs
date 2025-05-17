@@ -10,6 +10,7 @@ import { DataTablePageEvent } from 'primereact/datatable';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
+import { Image } from 'primereact/image';
 
 
 import { useRouter } from 'nextjs-toploader/app';
@@ -47,6 +48,21 @@ import DeleteRecordsDialog from "./DeleteRecordsDialog";
 import RecordDetailsDialog from "./RecordDetailsDialog"
 import CreateRecordDialog from "./CreateRecordDialog"
 import EditRecordDialog from "./EditRecordDialog"
+
+import {
+    FaWifi,
+    FaTv,
+    FaBed,
+    FaCoffee,
+    FaUtensils,
+    FaConciergeBell,
+    FaBath,
+    FaSwimmingPool,
+    FaParking,
+    FaRProject,
+    FaVolumeUp,
+    FaSpa,
+} from "react-icons/fa";
 
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -116,6 +132,27 @@ function RecordsList() {
     };
 
 
+    // Define a type for the icon values
+    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' | 'massage';
+
+
+    // Use the same type for your iconMap
+    const iconMap: Record<IconKey, React.ReactNode> = {
+        wifi: <FaWifi />,
+        tv: <FaTv />,
+        bed: <FaBed />,
+        breakfast: <FaCoffee />,
+        dinner: <FaUtensils />,
+        buffet: <FaConciergeBell />,
+        bathroom: <FaBath />,
+        "swimming pool": <FaSwimmingPool />,
+        parking: <FaParking />,
+        projector: <FaRProject />,
+        speakers: <FaVolumeUp />,
+        massage: <FaSpa />,
+    };
+
     // FormData reference from earlier:
     // type FormData = {
     //   name: string;
@@ -165,11 +202,7 @@ function RecordsList() {
             header: "Icon",
             body: (rowData) => (
                 <span>
-                    {rowData.icon ? (
-                        <i className={`${rowData.icon} text-xl mr-2`}></i>
-                    ) : (
-                        "No Icon"
-                    )}
+                    {rowData?.icon ? iconMap[rowData?.icon.toLowerCase() as IconKey] : "No Icon"}
                 </span>
             )
         },
@@ -180,17 +213,22 @@ function RecordsList() {
             body: (rowData) => (
                 <div className="flex justify-center">
                     {rowData.photo_url ? (
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${rowData.photo_url}`}
-                            alt={rowData.name}
-                            className="h-10 w-10 object-cover rounded-full"
-                        />
+                        <>
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}${rowData.photo_url}`}
+                                alt={rowData.name}
+                                className="h-10 w-10 object-cover rounded-full"
+                                preview
+                            />
+                        </>
+
                     ) : (
                         <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
                             <i className="pi pi-image text-gray-500"></i>
-                        </div>
-                    )}
-                </div>
+                        </div >
+                    )
+                    }
+                </div >
             )
         },
         {

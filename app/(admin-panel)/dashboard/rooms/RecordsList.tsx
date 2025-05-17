@@ -10,6 +10,7 @@ import { DataTablePageEvent } from 'primereact/datatable';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
+import { Image } from 'primereact/image';
 
 
 import { useRouter } from 'nextjs-toploader/app';
@@ -130,6 +131,7 @@ function RecordsList() {
     type ColDefn = {
         id: number;
         name: string;
+        photo_url?: string | null;
         description: string;
         price: number;
         stars: number;
@@ -170,7 +172,33 @@ function RecordsList() {
         {
             field: "description",
             header: "Description",
-            body: (rowData) => <span className="text-gray-600">{rowData.description}</span>
+            body: (rowData) => <span className="text-gray-600">{rowData.description}</span>,
+            visible: false
+        },
+        {
+            field: "photo_url",
+            header: "Photo",
+            type: "image",
+            body: (rowData) => (
+                <div className="flex justify-center">
+                    {rowData.photo_url ? (
+                        <>
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}${rowData.photo_url}`}
+                                alt={rowData.name}
+                                className="h-10 w-10 object-cover rounded-full"
+                                preview
+                            />
+                        </>
+
+                    ) : (
+                        <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i className="pi pi-image text-gray-500"></i>
+                        </div >
+                    )
+                    }
+                </div >
+            )
         },
         {
             field: "price",

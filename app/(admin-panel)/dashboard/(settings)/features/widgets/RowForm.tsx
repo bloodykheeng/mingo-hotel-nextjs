@@ -32,7 +32,7 @@ import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUp
 
 // ✅ Define Form Schema
 const formSchema = z.object({
-  name: z.string().min(3, "Name must be at least 3 characters"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
   icon: z.string().nullable().optional(),
   photo: z.object({
     file: z.instanceof(File).optional(),

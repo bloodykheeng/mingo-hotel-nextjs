@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import { useRouter } from "nextjs-toploader/app";
+import { usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePrimeReactToast } from "@/providers/PrimeReactToastProvider";
 
@@ -19,6 +20,7 @@ interface ApiErrorResponse {
 
 const useHandleMutationError = (error: ApiErrorResponse | Error | null) => {
   const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
   const primeReactToast = usePrimeReactToast();
 
@@ -62,7 +64,9 @@ const useHandleMutationError = (error: ApiErrorResponse | Error | null) => {
           Cookies.remove("refresh_token");
           Cookies.remove("profile");
 
-          router.push("/");
+          if (pathname?.startsWith("/dashboard")) {
+            router.push("/");
+          }
         } else {
           const additionalError = (memoizedError as ApiErrorResponse)?.response
             ?.data?.error

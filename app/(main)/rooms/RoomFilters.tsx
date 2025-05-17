@@ -132,84 +132,6 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
                     />
                 </div>
 
-                {/* Stars */}
-                <div className="col-span-1">
-                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Stars</label>
-                    <Controller
-                        name="stars"
-                        control={control}
-                        render={({ field }) => (
-                            <Rating
-                                value={field.value}
-                                onChange={(e) => field.onChange(e.value)}
-                                cancel={false}
-                                className="flex"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Booked Status */}
-                <div className="col-span-1">
-                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Include Booked Rooms</label>
-                    <Controller
-                        name="booked"
-                        control={control}
-                        render={({ field }) => (
-                            <InputSwitch
-                                checked={!!field.value}
-                                onChange={(e) => field.onChange(e.value)}
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Number of Adults */}
-                <div className="col-span-1">
-                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Adults</label>
-                    <Controller
-                        name="number_of_adults"
-                        control={control}
-                        render={({ field }) => (
-                            <InputNumber
-                                value={field.value}
-                                onValueChange={(e) => field.onChange(e.value)}
-                                min={0}
-                                showButtons
-                                buttonLayout="horizontal"
-                                decrementButtonClassName="p-button-danger"
-                                incrementButtonClassName="p-button-success"
-                                incrementButtonIcon="pi pi-plus"
-                                decrementButtonIcon="pi pi-minus"
-                                className="w-full"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Number of Children */}
-                <div className="col-span-1">
-                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Children</label>
-                    <Controller
-                        name="number_of_children"
-                        control={control}
-                        render={({ field }) => (
-                            <InputNumber
-                                value={field.value}
-                                onValueChange={(e) => field.onChange(e.value)}
-                                min={0}
-                                showButtons
-                                buttonLayout="horizontal"
-                                decrementButtonClassName="p-button-danger"
-                                incrementButtonClassName="p-button-success"
-                                incrementButtonIcon="pi pi-plus"
-                                decrementButtonIcon="pi pi-minus"
-                                className="w-full"
-                            />
-                        )}
-                    />
-                </div>
-
                 {/* Room Features */}
                 <div className="col-span-1">
                     <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">
@@ -295,6 +217,86 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
                         </button>
                     </div>
                 </div>
+
+                {/* Stars */}
+                <div className="col-span-1">
+                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Stars</label>
+                    <Controller
+                        name="stars"
+                        control={control}
+                        render={({ field }) => (
+                            <Rating
+                                value={field.value}
+                                onChange={(e) => field.onChange(e.value)}
+                                cancel={false}
+                                className="flex"
+                            />
+                        )}
+                    />
+                </div>
+
+                {/* Booked Status */}
+                <div className="col-span-1">
+                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Include Booked Rooms</label>
+                    <Controller
+                        name="booked"
+                        control={control}
+                        render={({ field }) => (
+                            <InputSwitch
+                                checked={!!field.value}
+                                onChange={(e) => field.onChange(e.value)}
+                            />
+                        )}
+                    />
+                </div>
+
+                {/* Number of Adults */}
+                <div className="col-span-1">
+                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Adults</label>
+                    <Controller
+                        name="number_of_adults"
+                        control={control}
+                        render={({ field }) => (
+                            <InputNumber
+                                value={field.value}
+                                onValueChange={(e) => field.onChange(e.value)}
+                                min={0}
+                                showButtons
+                                buttonLayout="horizontal"
+                                decrementButtonClassName="p-button-danger"
+                                incrementButtonClassName="p-button-success"
+                                incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus"
+                                className="w-full"
+                            />
+                        )}
+                    />
+                </div>
+
+                {/* Number of Children */}
+                <div className="col-span-1">
+                    <label className="block text-gray-700 dark:text-gray-200 font-medium mb-1">Children</label>
+                    <Controller
+                        name="number_of_children"
+                        control={control}
+                        render={({ field }) => (
+                            <InputNumber
+                                value={field.value}
+                                onValueChange={(e) => field.onChange(e.value)}
+                                min={0}
+                                showButtons
+                                buttonLayout="horizontal"
+                                decrementButtonClassName="p-button-danger"
+                                incrementButtonClassName="p-button-success"
+                                incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus"
+                                className="w-full"
+                            />
+                        )}
+                    />
+                </div>
+
+
 
                 {/* Submit and Reset Buttons */}
                 <div className="col-span-1 md:col-span-2 lg:col-span-3 mt-4 flex gap-2 justify-end">

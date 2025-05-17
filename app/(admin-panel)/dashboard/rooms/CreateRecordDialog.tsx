@@ -59,6 +59,7 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
 
         // Basic fields
         formData.append("name", data?.name);
+        formData.append("room_category_id", data?.room_category?.id);
         formData.append("description", data?.description);
         formData.append("status", data?.status);
         formData.append("room_type", data?.room_type);
@@ -70,6 +71,15 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
 
         // Features array as JSON
         formData.append("features", JSON.stringify(data?.features ?? []));
+
+        // Handle photo upload
+        if (data?.photo) {
+            // For new photos, append the file
+            if (data?.photo?.status === "new" && data?.photo?.file) {
+                formData.append("photo[file_path]", data?.photo?.file);
+                formData.append("photo[type]", "image");
+            }
+        }
 
 
         // Append attachments with their captions
