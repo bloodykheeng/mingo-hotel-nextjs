@@ -1,90 +1,123 @@
-import React from 'react';
-import { Card } from 'primereact/card';
+'use client'
 
-// import { Button } from 'primereact/button';
+import React from "react";
+import Image from "next/image";
 
-// import Dropdown from "./dropdown"
-
-const AboutUsPage = () => {
+const AboutUsPage: React.FC = () => {
     return (
-        <>
+        <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+            {/* Hero Section */}
+            <div className="relative w-full h-64 md:h-96 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/70 to-amber-500/70 z-10"></div>
+                <div className="w-full h-full bg-[url('/images/hotel-facade.jpg')] bg-cover bg-center"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-20">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-2">Mingo Hotel Kayunga</h1>
+                    <p className="text-xl md:text-2xl">Your Home Away From Home</p>
+                </div>
+            </div>
 
-            <Card>
-                <div className="text-black dark:text-white">
-                    <h1 className="text-3xl font-bold mb-4">About the Contract Monitoring System (CMS)</h1>
-                    <p className="mb-6">
-                        The Contract Monitoring System (CMS) is an online platform that enables Civil Society Organizations (CSOs) to monitor ongoing government projects and contracts.
-                        It enhances transparency, accountability, and service delivery by providing real-time tracking of government projects.
+            {/* Welcome Section */}
+            <div className="container mx-auto px-4 py-12">
+                <div className="flex flex-col items-center mb-12">
+                    <h2 className="text-3xl font-bold mb-6 text-center">Welcome to Mingo Hotel Kayunga Ltd</h2>
+                    <div className="w-24 h-1 bg-blue-600 mb-8"></div>
+                    <p className="text-lg text-center max-w-3xl">
+                        Nestled in the heart of Kayunga, Uganda, our exquisite 2-star hotel seamlessly combines
+                        modern amenities with a touch of local charm. Whether you're a weary traveler seeking
+                        respite or an explorer on a quest for new horizons, Mingo Hotel Kayunga Ltd promises
+                        an unforgettable stay.
                     </p>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">Who Can Use CMS?</h2>
-                        <ul className="list-disc ml-6">
-                            <li>Civil Society Organizations (CSOs) with a Memorandum of Understanding with the PPDA Authority</li>
-                            <li>The Public Procurement and Disposal of Public Assets Authority (PPDA)</li>
-                            <li>Anti-Corruption Agencies</li>
-                        </ul>
-                    </section>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">How CMS Works</h2>
-                        <p>
-                            CMS provides a structured way to monitor government contracts, report findings, and take appropriate action. CSOs play a crucial role in gathering evidence, reporting issues, and ensuring accountability in project execution.
-                        </p>
-                        <ul className="list-disc ml-6 mt-2">
-                            <li><strong>Monitors:</strong> Community focal persons who upload reports on ongoing projects.</li>
-                            <li><strong>Verifiers:</strong> Supervisors who conduct quality assurance of the reports.</li>
-                            <li><strong>Approvers:</strong> Senior CSO officials who determine the appropriate action to be taken.</li>
-                        </ul>
-                    </section>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">Key Benefits of CMS</h2>
-                        <ul className="list-disc ml-6">
-                            <li>Real-time monitoring of government projects to ensure value for money.</li>
-                            <li>Enhanced accountability in the contract management process.</li>
-                            <li>Citizen involvement in monitoring projects and services.</li>
-                            <li>Leveraging technology for efficient contract tracking and reporting.</li>
-                        </ul>
-                    </section>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">CMS Features</h2>
-                        <ul className="list-disc ml-6">
-                            <li>Mobile application for evidence-based reporting.</li>
-                            <li>Photo and video capture for documentation.</li>
-                            <li>Dashboard with detailed reports and analytics.</li>
-                            <li>High-security access with verification processes.</li>
-                        </ul>
-                    </section>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">Accessing CMS</h2>
-                        <p className="mb-2">
-                            The CMS is accessible via:
-                        </p>
-                        <ul className="list-disc ml-6">
-                            <li>The <strong>CMS Mobile App</strong> available on the Google Play Store.</li>
-                            <li><strong>Web-based platform</strong> for easy access to reports and monitoring tools.</li>
-                        </ul>
-                    </section>
-
-                    <section className="mb-6">
-                        <h2 className="text-2xl font-semibold mb-2">Support & Contact</h2>
-                        <p>
-                            For inquiries or assistance, contact the CMS Support Team:
-                        </p>
-                        <ul className="list-disc ml-6 mt-2">
-                            <li>Email: <a href="mailto:compliance@ppda.go.ug" className="text-blue-500">compliance@ppda.go.ug</a></li>
-                            <li>Helpline: <strong>0414311163</strong></li>
-                        </ul>
-                    </section>
                 </div>
 
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                        <div className="text-blue-600 text-3xl mb-4">
+                            <i className="pi pi-map-marker"></i>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3">Prime Location</h3>
+                        <p>
+                            Situated just 44 km away from the renowned Mehta Golf Club, our hotel boasts a prime
+                            location that allows guests to bask in the beauty of Uganda's landscapes.
+                        </p>
+                    </div>
 
-            </Card>
+                    <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                        <div className="text-blue-600 text-3xl mb-4">
+                            <i className="pi pi-home"></i>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3">Comfortable Rooms</h3>
+                        <p>
+                            Step into your room and you'll be welcomed by a flat-screen TV and, in select rooms,
+                            a charming balcony that offers panoramic views of the surroundings.
+                        </p>
+                    </div>
 
-        </>
+                    <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                        <div className="text-blue-600 text-3xl mb-4">
+                            <i className="pi pi-clock"></i>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3">24/7 Service</h3>
+                        <p>
+                            Our 24-hour front desk ensures your needs are met at any time, while complimentary
+                            private parking adds convenience to your stay.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Experience Section */}
+                <div className="flex flex-col md:flex-row items-center gap-10 mb-16">
+                    <div className="md:w-1/2">
+                        <h2 className="text-3xl font-bold mb-6">A Culinary Journey to Remember</h2>
+                        <p className="mb-4">
+                            The gastronomic experience at Mingo Hotel Kayunga Ltd is a journey that titillates your
+                            taste buds. Indulge in delectable dishes at the hotel's restaurant, where every bite is
+                            a fusion of flavors that showcase the region's culinary prowess.
+                        </p>
+                        <p>
+                            Whether you're a connoisseur of local delicacies or have an affinity for international
+                            cuisines, our diverse menu caters to every palate.
+                        </p>
+                    </div>
+                    <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
+                        <div className="w-full h-full bg-[url('/images/hotel-restaurant.jpg')] bg-cover bg-center"></div>
+                    </div>
+                </div>
+
+                {/* Explore Section */}
+                <div className="flex flex-col md:flex-row-reverse items-center gap-10 mb-16">
+                    <div className="md:w-1/2">
+                        <h2 className="text-3xl font-bold mb-6">Beyond the Hotel: Explore Kayunga</h2>
+                        <p className="mb-4">
+                            Mingo Hotel Kayunga Ltd serves as a gateway to a world of exploration. The iconic Source
+                            of the Nile – Speke Monument is just 47 km away, offering a chance to witness the majesty
+                            of one of Uganda's natural wonders.
+                        </p>
+                        <p>
+                            For golf enthusiasts, Jinja Golf Course, a mere 49 km from the hotel, presents an
+                            opportunity to indulge in a leisurely game amidst breathtaking landscapes.
+                        </p>
+                    </div>
+                    <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
+                        <div className="w-full h-full bg-[url('/images/kayunga-scenery.jpg')] bg-cover bg-center"></div>
+                    </div>
+                </div>
+
+                {/* History Section */}
+                <div className="text-center max-w-3xl mx-auto">
+                    <h2 className="text-3xl font-bold mb-6">Our History</h2>
+                    <div className="w-24 h-1 bg-blue-600 mb-8 mx-auto"></div>
+                    <p className="text-lg mb-6">
+                        Since its inception on November 5, 2022, Mingo Hotel Kayunga Ltd has been extending warm
+                        Ugandan hospitality to guests from around the world.
+                    </p>
+                    <p className="text-lg">
+                        The hotel's commitment to excellence and unwavering dedication to providing top-notch
+                        services has earned it a special place in the hearts of those who have experienced its charm.
+                    </p>
+                </div>
+            </div>
+        </div>
     );
 };
 

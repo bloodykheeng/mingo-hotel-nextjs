@@ -320,7 +320,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
             </div>
 
             {/* Newsletter and Footer Components */}
-            <Newsletter />
+            {/* <Newsletter /> */}
             <Footer />
         </div>
     );

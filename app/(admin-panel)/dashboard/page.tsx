@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 
 import { TabView, TabPanel } from "primereact/tabview";
 
+import StatisticsCards from "@/components/admin-panel/dashboard/statistics-cards/StatisticsCards"
 
 
 
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 export default function Dashboard() {
   return (
     <div className="p-4">
-      <h1>hello world</h1>
+      <StatisticsCards />
     </div>
   );
 }

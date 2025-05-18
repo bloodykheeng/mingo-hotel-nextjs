@@ -77,7 +77,7 @@ export const getMenuItems = (logggedInUser: any): MenuCategory[] => {
         {
           icon: <i className="pi pi-calendar" />, // calendar fits for bookings
           name: "Bookings",
-          path: "/dashboard/bookings"
+          path: "/dashboard/room-bookings"
         },
 
 
@@ -86,12 +86,12 @@ export const getMenuItems = (logggedInUser: any): MenuCategory[] => {
           name: "FAQs",
           path: "/dashboard/faqs"
         }] : []),
-        {
+        ...(systemAdminRoles.includes(logggedInUserRole) ? [{
           icon: <i className="pi pi-users" />,
           name: "Users",
           path: "/dashboard/users",
+        }] : []),
 
-        },
         ...(systemAdminRoles.includes(logggedInUserRole) ? [{
           icon: <i className="pi pi-cog" />,
           name: "Settings",

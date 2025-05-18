@@ -20,16 +20,18 @@ const testimonialsData: TestimonialItem[] = [
         name: "David Mutumba",
         profession: "Business Traveler",
         image: "/assets/img/testimonial-1.jpg",
-        testimonial: "Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos"
+        testimonial: "Mingo Hotel Kayunga exceeded my expectations. The rooms were clean, the staff was courteous, and the amenities catered perfectly to my business needs. I found the environment peaceful, and the Wi-Fi strong enough for all my work. I highly recommend it for professionals."
     },
     {
         id: 2,
         name: "Sarah Nalunga",
         profession: "Tourist",
         image: "/assets/img/testimonial-2.jpg",
-        testimonial: "Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos"
+        testimonial: "My stay at Mingo Hotel Kayunga was nothing short of amazing. From the warm welcome at the front desk to the delicious local meals at the restaurant, every detail was impressive. The location made it easy to visit nearby attractions. I’ll surely return again soon!"
     }
 ];
+
+
 
 const TestimonialsSection: React.FC = () => {
     const settings = {

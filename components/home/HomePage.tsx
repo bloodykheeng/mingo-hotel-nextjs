@@ -35,7 +35,7 @@ function HomePage() {
             <TestimonialsSection />
             <TeamStaffSection />
             {/* <NewsletterSection /> */}
-            <Newsletter />
+            {/* <Newsletter /> */}
             <Footer />
         </div>
     )

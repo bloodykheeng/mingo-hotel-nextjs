@@ -13,12 +13,11 @@ const routeGroups = {
   ],
 
   // Routes accessible by all authenticated users
-  authenticated: ["/dashboard", "/dashboard/users"],
+  authenticated: ["/dashboard", "/dashboard/rooms", "/dashboard/room-bookings"],
 
   // Routes accessible only by system admin
   systemAdminOnly: [
-    // "/dashboard/users",
-    "/dashboard/rooms",
+    "/dashboard/users",
     "/dashboard/features",
     "/dashboard/room-categories",
     "/dashboard/faqs",
