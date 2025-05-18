@@ -41,7 +41,7 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
                     alt={name}
                     className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
                 />
-                <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
+                {/* <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
                     UGX {price}/night
                 </div>
                 {status && (
@@ -49,12 +49,12 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
                         } text-white`}>
                         {status}
                     </div>
-                )}
+                )} */}
             </div>
 
             <div className="p-6">
                 <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{name}</h3>
-                <div className="flex mb-3">
+                {/* <div className="flex mb-3">
                     {Array.from({ length: 5 }).map((_, index) => (
                         <FaStar key={index} className="w-5 h-5 text-orange-500" />
                     ))}
@@ -69,7 +69,7 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
                         <FaDoorOpen className="w-5 h-5 text-orange-500 mr-2" />
                         Various Rooms
                     </div>
-                </div>
+                </div> */}
 
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
                     {description || "Luxurious room category with premium amenities and exceptional comfort."}

@@ -28,6 +28,8 @@ import { Rating } from "primereact/rating";
 
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
+import Link from 'next/link';
+
 interface RoomsListingProps {
     checkIn?: string;
     checkOut?: string;
@@ -37,6 +39,8 @@ interface RoomsListingProps {
 
 function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps) {
     const router = useRouter();
+
+    const [accordionActiveIndex, setAccordionActiveIndex] = useState<number | null>(null);
 
     const searchParamsAsDefaults: Partial<FilterFormValues> = {
         number_of_adults: adults ? parseInt(adults) : undefined,
@@ -63,12 +67,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
             page: pageParam,
             search: filters.search,
             paginate: true,
-            // room_type: filters.room_type,
-            // booked: filters.booked,
-            // stars: filters.stars,
-            // number_of_adults: filters.number_of_adults,
-            // number_of_children: filters.number_of_children,
-            // features: filters.features?.map(f => f.id) || []
+            ...filters
         }),
         getNextPageParam: (lastPage) => {
             const lastPageData = lastPage?.data?.data;
@@ -116,7 +115,11 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
 
     // Handle filter submission
     const handleFilterSubmit = (data: FilterFormValues) => {
+        console.log("🚀 ~ room filters handleFilterSubmit ~ data:", data)
         setFilters(data);
+
+        // Close the accordion after submission
+        setAccordionActiveIndex(null);
     };
 
     // Navigate to room details
@@ -153,7 +156,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
             <div className="relative h-96 w-full overflow-hidden">
                 {/* Background Image */}
                 <img
-                    src="/assets/img/carousel-1.jpg"
+                    src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
                     alt="Rooms Background"
                     className="absolute top-0 left-0 w-full h-full object-cover"
                 />
@@ -166,7 +169,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                 <div className="absolute top-0 left-0 w-full h-full z-20 flex flex-col justify-center items-center text-white">
                     <h1 className="text-5xl font-bold mb-4">Our Rooms</h1>
                     <div className="flex items-center space-x-2">
-                        <a href="/" className="hover:text-orange-500">HOME</a>
+                        <Link href="/" className="hover:text-orange-500">HOME</Link>
                         <span>/</span>
                         <span>ROOMS</span>
                     </div>
@@ -193,7 +196,12 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                         </div>
 
                         {/* Room Filters Component */}
-                        <Accordion multiple={false} className="mb-4">
+                        <Accordion
+                            multiple={false}
+                            className="mb-4"
+                            activeIndex={accordionActiveIndex}
+                            onTabChange={(e) => setAccordionActiveIndex(Array.isArray(e.index) ? e.index[0] : e.index)}
+                        >
                             <AccordionTab header="Room Filters">
                                 <RoomFilters
                                     onFilterSubmit={handleFilterSubmit}
@@ -221,10 +229,12 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                                                 className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
                                             />
                                             <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
-                                                ${room.price}/night
+
+                                                UGX {Number(room?.price).toLocaleString()}/night
+
                                             </div>
                                             {room.booked && (
-                                                <div className="absolute top-4 right-4 bg-red-500 text-white py-1 px-3 font-medium">
+                                                <div className="absolute top-4 right-4 bg-green-500 text-white py-1 px-3 font-medium">
                                                     Booked
                                                 </div>
                                             )}
@@ -277,6 +287,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                                                     VIEW DETAIL
                                                 </button>
                                                 <button
+                                                    onClick={() => handleViewDetails(room.id)}
                                                     className={`${room.booked ? 'bg-gray-500 cursor-not-allowed' : 'bg-gray-900 hover:bg-gray-800'} text-white px-6 py-2 inline-block transition duration-300 rounded`}
                                                     disabled={room.booked}
                                                 >

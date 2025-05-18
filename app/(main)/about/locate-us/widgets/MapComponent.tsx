@@ -74,6 +74,14 @@ const MapComponent: React.FC<MapComponentProps> = ({ location }) => {
                         <h3 className="font-bold text-lg">{location.name}</h3>
                         <p>Welcome to Mingo Hotel Kayunga Ltd</p>
                         <p>Your home away from home</p>
+                        <a
+                            href={`https://www.google.com/maps?q=${location.lat},${location.lng}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline mt-2 inline-block"
+                        >
+                            Open in Google Maps
+                        </a>
                     </div>
                 </Popup>
             </Marker>

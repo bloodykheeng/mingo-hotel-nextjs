@@ -35,9 +35,11 @@ const loginSchema = z.object({
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
+interface LoginPagePropTypes {
+    returnPath?: string
+}
 
-
-const LoginPage = () => {
+const LoginPage = ({ returnPath }: LoginPagePropTypes) => {
 
 
 
@@ -83,8 +85,22 @@ const LoginPage = () => {
             queryClient.invalidateQueries();
             queryClient.invalidateQueries({ queryKey: ["logged-in-user"] });
 
-            router.push('/')
 
+            // 🔁 Redirect back to original page or home
+            if (returnPath) {
+                const decoded = decodeURIComponent(returnPath);
+                console.log("🚀 ~ LoginPage ~ decoded:", decoded)
+                const pathname = new URL(decoded, window.location.origin).pathname;
+                console.log("🚀 ~ LoginPage ~ pathname:", pathname)
+
+                const allowedReturnPaths = ['/rooms/view/'];
+                if (allowedReturnPaths.includes(pathname)) {
+                    router.push(decoded);
+                    return;
+                }
+            }
+
+            router.push('/');
 
             // setShowOTPDialog(true);
         },

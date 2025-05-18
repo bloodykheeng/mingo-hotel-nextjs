@@ -11,16 +11,12 @@ export async function getRoomBookingsById(id: any) {
 }
 
 export async function postRoomBookings(data: any) {
-  const response = await axiosAPI.post(`room-bookings`, data, {
-    headers: { "Content-Type": "multipart/form-data" }
-  });
+  const response = await axiosAPI.post(`room-bookings`, data);
   return response;
 }
 
 export async function updateRoomBookings(id: any, data: any) {
-  const response = await axiosAPI.post(`room-bookings/${id}`, data, {
-    headers: { "Content-Type": "multipart/form-data" }
-  });
+  const response = await axiosAPI.put(`room-bookings/${id}`, data);
   return response;
 }
 
@@ -30,8 +26,6 @@ export async function deleteRoomBookingById(id: any) {
 }
 
 export async function postToBulkDestroyRoomBookings(data: any) {
-  const response = await axiosAPI.post(`bulk-destroy-room-bookings`, data, {
-    headers: { "Content-Type": "multipart/form-data" }
-  });
+  const response = await axiosAPI.post(`bulk-destroy-room-bookings`, data);
   return response;
 }

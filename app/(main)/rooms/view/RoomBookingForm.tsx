@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,7 +8,9 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
+import moment from "moment";
 // ✅ Form Validation Schema
 const bookingSchema = z.object({
     check_in: z.date({ required_error: "Check-in is required" }),
@@ -33,9 +35,11 @@ const defaultValues: FormData = {
 const RoomBookingForm: React.FC<{
     handleFormSubmit: (FormData: FormData | null) => any,
     formMutation: any,
+    room: any
 }> = ({
     handleFormSubmit,
     formMutation,
+    room
 }) => {
         const {
             control,
@@ -46,8 +50,26 @@ const RoomBookingForm: React.FC<{
             resolver: zodResolver(bookingSchema),
         });
 
+        const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+        const [pendingData, setPendingData] = useState<FormData | null>(null);
+
+        const onSubmit = (data: FormData) => {
+            setPendingData(data);
+            setShowConfirmDialog(true);
+        };
+
+        const onConfirmSubmit = (e: any) => {
+            e.preventDefault();
+            handleFormSubmit(pendingData);
+            setShowConfirmDialog(false);
+        };
+
+        const onCancelSubmit = () => {
+            setShowConfirmDialog(false);
+        };
+
         return (
-            <form onSubmit={handleSubmit(handleFormSubmit)} className="p-4 space-y-4 max-w-xl mx-auto">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4 max-w-xl mx-auto">
 
                 {/* Check-in */}
                 <div>
@@ -57,11 +79,14 @@ const RoomBookingForm: React.FC<{
                         control={control}
                         render={({ field }) => (
                             <Calendar
-                                value={field.value}
+                                value={field.value ? moment(field.value).toDate() : null}
                                 onChange={(e) => field.onChange(e.value)}
-                                showTime
-                                showIcon
                                 className="w-full"
+                                minDate={new Date()}
+                                showIcon
+                                showTime
+                                hourFormat="12"
+                                showButtonBar
                             />
                         )}
                     />
@@ -76,11 +101,14 @@ const RoomBookingForm: React.FC<{
                         control={control}
                         render={({ field }) => (
                             <Calendar
-                                value={field.value}
+                                value={field.value ? moment(field.value).toDate() : null}
                                 onChange={(e) => field.onChange(e.value)}
-                                showTime
-                                showIcon
                                 className="w-full"
+                                minDate={new Date()}
+                                showIcon
+                                showTime
+                                hourFormat="12"
+                                showButtonBar
                             />
                         )}
                     />
@@ -145,6 +173,38 @@ const RoomBookingForm: React.FC<{
                 <div className="pt-4">
                     <Button label="Submit Booking" type="submit" className="w-full" />
                 </div>
+                <Dialog
+                    header="Confirm Booking Submission"
+                    visible={showConfirmDialog}
+                    maximizable
+                    onHide={onCancelSubmit}
+                    footer={
+                        <div>
+                            <Button label="Yes" onClick={onConfirmSubmit} />
+                            <Button label="No" onClick={onCancelSubmit} className="p-button-secondary" />
+                        </div>
+                    }
+                >
+                    <p>Are you sure you want to submit this booking?</p>
+                    {room && (
+                        <p className="font-medium mt-2">Room: {room.name}</p>
+                    )}
+                    {pendingData?.check_in && pendingData?.check_out && (
+                        <>
+                            <p className="mt-1">
+                                {moment(pendingData.check_in).format('MMMM D, YYYY h:mm A')} -{' '}
+                                {moment(pendingData.check_out).format('MMMM D, YYYY h:mm A')}
+                            </p>
+                            <p className="text-sm">
+                                Duration:{' '}
+                                <strong>
+                                    {moment(pendingData.check_out).diff(moment(pendingData.check_in), 'days')} night(s)
+                                </strong>
+                            </p>
+                        </>
+                    )}
+                </Dialog>
+
             </form>
         );
     };

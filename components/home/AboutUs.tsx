@@ -69,31 +69,31 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                     <div className="lg:w-1/2 grid grid-cols-2 gap-4">
                         <div className="rounded overflow-hidden flex justify-end">
                             <img
-                                src="/assets/img/about-1.jpg"
-                                alt="Hotel pool view"
+                                src="/mingo-hotel/about-us/meals-time.jpg"
+                                alt="Mingo Hotel Meals Time"
                                 className="w-[75%] object-cover transition-transform duration-500 hover:scale-110"
                                 style={{ marginTop: "25%" }}
                             />
                         </div>
                         <div className="rounded overflow-hidden">
                             <img
-                                src="/assets/img/about-2.jpg"
-                                alt="Beach resort"
+                                src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
+                                alt="Mingo Hotel Day View"
                                 className="w-[100%]  object-cover transition-transform duration-500 hover:scale-110"
                             />
                         </div>
                         <div className="rounded overflow-hidden flex justify-end">
                             <img
-                                src="/assets/img/about-3.jpg"
-                                alt="Luxury villas"
+                                src="/mingo-hotel/about-us/conference-hall.jpg"
+                                alt="Conference hall"
                                 className="w-[50%]  object-cover transition-transform duration-500 hover:scale-110"
                                 style={{ marginBottom: "25%" }}
                             />
                         </div>
                         <div className="rounded overflow-hidden">
                             <img
-                                src="/assets/img/about-4.jpg"
-                                alt="Spa service"
+                                src="/mingo-hotel/about-us/dinner-time.jpg"
+                                alt="Dinner time"
                                 className="w-[75%]  object-cover transition-transform duration-500 hover:scale-110"
                             />
                         </div>

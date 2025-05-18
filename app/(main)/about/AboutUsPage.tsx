@@ -8,7 +8,16 @@ const AboutUsPage: React.FC = () => {
         <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
             {/* Hero Section */}
             <div className="relative w-full h-64 md:h-96 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/70 to-amber-500/70 z-10"></div>
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-orange-500/70 to-amber-500/70 z-10"></div> */}
+                {/* Background Image */}
+                <img
+                    src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
+                    alt="Rooms Background"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                />
+                {/* Dark overlay - only visible in dark mode */}
+                <div className="absolute inset-0 bg-[#0F172B] opacity-50 dark:opacity-70 z-10"></div>
+
                 <div className="w-full h-full bg-[url('/images/hotel-facade.jpg')] bg-cover bg-center"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-20">
                     <h1 className="text-4xl md:text-5xl font-bold mb-2">Mingo Hotel Kayunga</h1>
@@ -80,8 +89,17 @@ const AboutUsPage: React.FC = () => {
                         </p>
                     </div>
                     <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
-                        <div className="w-full h-full bg-[url('/images/hotel-restaurant.jpg')] bg-cover bg-center"></div>
+                        {/* Background Image */}
+                        <img
+                            src="/mingo-hotel/about-us/meals-time.jpg"
+                            alt="Mingo Hotel Meals"
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                        />
+
+                        {/* Optional dark overlay (for text contrast or visual consistency) */}
+                        <div className="absolute inset-0 bg-[#0F172B] opacity-30 dark:opacity-50 z-10"></div>
                     </div>
+
                 </div>
 
                 {/* Explore Section */}
@@ -99,7 +117,15 @@ const AboutUsPage: React.FC = () => {
                         </p>
                     </div>
                     <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
-                        <div className="w-full h-full bg-[url('/images/kayunga-scenery.jpg')] bg-cover bg-center"></div>
+                        {/* Background Image */}
+                        <img
+                            src="/mingo-hotel/about-us/spekemonument.jpg"
+                            alt="Speak Monument"
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                        />
+
+                        {/* Optional dark overlay (for text contrast or visual consistency) */}
+                        <div className="absolute inset-0 bg-[#0F172B] opacity-30 dark:opacity-50 z-10"></div>
                     </div>
                 </div>
 

@@ -27,12 +27,12 @@ import useHandleQueryError from "@/hooks/useHandleQueryError";
 
 // Filter form schema
 const filterSchema = z.object({
-    room_type: z.enum(["accommodation", "conference", ""]).optional(),
+    room_type: z.enum(["accommodation", "conference", ""]).optional().nullable(),
     booked: z.boolean().optional(),
     stars: z.number().min(0).max(5).optional(),
-    features: z.array(z.object({ id: z.number(), name: z.string() }).passthrough()).optional(),
-    number_of_adults: z.number().min(0).optional(),
-    number_of_children: z.number().min(0).optional(),
+    features: z.array(z.object({ id: z.number(), name: z.string() })).optional().nullable(),
+    number_of_adults: z.number().min(0).optional().nullable(),
+    number_of_children: z.number().min(0).optional().nullable(),
     search: z.string().optional(),
 });
 
@@ -41,12 +41,12 @@ export type FilterFormValues = z.infer<typeof filterSchema>;
 
 // Default filter values
 export const defaultFilterValues: FilterFormValues = {
-    room_type: "",
-    booked: false,
-    stars: 0,
-    features: [],
-    number_of_adults: 0,
-    number_of_children: 0,
+    // room_type: null,
+    // booked: true,
+    // stars: null,
+    // features: [],
+    // number_of_adults: 0,
+    // number_of_children: 0,
     search: "",
 };
 
@@ -72,6 +72,8 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
         defaultValues: initialValues
     });
 
+    console.log("🚀 ~ RoomFilters ~ errors:", errors)
+
     // Fetch Room Features for filter dropdown
     const featuresQuery = useQuery({
         queryKey: ["features"],
@@ -81,6 +83,7 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
 
     // Handle filter submission
     const submitFilters = (data: FilterFormValues) => {
+        console.log("🚀 ~ testting submitFilters ~ data:", data)
         onFilterSubmit(data);
     };
 
@@ -105,7 +108,6 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
 
     // Room type options
     const roomTypeOptions = [
-        { label: "All Types", value: "" },
         { label: "Accommodation", value: "accommodation" },
         { label: "Conference", value: "conference" }
     ];
@@ -258,8 +260,8 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
                         control={control}
                         render={({ field }) => (
                             <InputNumber
-                                value={field.value}
-                                onValueChange={(e) => field.onChange(e.value)}
+                                value={field.value ? Number(field.value) : undefined}
+                                onChange={(e) => field.onChange(e.value ? Number(e.value) : undefined)}
                                 min={0}
                                 showButtons
                                 buttonLayout="horizontal"
@@ -281,8 +283,8 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
                         control={control}
                         render={({ field }) => (
                             <InputNumber
-                                value={field.value}
-                                onValueChange={(e) => field.onChange(e.value)}
+                                value={field.value ? Number(field.value) : undefined}
+                                onChange={(e) => field.onChange(e.value ? Number(e.value) : undefined)}
                                 min={0}
                                 showButtons
                                 buttonLayout="horizontal"

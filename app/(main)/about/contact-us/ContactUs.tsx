@@ -39,6 +39,7 @@ const defaultValues: ContactFormData = {
 
 const ContactUs: React.FC = () => {
 
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const queryClient = useQueryClient();
     const primeReactToast = usePrimeReactToast();
 
@@ -47,6 +48,7 @@ const ContactUs: React.FC = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["contact-us"] });
             primeReactToast.success("Message Delivered Successfully");
+            setFormSubmitted(true)
         }
     });
 
@@ -60,7 +62,7 @@ const ContactUs: React.FC = () => {
 
 
 
-    const [formSubmitted, setFormSubmitted] = useState(false);
+
     const handleNewMessage = () => {
         setFormSubmitted(false);
     };

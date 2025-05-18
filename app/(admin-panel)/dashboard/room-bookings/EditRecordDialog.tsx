@@ -54,7 +54,12 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
         console.log("🚀 ~room booking edit handleFormSubmit ~ data:", data)
         if (!data) return;
 
-        editMutation.mutate(data);
+        const finalData = {
+            ...data,
+            room_id: data?.room?.id
+        }
+
+        editMutation.mutate(finalData);
     };
 
     const dialogFooter = (
@@ -71,14 +76,13 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
 
 
     const defaultValues = {
-        name: "",
-        abbreviation: "",
-        designation: "Private", // Must be exactly "Private" | "NGO"
-        type: "Indigenous", // Must be exactly "Indigenous" | "Foreign"
+        room: null,
+        check_in: null,
+        check_out: null,
+        status: "new",
+        number_of_adults: 1,
+        number_of_children: 0,
         description: "",
-        status: "active", // Must be exactly "active" | "deactive"
-        regional_offices: undefined,
-        districts: undefined,
     };
 
     const features = initialData?.room_features?.map((item: any) => item?.feature)

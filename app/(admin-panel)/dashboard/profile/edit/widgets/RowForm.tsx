@@ -19,8 +19,7 @@ import { RadioButton } from "primereact/radiobutton";
 
 
 import { getAllUserAssignableRoles } from "@/services/users/user-roles-service";
-import { getAllRegionalOffices } from "@/services/regional-offices/regional-offices-service";
-import { getAllCSOs, } from "@/services/csos/csos-service";
+
 
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
@@ -45,6 +44,7 @@ const formSchema = z
   .object({
     name: z.string().min(3, "Name must be at least 3 characters"),
     email: z.string().email("Invalid email format"),
+    address: z.string().min(3, "Address must be at least 3 characters"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     gender: z.enum(["Male", "Female", "Prefer not to say"], {
       required_error: "Please select your gender",
@@ -65,6 +65,7 @@ const formSchema = z
 const defaultValues: FormData = {
 
   name: "", // Empty string for user input
+  address: "",
   email: "", // Empty email
   password: "", // Empty password
   gender: "Prefer not to say", // Default to 'Prefer not to say'
@@ -162,6 +163,17 @@ const RowForm: React.FC<{ handleFormSubmit: (FormData: FormData | null) => any, 
               render={({ field }) => <InputText {...field} type="email" className={`w-full ${errors.email ? "p-invalid" : ""}`} />}
             />
             {errors.email && <small className="p-error">{errors.email.message}</small>}
+          </div>
+
+          {/* address*/}
+          <div className="p-field">
+            <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Address</label>
+            <Controller
+              name="address"
+              control={control}
+              render={({ field }) => <InputText {...field} className={`w-full ${errors.address ? "p-invalid" : ""}`} />}
+            />
+            {errors.address && <small className="p-error">{errors.address.message}</small>}
           </div>
 
           {/* Phone Number */}

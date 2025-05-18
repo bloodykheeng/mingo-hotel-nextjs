@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePrimeReactToast } from "@/providers/PrimeReactToastProvider";
 import useHandleMutationError from "@/hooks/useHandleMutationError";
 
+import { useRouter } from 'nextjs-toploader/app';
+
 import {
     getAllRoomBookings,
     getRoomBookingsById,
@@ -29,6 +31,8 @@ const RoomBookingDialog: React.FC<RoomBookingDialogProps> = ({
     onHide,
     initialData,
 }) => {
+
+    const router = useRouter();
     const queryClient = useQueryClient();
     const primeReactToast = usePrimeReactToast();
 
@@ -36,24 +40,22 @@ const RoomBookingDialog: React.FC<RoomBookingDialogProps> = ({
         mutationFn: postRoomBookings,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["room-bookings"] });
-            primeReactToast.success("Booking created successfully");
+            queryClient.invalidateQueries({ queryKey: ["rooms"] });
+            primeReactToast.success("Booking created successfully youill be contacted shortly once booking gets approved");
             onHide();
+            router.push("/rooms")
         },
     });
 
     useHandleMutationError(bookingMutation.error);
 
     const handleFormSubmit = (data: any) => {
+        console.log("🚀 ~ handleFormSubmit ~ data:", data)
         if (!data) return;
 
-        const formData = new FormData();
-        formData.append("check_in", data?.check_in);
-        formData.append("check_out", data?.check_out);
-        formData.append("number_of_adults", data?.number_of_adults);
-        formData.append("number_of_children", data?.number_of_children);
-        formData.append("description", data?.description || "");
+        const finalData = { ...data, status: "new", room_id: initialData?.id }
 
-        bookingMutation.mutate(formData);
+        bookingMutation.mutate(finalData);
     };
 
     const dialogFooter = (
@@ -84,6 +86,7 @@ const RoomBookingDialog: React.FC<RoomBookingDialogProps> = ({
                 <RoomBookingForm
                     handleFormSubmit={handleFormSubmit}
                     formMutation={bookingMutation}
+                    room={initialData}
                 />
 
                 {bookingMutation.isPending && (

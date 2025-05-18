@@ -17,8 +17,8 @@ const MapComponent = dynamic(() => import("./widgets/MapComponent"), {
 const LocateUs: React.FC = () => {
     // Coordinates for Mingo Hotel in Kayunga, Uganda
     const hotelLocation = {
-        lat: 0.7766, // Replace with actual coordinates
-        lng: 32.8909, // Replace with actual coordinates
+        lat: 0.7079997054679262, // Replace with actual coordinates
+        lng: 32.90102532819053, // Replace with actual coordinates
         name: "Mingo Hotel Kayunga Ltd"
     };
 

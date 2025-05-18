@@ -167,7 +167,7 @@ const RowForm: React.FC<RowFormProps> = ({
                 <Button
                     type="submit"
                     label="Send Message"
-                    icon="pi pi-send"
+                    icon={formMutation?.isPending ? "pi pi-spin pi-spinner" : "pi pi-send"}
                     className="w-full p-3 text-lg"
                     disabled={formMutation.isPending}
                 />

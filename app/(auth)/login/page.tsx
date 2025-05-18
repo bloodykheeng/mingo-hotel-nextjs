@@ -1,10 +1,20 @@
 import React from 'react'
 import LoginForm from "./LoginForm"
 
-function LoginPage() {
+interface PageProps {
+    params: Promise<{}>; // no dynamic route segments here
+    searchParams: Promise<{
+        returnPath?: string;
+
+    }>;
+}
+
+async function LoginPage({ params, searchParams }: PageProps) {
+    const { returnPath } = await searchParams;
+
     return (
         <div>
-            <LoginForm />
+            <LoginForm returnPath={returnPath} />
         </div>
     )
 }

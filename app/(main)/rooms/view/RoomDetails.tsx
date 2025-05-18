@@ -21,6 +21,8 @@ import { Badge } from "primereact/badge";
 import { Toast } from 'primereact/toast';
 import { TabView, TabPanel } from 'primereact/tabview';
 
+import Link from "next/link";
+
 // Lottie Animations
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -123,7 +125,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
             <div className="relative h-96 w-full overflow-hidden">
                 {/* Background Image */}
                 <img
-                    src={roomPhotos?.length > 0
+                    src={room?.photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${room?.photo_url}` : roomPhotos?.length > 0
                         ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0]?.file_path}`
                         : "/assets/img/carousel-1.jpg"}
                     alt={room?.name}
@@ -142,9 +144,9 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                 <div className="absolute top-0 left-0 w-full h-full z-20 flex flex-col justify-center items-center text-white">
                     <h1 className="text-5xl font-bold mb-4">{room?.name}</h1>
                     <div className="flex items-center space-x-2">
-                        <a href="/" className="hover:text-orange-500">HOME</a>
+                        <Link href="/" className="hover:text-orange-500">HOME</Link>
                         <span>/</span>
-                        <a href="/rooms" className="hover:text-orange-500">ROOMS</a>
+                        <Link href="/rooms" className="hover:text-orange-500">ROOMS</Link>
                         <span>/</span>
                         <span>{room?.name}</span>
                     </div>
@@ -207,9 +209,24 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                     </Slider>
                                                 </div>
                                             ) : (
-                                                <div className="mb-8 rounded-lg overflow-hidden h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                                                    <p className="text-gray-500 dark:text-gray-400">No photos available</p>
-                                                </div>
+                                                <>
+                                                    {/* <div className="mb-8 rounded-lg overflow-hidden h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                                        <p className="text-gray-500 dark:text-gray-400">No photos available</p>
+                                                    </div> */}
+
+                                                    <div className="mb-8 rounded-lg overflow-hidden h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                                        <img
+                                                            src={
+                                                                room?.photo_url
+                                                                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${room.photo_url}`
+                                                                    : "/assets/img/carousel-1.jpg"
+                                                            }
+                                                            alt="Room"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                </>
+
                                             )}
 
                                             {/* Room Tabs */}
@@ -275,7 +292,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                     {/* Price */}
                                                     <div className="flex justify-between items-center mb-4">
                                                         <span className="text-gray-600 dark:text-gray-300">Price per night:</span>
-                                                        <span className="text-2xl font-bold text-orange-500">${room.price}</span>
+                                                        <span className="text-2xl font-bold text-orange-500">UGX {Number(room?.price).toLocaleString()}/night</span>
                                                     </div>
 
                                                     {/* Rating */}
@@ -383,13 +400,14 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
             {/* This would be added here but would require additional data fetching */}
 
             {/* Newsletter and Footer Components */}
-            <Newsletter />
+            {/* <Newsletter /> */}
             <Footer />
 
 
             <RoomBookingDialog
                 visible={showCreateBooking}
                 onHide={() => setShowCreateBooking(false)}
+                initialData={room}
             />
         </div>
     );

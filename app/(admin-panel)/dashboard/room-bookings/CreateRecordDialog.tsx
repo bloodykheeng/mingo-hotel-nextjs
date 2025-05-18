@@ -55,7 +55,11 @@ const CreateRecordDialog: React.FC<CreateRecordDialogProps> = ({
         console.log("🚀 ~ room booking handleFormSubmit ~ data:", data);
         if (!data) return;
 
-        createMutation.mutate(data);
+        const finalData = {
+            ...data,
+            room_id: data?.room?.id
+        }
+        createMutation.mutate(finalData);
     };
 
 

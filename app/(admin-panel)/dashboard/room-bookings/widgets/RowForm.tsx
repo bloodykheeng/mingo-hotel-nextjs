@@ -22,6 +22,8 @@ import {
 } from "@/services/rooms/rooms-service";
 import moment from "moment";
 
+import useAuthContext from "@/providers/AuthProvider";
+
 const requireField = (val: any, ctx: z.RefinementCtx, fieldName: string) => {
   if (!!val === false) {
     ctx.addIssue({
@@ -91,6 +93,11 @@ const RowForm: React.FC<{
   formMutation: any,
   initialData?: FormData,
 }> = ({ handleFormSubmit, formMutation, initialData = defaultValues }) => {
+
+  const { getUserQuery, logoutMutation } = useAuthContext();
+  const loggedInUserData = getUserQuery?.data?.data;
+
+
   const {
     register,
     handleSubmit,
@@ -240,24 +247,30 @@ const RowForm: React.FC<{
           </div>
 
           {/* Status Dropdown */}
-          <div className="flex justify-center pt-2">
-            <div className="p-field w-full">
-              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Status</label>
-              <Controller
-                name="status"
-                control={control}
-                render={({ field }) => (
-                  <Dropdown
-                    {...field}
-                    options={statusOptions}
-                    className={`w-full ${errors.status ? "p-invalid" : ""}`}
-                    placeholder="Select Status"
+
+          {loggedInUserData?.role === "System Admin" && (
+            <>
+              <div className="flex justify-center pt-2">
+                <div className="p-field w-full">
+                  <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Status</label>
+                  <Controller
+                    name="status"
+                    control={control}
+                    render={({ field }) => (
+                      <Dropdown
+                        {...field}
+                        options={statusOptions}
+                        className={`w-full ${errors.status ? "p-invalid" : ""}`}
+                        placeholder="Select Status"
+                      />
+                    )}
                   />
-                )}
-              />
-              {errors.status && <small className="p-error">{errors?.status?.message?.toString()}</small>}
-            </div>
-          </div>
+                  {errors.status && <small className="p-error">{errors?.status?.message?.toString()}</small>}
+                </div>
+              </div>
+            </>
+          )}
+
 
           {/* Number of Adults */}
           <div className="flex justify-center pt-2">
@@ -326,7 +339,7 @@ const RowForm: React.FC<{
           </div>
 
           {/* Submit Button */}
-          <div className="col-span-3 flex justify-center pt-4">
+          <div className="lg:col-span-3 flex justify-center pt-4">
             <Button
               type="submit"
               label="Submit"

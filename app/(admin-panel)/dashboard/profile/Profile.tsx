@@ -91,13 +91,15 @@ const Profile = () => {
                                 <h3 className="text-lg font-semibold">Profile Information</h3>
                                 <Divider />
                                 <p className="text-sm text-gray-600">
-                                    Hi, {loggedInUserData?.name}! Welcome to the PPDA Content Management System (CMS).
-                                    Here, you can manage your profile, update your details, and customize your preferences to enhance your experience.
+                                    Hi, {loggedInUserData?.name}! Welcome to the Mingo Hotel Management System.
+                                    Here, you can manage your profile, update your details, and customize your preferences to enhance your experience as part of the Mingo Hotel team.
                                 </p>
+
 
                                 <div className="mt-3">
                                     <div><strong>Full Name:</strong> {loggedInUserData?.name ?? 'N/A'}</div>
                                     <div><strong>Email:</strong> {loggedInUserData?.email ?? 'N/A'}</div>
+                                    <div><strong>Address:</strong> {loggedInUserData?.address ?? 'N/A'}</div>
                                     <div><strong>Phone:</strong> {loggedInUserData?.phone ?? 'N/A'}</div>
                                     <div><strong>Status:</strong> {loggedInUserData?.status ?? 'N/A'}</div>
                                     <div className="flex items-start gap-2">
@@ -116,21 +118,7 @@ const Profile = () => {
                                     </div>
                                     <div><strong>Gender:</strong> {loggedInUserData?.gender ?? 'N/A'}</div>
 
-                                    {/* Regional Office Info - Only show if applicable */}
-                                    {showRegionalOffices && (
-                                        <div>
-                                            <strong>Regional office :</strong>   <span className="mt-1">{loggedInUserData?.regional_office?.name || "N/A"}</span>
-                                        </div>
 
-
-                                    )}
-
-                                    {/* CSO Info - Only show if applicable */}
-                                    {showCSO && (
-                                        <div>
-                                            <strong>CSO :</strong>   <span className="mt-1">{loggedInUserData?.cso?.name || "N/A"}</span>
-                                        </div>
-                                    )}
                                 </div>
                             </Card>
                         </div>
@@ -139,19 +127,21 @@ const Profile = () => {
                         {/* Right Section - Profile Information */}
                         <div className="col-span-12 md:col-span-4">
                             <Card className="p-4">
-                                <h3 className="text-lg font-semibold">CFP Profile Section</h3>
+                                <h3 className="text-lg font-semibold">Mingo Hotel Overview</h3>
                                 <Divider />
                                 <div className="flex justify-between align-items-center my-3">
                                     <p>
-                                        The PPDA CMS Profile Section is designed to give system users a streamlined and efficient way to manage their account details.
-                                        Whether it's updating personal information like name, email, and phone number, or managing preferences such as notification settings,
-                                        this section ensures all data is accurate and up to date. Built with usability in mind, it empowers users to maintain their profiles with ease,
-                                        supporting a secure and personalized experience within the PPDA Content Management System.
+                                        Mingo Hotel is designed to offer guests a modern, comfortable, and luxurious hospitality experience.
+                                        Whether you're visiting for business or leisure, the hotel features well-appointed rooms, attentive service,
+                                        and a range of amenities including fine dining, conference facilities, and wellness services.
+                                        With a commitment to exceptional quality and guest satisfaction, Mingo Hotel ensures every stay is memorable.
+                                        The hotel management system allows staff to efficiently manage bookings, room features, and guest preferences,
+                                        enhancing the overall experience for all guests.
                                     </p>
-
                                 </div>
                             </Card>
                         </div>
+
                     </div>
 
                 </div>
