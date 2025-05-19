@@ -8,6 +8,21 @@ import { Accordion, AccordionTab } from "primereact/accordion";
 
 import moment from "moment";
 
+import {
+    FaWifi,
+    FaTv,
+    FaBed,
+    FaCoffee,
+    FaUtensils,
+    FaConciergeBell,
+    FaBath,
+    FaSwimmingPool,
+    FaParking,
+    FaRProject,
+    FaVolumeUp,
+    FaSpa,
+} from "react-icons/fa";
+
 interface RecordDetailsDialogProps {
     visible: boolean;
     onHide: () => void;
@@ -51,6 +66,27 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
     console.log(JSON.stringify(regionalDistricts, null, 2));
 
 
+    // Define a type for the icon values
+    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' | 'massage';
+
+
+    // Use the same type for your iconMap
+    const iconMap: Record<IconKey, React.ReactNode> = {
+        wifi: <FaWifi />,
+        tv: <FaTv />,
+        bed: <FaBed />,
+        breakfast: <FaCoffee />,
+        dinner: <FaUtensils />,
+        buffet: <FaConciergeBell />,
+        bathroom: <FaBath />,
+        "swimming pool": <FaSwimmingPool />,
+        parking: <FaParking />,
+        projector: <FaRProject />,
+        speakers: <FaVolumeUp />,
+        massage: <FaSpa />,
+    };
+
 
     return (
         <Dialog
@@ -93,9 +129,13 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
                             </p>
 
                             <p>
+                                <strong>Price:</strong> {Number(selectedRecord?.price).toLocaleString() || "N/A"}
+                            </p>
+
+                            <p>
                                 <strong>Icon:</strong>{" "}
                                 {selectedRecord?.icon ? (
-                                    <i className={`${selectedRecord.icon} text-lg text-gray-700`} />
+                                    iconMap[selectedRecord?.icon as IconKey]
                                 ) : (
                                     "No Icon"
                                 )}

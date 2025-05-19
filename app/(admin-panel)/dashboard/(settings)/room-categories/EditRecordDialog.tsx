@@ -53,6 +53,8 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
     const handleFormSubmit = (data: any) => {
         if (!data) return;
 
+        console.log("🚀 ~ room categories handleFormSubmit ~ data:", data)
+
         const formData = new FormData();
         formData.append("_method", "PUT");
 
@@ -90,6 +92,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
 
         editMutation.mutate(formData);
     };
+
 
     const dialogFooter = (
         <div className="flex justify-end gap-2 mt-4">
