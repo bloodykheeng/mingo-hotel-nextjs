@@ -22,18 +22,18 @@ interface CarouselItem {
     img: string;
     title: string;
     subtitle: string;
-    btn1: string;
-    btn2: string;
-    btn1Link: string;
-    btn2Link: string;
+    btn1?: string | null;
+    btn2?: string | null;
+    btn1Link?: string | null;
+    btn2Link?: string | null;
 }
 
 interface HeroSliderProps {
     id: string;
     title: string;
     description: string;
-    button_link_one: string;
-    button_link_two: string;
+    button_link_one?: string | null;
+    button_link_two?: string | null;
     photo_url: string;
     status?: string;
 }
@@ -65,9 +65,10 @@ export default function Carousel(): JSX.Element {
     ];
 
     // Function to get button label from link
-    const getButtonLabel = (link: string): string => {
+    const getButtonLabel = (link: string | null | undefined): string | null => {
+        if (!link) return null;
         const option = linkOptions.find(opt => opt.value === link);
-        return option?.label || "LEARN MORE";
+        return option?.label || null;
     };
 
     // Fetch hero sliders
@@ -87,8 +88,8 @@ export default function Carousel(): JSX.Element {
         subtitle: slider.description || 'LUXURY ACCOMMODATION',
         btn1: getButtonLabel(slider.button_link_one),
         btn2: getButtonLabel(slider.button_link_two),
-        btn1Link: slider.button_link_one || '/about',
-        btn2Link: slider.button_link_two || '/rooms',
+        btn1Link: slider.button_link_one,
+        btn2Link: slider.button_link_two,
     }));
 
     // Debug: Log the API response to check structure
@@ -154,8 +155,6 @@ export default function Carousel(): JSX.Element {
         },
     ];
 
-
-
     // If loading, show loading animation
     if (getHeroSlidersQuery.isLoading) {
         return (
@@ -167,7 +166,6 @@ export default function Carousel(): JSX.Element {
             </div>
         );
     }
-
 
     // Use fallback data if API fails or returns empty
     const displayCarouselData = getHeroSlidersQuery.isError || transformedSliders.length === 0
@@ -223,44 +221,59 @@ export default function Carousel(): JSX.Element {
     return (
         <div className="relative">
             <Slider ref={sliderRef} {...settings}>
-                {displayCarouselData.map((item, index) => (
-                    <div key={`carousel-${index}-${item.title}`} className="relative w-full h-screen overflow-hidden">
-                        <img
-                            src={item.img}
-                            alt={item.title}
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/60 h-[100%]"></div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-                            <div className="max-w-4xl">
-                                <h3 className="text-lg md:text-xl font-medium mb-4 tracking-widest relative">
-                                    <span className="inline-block relative px-8">
-                                        {item.subtitle}
-                                        <span className="absolute left-0 top-1/2 h-0.5 w-6 bg-orange-500"></span>
-                                        <span className="absolute right-0 top-1/2 h-0.5 w-6 bg-orange-500"></span>
-                                    </span>
-                                </h3>
-                                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8">
-                                    {item.title}
-                                </h1>
-                                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                                    <button
-                                        onClick={() => router.push(item.btn1Link)}
-                                        className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-8 transition duration-300"
-                                    >
-                                        {item.btn1}
-                                    </button>
-                                    <button
-                                        onClick={() => router.push(item.btn2Link)}
-                                        className="bg-white hover:bg-gray-100 text-gray-800 font-medium py-3 px-8 transition duration-300"
-                                    >
-                                        {item.btn2}
-                                    </button>
+                {displayCarouselData.map((item, index) => {
+                    // Check if any buttons exist
+                    const hasBtn1 = item.btn1 && item.btn1Link;
+                    const hasBtn2 = item.btn2 && item.btn2Link;
+                    const hasAnyButtons = hasBtn1 || hasBtn2;
+
+                    return (
+                        <div key={`carousel-${index}-${item.title}`} className="relative w-full h-screen overflow-hidden">
+                            <img
+                                src={item.img}
+                                alt={item.title}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/60 h-[100%]"></div>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
+                                <div className="max-w-4xl">
+                                    <h3 className="text-lg md:text-xl font-medium mb-4 tracking-widest relative">
+                                        <span className="inline-block relative px-8">
+                                            {item.subtitle}
+                                            <span className="absolute left-0 top-1/2 h-0.5 w-6 bg-orange-500"></span>
+                                            <span className="absolute right-0 top-1/2 h-0.5 w-6 bg-orange-500"></span>
+                                        </span>
+                                    </h3>
+                                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8">
+                                        {item.title}
+                                    </h1>
+
+                                    {/* Only show buttons container if at least one button exists */}
+                                    {hasAnyButtons && (
+                                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                            {hasBtn1 && (
+                                                <button
+                                                    onClick={() => router.push(item.btn1Link!)}
+                                                    className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-8 transition duration-300"
+                                                >
+                                                    {item.btn1}
+                                                </button>
+                                            )}
+                                            {hasBtn2 && (
+                                                <button
+                                                    onClick={() => router.push(item.btn2Link!)}
+                                                    className="bg-white hover:bg-gray-100 text-gray-800 font-medium py-3 px-8 transition duration-300"
+                                                >
+                                                    {item.btn2}
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </Slider>
         </div>
     );
