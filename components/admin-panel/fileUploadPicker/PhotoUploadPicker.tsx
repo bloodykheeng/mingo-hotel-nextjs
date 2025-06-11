@@ -132,7 +132,8 @@ const PhotoUploaderPicker: React.FC<PhotoUploaderPickerProps> = ({
                 ref={fileUploadRef}
                 mode="basic"
                 name="photo"
-                accept="image/*"
+                // accept="image/*"
+                accept=".png,.jpg,.jpeg"
                 maxFileSize={5000000}
                 customUpload
                 auto

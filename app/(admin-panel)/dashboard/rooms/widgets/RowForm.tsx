@@ -120,12 +120,10 @@ const RoomForm: React.FC<{
   handleFormSubmit: (FormData: FormData | null) => any,
   formMutation: any,
   initialData?: FormData,
-  existingAttachments?: any[]
 }> = ({
   handleFormSubmit,
   formMutation,
   initialData = defaultValues,
-  existingAttachments = []
 }) => {
     const {
       register,
@@ -146,6 +144,7 @@ const RoomForm: React.FC<{
     // Watch values
     const features = watch("features");
     const attachments = watch("attachments") || [];
+    const existingAttachments = watch("room_attachments") || [];
     const selectedRoomCategory = watch("room_category");
 
     // Get current photo from form state
@@ -510,7 +509,7 @@ const RoomForm: React.FC<{
 
             {/* File Upload */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-              <FileUploaderPicker setValue={setValue} attachments={attachments} />
+              <FileUploaderPicker setValue={setValue} attachments={attachments} allowedTypes={["Picture", "Video"]} />
             </div>
 
             {/* Submit Button */}

@@ -16,13 +16,13 @@ import { Image } from 'primereact/image';
 import { useRouter } from 'nextjs-toploader/app';
 
 import {
-    getAllFeatures,
-    getFeaturesById,
-    postFeatures,
-    updateFeatures,
-    deleteFeatureById,
-    postToBulkDestroyFeatures,
-} from "@/services/features/features-service";
+    getAllHeroSliders,
+    getHeroSlidersById,
+    postHeroSliders,
+    updateHeroSliders,
+    deleteHeroSliderById,
+    postToBulkDestroyHeroSliders,
+} from "@/services/hero-sliders/hero-sliders-service";
 
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
@@ -50,9 +50,18 @@ import CreateRecordDialog from "./CreateRecordDialog"
 import EditRecordDialog from "./EditRecordDialog"
 
 import {
-    FaWifi, FaTv, FaBed, FaCoffee, FaUtensils, FaConciergeBell, FaBath,
-    FaSwimmingPool, FaParking, FaRProject, FaVolumeUp, FaSpa, FaCouch,
-    FaDoorOpen, FaSnowflake, FaShower, FaPlane, FaCocktail, FaHotel
+    FaWifi,
+    FaTv,
+    FaBed,
+    FaCoffee,
+    FaUtensils,
+    FaConciergeBell,
+    FaBath,
+    FaSwimmingPool,
+    FaParking,
+    FaRProject,
+    FaVolumeUp,
+    FaSpa,
 } from "react-icons/fa";
 
 import dynamic from "next/dynamic";
@@ -69,21 +78,21 @@ function RecordsList() {
     const [rowsPerPage, setRowsPerPage] = useState(5)
 
     // Fetch data using useQuery
-    const getAllFeaturesQuery = useQuery({
-        queryKey: ["features", currentPage, rowsPerPage, globalSearchTearm, "paginate"], // Include page and search term in query key
-        queryFn: (queryprops) => getAllFeatures({ ...queryprops, page: currentPage, rowsPerPage, search: globalSearchTearm, paginate: true }),
+    const getAllHeroSlidersQuery = useQuery({
+        queryKey: ["hero-sliders", currentPage, rowsPerPage, globalSearchTearm, "paginate"], // Include page and search term in query key
+        queryFn: (queryprops) => getAllHeroSliders({ ...queryprops, page: currentPage, rowsPerPage, search: globalSearchTearm, paginate: true }),
     });
-    console.log("🚀 ~ RecordsList ~ getAllFeaturesQuery:", getAllFeaturesQuery)
+    console.log("🚀 ~ RecordsList ~ getAllHeroSlidersQuery:", getAllHeroSlidersQuery)
 
-    useHandleQueryError(getAllFeaturesQuery);
+    useHandleQueryError(getAllHeroSlidersQuery);
 
 
 
     // Extract data and pagination details from the query result
-    const tableData = getAllFeaturesQuery?.data?.data?.data?.data || [];
-    const totalRecords = getAllFeaturesQuery?.data?.data?.data?.total || 0;
-    const perPage = getAllFeaturesQuery?.data?.data?.data?.per_page || 5;
-    const lastPage = getAllFeaturesQuery?.data?.data?.data?.last_page || 1;
+    const tableData = getAllHeroSlidersQuery?.data?.data?.data?.data || [];
+    const totalRecords = getAllHeroSlidersQuery?.data?.data?.data?.total || 0;
+    const perPage = getAllHeroSlidersQuery?.data?.data?.data?.per_page || 5;
+    const lastPage = getAllHeroSlidersQuery?.data?.data?.data?.last_page || 1;
 
 
 
@@ -105,7 +114,7 @@ function RecordsList() {
                 type="search"
                 value={globalSearch}
                 onChange={(e) => setGlobalSearch(e.target.value)}
-                placeholder="Search Feature" />
+                placeholder="Search Hero Slider" />
             <Button icon="pi pi-search" className="p-button-primary" onClick={handleSearch} />
         </div>
 
@@ -125,9 +134,8 @@ function RecordsList() {
 
     // Define a type for the icon values
     type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
-        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' |
-        'massage' | 'sofa' | 'balcony' | 'fridge' | 'shower' | 'airport' |
-        'rooftop' | 'double bed' | 'single room';
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' | 'massage';
+
 
     // Use the same type for your iconMap
     const iconMap: Record<IconKey, React.ReactNode> = {
@@ -143,15 +151,8 @@ function RecordsList() {
         projector: <FaRProject />,
         speakers: <FaVolumeUp />,
         massage: <FaSpa />,
-        sofa: <FaCouch />,
-        balcony: <FaDoorOpen />,
-        fridge: <FaSnowflake />,
-        shower: <FaShower />,
-        airport: <FaPlane />,
-        rooftop: <FaCocktail />,
-        "double bed": <FaBed />,
-        "single room": <FaHotel />,
     };
+
     // FormData reference from earlier:
     // type FormData = {
     //   name: string;
@@ -192,9 +193,9 @@ function RecordsList() {
     // Column definitions updated to include all relevant fields for Features
     const columns: ColumnConfig<ColDefn>[] = [
         {
-            field: "name",
-            header: "Name",
-            body: (rowData) => <span className="font-semibold">{rowData.name}</span>
+            field: "title",
+            header: "Title",
+            body: (rowData) => <span className="font-semibold">{rowData.title}</span>
         },
         {
             field: "icon",
@@ -296,7 +297,7 @@ function RecordsList() {
 
 
     return (<>
-        {getAllFeaturesQuery?.isError ? (
+        {getAllHeroSlidersQuery?.isError ? (
             <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ maxWidth: "400px" }}>
                     <Lottie animationData={SnailErrorLottie} loop={true} autoplay={true} />
@@ -336,24 +337,24 @@ function RecordsList() {
                                     totalRecords={totalRecords}
                                     rows={perPage}
                                     first={first}
-                                    loading={getAllFeaturesQuery.isLoading}
+                                    loading={getAllHeroSlidersQuery.isLoading}
                                     onPageChange={onPageChange}
-                                    emptyMessage="No Feature's found."
+                                    emptyMessage="No Hero Sliders found."
                                     headerContent={
                                         <div className="flex flex-wrap gap-2 items-center justify-between">
-                                            <h4 className="m-0">Feature's List</h4>
+                                            <h4 className="m-0">Hero Sliders List</h4>
                                             <div className="p-inputgroup w-full md:w-30rem lg:w-30rem">
                                                 <InputText
                                                     type="search"
                                                     value={globalSearch}
                                                     onChange={(e) => setGlobalSearch(e.target.value)}
-                                                    placeholder="Search Feature's"
+                                                    placeholder="Search Hero Sliders"
                                                 />
                                                 <Button icon="pi pi-search" className="p-button-primary" onClick={handleSearch} />
                                             </div>
                                         </div>
                                     }
-                                    fileName="Feature's Export"
+                                    fileName="Hero Sliders Export"
 
                                     // selection
                                     selection={true}

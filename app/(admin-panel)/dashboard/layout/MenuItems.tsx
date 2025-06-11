@@ -80,7 +80,11 @@ export const getMenuItems = (logggedInUser: any): MenuCategory[] => {
           path: "/dashboard/room-bookings"
         },
 
-
+        ...(systemAdminRoles.includes(logggedInUserRole) ? [{
+          icon: <i className="pi pi-images" />,
+          name: "Hero Slider",
+          path: "/dashboard/hero-slider"
+        }] : []),
         ...(systemAdminRoles.includes(logggedInUserRole) ? [{
           icon: <i className="pi pi-comments" />,
           name: "FAQs",

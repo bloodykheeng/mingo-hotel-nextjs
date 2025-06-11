@@ -25,6 +25,7 @@ const routeGroups = {
   systemAdminOnly: [
     "/dashboard/users",
     "/dashboard/features",
+    "/dashboard/hero-slider",
     "/dashboard/room-categories",
     "/dashboard/faqs",
     "/dashboard/roles",

@@ -201,11 +201,11 @@ const Header = () => {
               {/* Mobile-only sign in/up */}
               <div className="mt-4 border-t pt-4 lg:hidden">
                 <Link
-                  href="/signin"
+                  href="/register"
                   className="block w-full text-center py-2 text-base font-medium text-dark hover:opacity-70 dark:text-white"
                   onClick={closeMenus}
                 >
-                  Sign In
+                  Register
                 </Link>
 
 

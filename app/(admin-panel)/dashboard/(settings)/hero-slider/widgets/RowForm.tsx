@@ -6,42 +6,21 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { useRouter } from 'nextjs-toploader/app';
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
 
-import {
-  FaWifi,
-  FaTv,
-  FaBed,
-  FaCoffee,
-  FaUtensils,
-  FaConciergeBell,
-  FaBath,
-  FaSwimmingPool,
-  FaParking,
-  FaRProject,
-  FaVolumeUp,
-  FaSpa,
-  FaCouch,        // for sofa set
-  FaBuilding,      // for balcony (if available, otherwise use FaDoorOpen)
-  FaSnowflake,    // for fridge/AC
-  FaShower,       // for shower
-  FaPlane,        // for airport pickup
-  FaCocktail,     // for rooftop bar/drinks
-  FaHotel,        // for accommodation/rooms
-  FaDoorOpen,     // alternative for balcony
-} from "react-icons/fa";
-
-
 import PhotoUploadPicker from "@/components/admin-panel/fileUploadPicker/PhotoUploadPicker";
 
 // ✅ Define Form Schema
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  icon: z.string().nullable().optional(),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+  description: z.string().nullable().optional(),
+  button_link_one: z.string().nullable().optional(),
+  button_link_two: z.string().nullable().optional(),
   photo: z.object({
     file: z.instanceof(File).optional(),
     previewUrl: z.string(),
@@ -53,8 +32,10 @@ const formSchema = z.object({
 
 // ✅ Default Form Values
 const defaultValues: FormData = {
-  name: "",
-  icon: null,
+  title: "",
+  description: null,
+  button_link_one: null,
+  button_link_two: null,
   photo: null,
   photo_url: null,
   status: 'active',
@@ -63,7 +44,7 @@ const defaultValues: FormData = {
 // ✅ TypeScript Type for Form Fields
 type FormData = z.infer<typeof formSchema>;
 
-const FeatureForm: React.FC<{
+const HeroSliderForm: React.FC<{
   handleFormSubmit: (FormData: FormData | null) => any,
   formMutation: any,
   initialData?: FormData
@@ -115,130 +96,91 @@ const FeatureForm: React.FC<{
       { label: "Deactive", value: "deactive" },
     ];
 
-    // Define a type for the icon values
-    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
-      'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' |
-      'massage' | 'sofa' | 'balcony' | 'fridge' | 'shower' | 'airport' |
-      'rooftop' | 'double bed' | 'single room';
-
-    // Define the option type
-    interface IconOption {
-      label: string;
-      value: IconKey; // Now value must be one of the IconKey types
-    }
-
-    // Use the type for your array
-    const iconOptions: IconOption[] = [
-      { label: "Wi-Fi", value: "wifi" },
-      { label: "TV", value: "tv" },
-      { label: "Bed", value: "bed" },
-      { label: "Breakfast", value: "breakfast" },
-      { label: "Dinner", value: "dinner" },
-      { label: "Buffet", value: "buffet" },
-      { label: "Bathroom", value: "bathroom" },
-      { label: "Swimming Pool", value: "swimming pool" },
-      { label: "Parking", value: "parking" },
-      { label: "Projector", value: "projector" },
-      { label: "Speakers", value: "speakers" },
-      { label: "Massage", value: "massage" },
-      { label: "Sofa Set", value: "sofa" },
-      { label: "Balcony", value: "balcony" },
-      { label: "Fridge", value: "fridge" },
-      { label: "Shower", value: "shower" },
-      { label: "Airport Pickup", value: "airport" },
-      { label: "Rooftop Bar", value: "rooftop" },
-      { label: "Double Bed", value: "double bed" },
-      { label: "Single Room", value: "single room" },
+    const linkOptions = [
+      { label: "Rooms", value: "/rooms" },
+      { label: "About", value: "/about" },
+      { label: "FAQs", value: "/faqs" },
+      { label: "Login", value: "/login" },
+      { label: "Register", value: "/register" },
     ];
-
-    // Use the same type for your iconMap
-    const iconMap: Record<IconKey, React.ReactNode> = {
-      wifi: <FaWifi />,
-      tv: <FaTv />,
-      bed: <FaBed />,
-      breakfast: <FaCoffee />,
-      dinner: <FaUtensils />,
-      buffet: <FaConciergeBell />,
-      bathroom: <FaBath />,
-      "swimming pool": <FaSwimmingPool />,
-      parking: <FaParking />,
-      projector: <FaRProject />,
-      speakers: <FaVolumeUp />,
-      massage: <FaSpa />,
-      sofa: <FaCouch />,
-      balcony: <FaDoorOpen />, // or FaBalcony if available
-      fridge: <FaSnowflake />,
-      shower: <FaShower />,
-      airport: <FaPlane />,
-      rooftop: <FaCocktail />,
-      "double bed": <FaBed />,
-      "single room": <FaHotel />,
-    };
-    // Template for the selected value
-    const selectedIconTemplate = (option: IconOption | null) => {
-      if (option) {
-        return (
-          <div className="flex items-center gap-2">
-            {iconMap[option.value]}
-            <span>{option.label}</span>
-          </div>
-        );
-      }
-      return <span>Select an icon</span>;
-    };
-
-    // Template for each item in the dropdown list
-    const itemIconTemplate = (option: IconOption) => {
-      return (
-        <div className="flex items-center gap-2">
-          {iconMap[option.value]}
-          <span>{option.label}</span>
-        </div>
-      );
-    };
 
     return (
       <>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 p-4 items-center">
-            {/* Name */}
+            {/* Title */}
             <div className="col-span-3">
-              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Feature Name</label>
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Title</label>
               <Controller
-                name="name"
+                name="title"
                 control={control}
                 render={({ field }) => (
                   <InputText
                     {...field}
-                    className={`w-full ${errors.name ? "p-invalid" : ""}`}
+                    className={`w-full ${errors.title ? "p-invalid" : ""}`}
                   />
                 )}
               />
-              {errors.name && <small className="p-error">{errors.name.message}</small>}
+              {errors.title && <small className="p-error">{errors.title.message}</small>}
             </div>
 
-            {/* Icon */}
+            {/* Description */}
             <div className="col-span-3">
-              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Icon</label>
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Description</label>
               <Controller
-                name="icon"
+                name="description"
                 control={control}
                 render={({ field }) => (
-                  <Dropdown
-                    value={field.value}
-                    options={iconOptions}
-                    onChange={(e) => field.onChange(e.value)}
-                    itemTemplate={itemIconTemplate}
-                    valueTemplate={selectedIconTemplate}
-                    placeholder="Select an icon"
+                  <InputTextarea
+                    {...field}
+                    value={field.value || ""}
+                    rows={4}
                     className="w-full"
                   />
                 )}
               />
             </div>
 
+            {/* Button Link One */}
+            <div className="col-span-3 md:col-span-1">
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Button Link One</label>
+              <Controller
+                name="button_link_one"
+                control={control}
+                render={({ field }) => (
+                  <Dropdown
+                    value={field.value}
+                    options={linkOptions}
+                    onChange={(e) => field.onChange(e.value)}
+                    placeholder="Select a link"
+                    className="w-full"
+                    showClear
+                  />
+                )}
+              />
+            </div>
+
+            {/* Button Link Two */}
+            <div className="col-span-3 md:col-span-1">
+              <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Button Link Two</label>
+              <Controller
+                name="button_link_two"
+                control={control}
+                render={({ field }) => (
+                  <Dropdown
+                    value={field.value}
+                    options={linkOptions}
+                    onChange={(e) => field.onChange(e.value)}
+                    placeholder="Select a link"
+                    className="w-full"
+                    showClear
+                  />
+                )}
+              />
+            </div>
+
             {/* Status */}
-            <div className="col-span-3">
+            <div className="col-span-3 md:col-span-1">
               <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">Status</label>
               <Controller
                 name="status"
@@ -291,10 +233,10 @@ const FeatureForm: React.FC<{
             </div>
           }
         >
-          Are you sure you want to submit this feature?
+          Are you sure you want to submit this hero slider?
         </Dialog>
       </>
     );
   };
 
-export default FeatureForm;
+export default HeroSliderForm;

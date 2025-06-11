@@ -97,7 +97,7 @@ const LocateUs: React.FC = () => {
                                     </div>
                                 </li>
                                 <li className="flex items-start">
-                                    <i className="pi pi-taxi text-blue-600 text-base mt-1 mr-3"></i>
+                                    <i className="pi pi-car text-blue-600 text-base mt-1 mr-3"></i>
                                     <div>
                                         <p className="font-medium">Taxi Service</p>
                                         <p className="text-sm text-gray-600 dark:text-gray-400">Available on request</p>

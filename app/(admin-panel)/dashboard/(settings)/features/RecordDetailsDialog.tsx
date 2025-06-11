@@ -9,20 +9,10 @@ import { Accordion, AccordionTab } from "primereact/accordion";
 import moment from "moment";
 
 import {
-    FaWifi,
-    FaTv,
-    FaBed,
-    FaCoffee,
-    FaUtensils,
-    FaConciergeBell,
-    FaBath,
-    FaSwimmingPool,
-    FaParking,
-    FaRProject,
-    FaVolumeUp,
-    FaSpa,
+    FaWifi, FaTv, FaBed, FaCoffee, FaUtensils, FaConciergeBell, FaBath,
+    FaSwimmingPool, FaParking, FaRProject, FaVolumeUp, FaSpa, FaCouch,
+    FaDoorOpen, FaSnowflake, FaShower, FaPlane, FaCocktail, FaHotel
 } from "react-icons/fa";
-
 interface RecordDetailsDialogProps {
     visible: boolean;
     onHide: () => void;
@@ -67,8 +57,9 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
 
     // Define a type for the icon values
     type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
-        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' | 'massage';
-
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' |
+        'massage' | 'sofa' | 'balcony' | 'fridge' | 'shower' | 'airport' |
+        'rooftop' | 'double bed' | 'single room';
 
     // Use the same type for your iconMap
     const iconMap: Record<IconKey, React.ReactNode> = {
@@ -84,6 +75,14 @@ const RecordDetailsDialog: React.FC<RecordDetailsDialogProps> = ({ visible, onHi
         projector: <FaRProject />,
         speakers: <FaVolumeUp />,
         massage: <FaSpa />,
+        sofa: <FaCouch />,
+        balcony: <FaDoorOpen />,
+        fridge: <FaSnowflake />,
+        shower: <FaShower />,
+        airport: <FaPlane />,
+        rooftop: <FaCocktail />,
+        "double bed": <FaBed />,
+        "single room": <FaHotel />,
     };
 
 

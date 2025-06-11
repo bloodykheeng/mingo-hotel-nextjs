@@ -55,7 +55,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                         <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
                             Welcome to <span className="text-orange-500">{hotelName}</span>
                         </h2>
-                        <p className="text-gray-700 dark:text-white mb-8">
+                        <p className="whitespace-pre-line text-gray-700 dark:text-white mb-8">
                             {description}
                         </p>
 
@@ -66,7 +66,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                         </div>
                     </div>
 
-                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                    {/* <div className="lg:w-1/2 grid grid-cols-2 gap-4">
                         <div className="rounded overflow-hidden flex justify-end">
                             <img
                                 src="/mingo-hotel/about-us/meals-time.jpg"
@@ -97,7 +97,47 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                                 className="w-[75%]  object-cover transition-transform duration-500 hover:scale-110"
                             />
                         </div>
+                    </div> */}
+
+                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div className="rounded overflow-hidden flex justify-end">
+                            <div className="w-[75%]" style={{ marginTop: "25%" }}>
+                                <img
+                                    src="/mingo-hotel/about-us/meals-time.jpg"
+                                    alt="Mingo Hotel Meals Time"
+                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden">
+                            <div className="w-[100%]">
+                                <img
+                                    src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
+                                    alt="Mingo Hotel Day View"
+                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden flex justify-end">
+                            <div className="w-[50%]" style={{ marginBottom: "25%" }}>
+                                <img
+                                    src="/mingo-hotel/about-us/conference-hall.jpg"
+                                    alt="Conference hall"
+                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden">
+                            <div className="w-[75%]">
+                                <img
+                                    src="/mingo-hotel/about-us/dinner-time.jpg"
+                                    alt="Dinner time"
+                                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>

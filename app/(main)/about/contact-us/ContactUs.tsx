@@ -91,6 +91,7 @@ const ContactUs: React.FC = () => {
                                 <div>
                                     <h4 className="text-lg font-semibold">Address</h4>
                                     <p>Kayunga, Uganda</p>
+                                    <p>We located in kayunga town council, opposite kayunga referral hospital</p>
                                 </div>
                             </div>
 
@@ -100,7 +101,7 @@ const ContactUs: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-lg font-semibold">Phone</h4>
-                                    <p>+256 700 123 456</p>
+                                    <p>0705855551 or 0773383900</p>
                                 </div>
                             </div>
 
@@ -110,7 +111,7 @@ const ContactUs: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-lg font-semibold">Email</h4>
-                                    <p>info@mingohotel.com</p>
+                                    <p>mingo927011@gmail.com</p>
                                 </div>
                             </div>
 

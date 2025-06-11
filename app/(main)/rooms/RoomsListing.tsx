@@ -12,6 +12,12 @@ import {
 } from "@/services/rooms/rooms-service";
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
+import {
+    FaWifi, FaTv, FaBed, FaCoffee, FaUtensils, FaConciergeBell, FaBath,
+    FaSwimmingPool, FaParking, FaRProject, FaVolumeUp, FaSpa, FaCouch,
+    FaDoorOpen, FaSnowflake, FaShower, FaPlane, FaCocktail, FaHotel
+} from "react-icons/fa";
+
 // Lottie Animations
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -130,7 +136,7 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
     // Get room image from attachments
     const getRoomImage = (room: Room) => {
         const photoAttachment = room.room_attachments?.find(
-            attachment => attachment.type.toLowerCase() === 'photo'
+            attachment => attachment.type.toLowerCase() === 'picture'
         );
 
         // return photoAttachment
@@ -146,6 +152,36 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
     // Get first 3 room features
     const getTopFeatures = (room: Room) => {
         return room.room_features?.slice(0, 3) || [];
+    };
+
+    // Define a type for the icon values
+    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' |
+        'massage' | 'sofa' | 'balcony' | 'fridge' | 'shower' | 'airport' |
+        'rooftop' | 'double bed' | 'single room';
+
+    // Use the same type for your iconMap
+    const iconMap: Record<IconKey, React.ReactNode> = {
+        wifi: <FaWifi />,
+        tv: <FaTv />,
+        bed: <FaBed />,
+        breakfast: <FaCoffee />,
+        dinner: <FaUtensils />,
+        buffet: <FaConciergeBell />,
+        bathroom: <FaBath />,
+        "swimming pool": <FaSwimmingPool />,
+        parking: <FaParking />,
+        projector: <FaRProject />,
+        speakers: <FaVolumeUp />,
+        massage: <FaSpa />,
+        sofa: <FaCouch />,
+        balcony: <FaDoorOpen />,
+        fridge: <FaSnowflake />,
+        shower: <FaShower />,
+        airport: <FaPlane />,
+        rooftop: <FaCocktail />,
+        "double bed": <FaBed />,
+        "single room": <FaHotel />,
     };
 
     return (
@@ -252,7 +288,9 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                                             <div className="flex mb-4 text-gray-600 dark:text-gray-300 text-sm flex-wrap">
                                                 {getTopFeatures(room).map((featureObj, index) => (
                                                     <div key={featureObj.id} className="flex items-center mr-4 mb-2">
-                                                        <i className={`${featureObj.feature.icon} text-orange-500 mr-2 text-lg`}></i>
+                                                        <span className="text-orange-500 mr-2 text-lg">
+                                                            {iconMap[featureObj.feature.icon as IconKey] || <FaHotel />}
+                                                        </span>
                                                         {featureObj.feature.name}
                                                     </div>
                                                 ))}

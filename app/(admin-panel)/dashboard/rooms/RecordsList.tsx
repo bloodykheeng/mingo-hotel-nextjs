@@ -238,7 +238,7 @@ function RecordsList() {
             field: "features",
             header: "Features",
             body: (rowData) => (
-                <span>{rowData?.features?.map(f => f.name).join(", ") || "None"}</span>
+                <span>{rowData?.room_features?.map((f: any) => f.feature.name).join(", ") || "None"}</span>
             )
         },
         {

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, JSX } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from "@tanstack/react-query";
 import Slider from "react-slick";
@@ -22,6 +22,12 @@ import { Toast } from 'primereact/toast';
 import { TabView, TabPanel } from 'primereact/tabview';
 
 import Link from "next/link";
+
+import {
+    FaWifi, FaTv, FaBed, FaCoffee, FaUtensils, FaConciergeBell, FaBath,
+    FaSwimmingPool, FaParking, FaRProject, FaVolumeUp, FaSpa, FaCouch,
+    FaDoorOpen, FaSnowflake, FaShower, FaPlane, FaCocktail, FaHotel
+} from "react-icons/fa";
 
 // Lottie Animations
 import dynamic from "next/dynamic";
@@ -57,16 +63,53 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
     useHandleQueryError(getRoomsByIdQuery);
 
     const room = getRoomsByIdQuery?.data?.data;
+    console.log("🚀 ~ RoomDetails ~ room:", room)
 
     // Get room photos for slider
     const roomPhotos = room?.room_attachments?.filter(
-        (attachment: any) => attachment?.type.toLowerCase() === 'photo'
+        (attachment: any) => attachment?.type.toLowerCase() === 'picture'
     ) || [];
 
     // Get room videos
     const roomVideos = room?.room_attachments?.filter(
         (attachment: any) => attachment?.type.toLowerCase() === 'video'
     ) || [];
+
+    interface ArrowProps {
+        onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    }
+
+
+    // Custom arrow components
+    const PrevArrow = (props: ArrowProps): JSX.Element => {
+        const { onClick } = props;
+        return (
+            <button
+                onClick={onClick}
+                className="absolute left-4 top-1/2 z-10 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white w-10 h-10 flex items-center justify-center rounded-full"
+                aria-label="Previous"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+        );
+    };
+
+    const NextArrow = (props: ArrowProps): JSX.Element => {
+        const { onClick } = props;
+        return (
+            <button
+                onClick={onClick}
+                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white w-10 h-10 flex items-center justify-center rounded-full"
+                aria-label="Next"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        );
+    };
 
     // Slider settings for photos
     const sliderSettings = {
@@ -79,7 +122,9 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
         autoplaySpeed: 5000,
         arrows: true,
         adaptiveHeight: true,
-        className: "rounded-lg overflow-hidden shadow-lg"
+        className: "rounded-lg overflow-hidden shadow-lg",
+        prevArrow: <PrevArrow />,
+        nextArrow: <NextArrow />,
     };
 
     // Handle booking
@@ -117,6 +162,36 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
         setShowCreateBooking(true);
     };
 
+    // Define a type for the icon values
+    type IconKey = 'wifi' | 'tv' | 'bed' | 'breakfast' | 'dinner' | 'buffet' |
+        'bathroom' | 'swimming pool' | 'parking' | 'projector' | 'speakers' |
+        'massage' | 'sofa' | 'balcony' | 'fridge' | 'shower' | 'airport' |
+        'rooftop' | 'double bed' | 'single room';
+
+    // Use the same type for your iconMap
+    const iconMap: Record<IconKey, React.ReactNode> = {
+        wifi: <FaWifi />,
+        tv: <FaTv />,
+        bed: <FaBed />,
+        breakfast: <FaCoffee />,
+        dinner: <FaUtensils />,
+        buffet: <FaConciergeBell />,
+        bathroom: <FaBath />,
+        "swimming pool": <FaSwimmingPool />,
+        parking: <FaParking />,
+        projector: <FaRProject />,
+        speakers: <FaVolumeUp />,
+        massage: <FaSpa />,
+        sofa: <FaCouch />,
+        balcony: <FaDoorOpen />,
+        fridge: <FaSnowflake />,
+        shower: <FaShower />,
+        airport: <FaPlane />,
+        rooftop: <FaCocktail />,
+        "double bed": <FaBed />,
+        "single room": <FaHotel />,
+    };
+
     return (
         <div className="bg-gray-100 dark:bg-gray-900 min-h-screen">
             <Toast ref={toast} />
@@ -127,7 +202,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                 <img
                     src={room?.photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${room?.photo_url}` : roomPhotos?.length > 0
                         ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0]?.file_path}`
-                        : "/assets/img/carousel-1.jpg"}
+                        : "/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"}
                     alt={room?.name}
                     className="absolute top-0 left-0 w-full h-full object-cover"
                 />
@@ -243,7 +318,9 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                         {room.room_features && room.room_features.length > 0 ? (
                                                             room.room_features.map((featureObj: any) => (
                                                                 <div key={featureObj.id} className="flex items-center">
-                                                                    <i className={`${featureObj.feature.icon} text-orange-500 mr-3 text-xl`}></i>
+                                                                    <span className="text-orange-500 mr-3 text-xl">
+                                                                        {iconMap[featureObj.feature.icon as IconKey] || <FaHotel />}
+                                                                    </span>
                                                                     <span className="text-gray-700 dark:text-gray-300">
                                                                         {featureObj.feature.name}
                                                                     </span>
@@ -262,7 +339,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                                     <video
                                                                         controls
                                                                         className="w-full"
-                                                                        poster={roomPhotos.length > 0 ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0].file_path}` : undefined}
+                                                                    // poster={roomPhotos.length > 0 ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0].file_path}` : undefined}
                                                                     >
                                                                         <source src={`${process.env.NEXT_PUBLIC_BASE_URL}${video.file_path}`} type="video/mp4" />
                                                                         Your browser does not support the video tag.
@@ -374,15 +451,15 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                     <div className="space-y-4">
                                                         <div className="flex items-center">
                                                             <i className="pi pi-phone text-orange-500 mr-3"></i>
-                                                            <span className="text-gray-700 dark:text-gray-300">+1 234 567 8900</span>
+                                                            <span className="text-gray-700 dark:text-gray-300">0705855551 or 0773383900</span>
                                                         </div>
                                                         <div className="flex items-center">
                                                             <i className="pi pi-envelope text-orange-500 mr-3"></i>
-                                                            <span className="text-gray-700 dark:text-gray-300">info@yourhotel.com</span>
+                                                            <span className="text-gray-700 dark:text-gray-300">mingo927011@gmail.com</span>
                                                         </div>
                                                         <div className="flex items-center">
                                                             <i className="pi pi-map-marker text-orange-500 mr-3"></i>
-                                                            <span className="text-gray-700 dark:text-gray-300">123 Hotel Street, City, Country</span>
+                                                            <span className="text-gray-700 dark:text-gray-300">Mingo Hotel Uganda</span>
                                                         </div>
                                                     </div>
                                                 </div>

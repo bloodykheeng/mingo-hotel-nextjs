@@ -6,11 +6,22 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 const footerData = {
     contact: [
         { icon: '📍', text: 'Kayunga, Uganda' },
-        { icon: '📞', text: '+256 700 123456' },
-        { icon: '✉️', text: 'info@mingohotel.com' },
+        { icon: '📞', text: '0705855551 or 0773383900' },
+        { icon: '✉️', text: 'mingo927011@gmail.com' },
     ],
     company: ['About Us', 'Contact Us', 'Privacy Policy', 'Terms & Condition', 'Support'],
-    services: ['Food & Restaurant', 'Spa & Fitness', 'Sports & Gaming', 'Event & Party', 'GYM & Yoga'],
+    // services: ['Food & Restaurant', 'Spa & Fitness', 'Sports & Gaming', 'Event & Party', 'GYM & Yoga'],
+    services: [
+        'Restaurant & Buffet',
+        'Conference Hall',
+        'Free Wi-Fi & DSTV',
+        'Rooftop Bar',
+        'Modern Rooms',
+        'Ample Parking',
+        'Airport Pick-up',
+        'Breakfast Included',
+    ]
+
 };
 
 const Footer: React.FC = () => {
@@ -20,7 +31,7 @@ const Footer: React.FC = () => {
                 <div className="bg-orange-500 p-8 text-white">
                     <h3 className="text-4xl font-bold mb-4">Mingo Hotel</h3>
                     <p>
-                        Mingo Hotel Kayunga Ltd stands out as a delightful choice. Nestled in the heart of Kayunga, Uganda, this exquisite 2-star hotel seamlessly combines modern amenities with a touch of local charm. Whether you’re a weary traveler seeking respite or an explorer on a quest for new horizons, Mingo Hotel Kayunga Ltd promises an unforgettable stay.
+                        Mingo Hotel Uganda stands out as a delightful choice. Nestled in the heart of Kayunga, Uganda, this exquisite 2-star hotel seamlessly combines modern amenities with a touch of local charm. Whether you’re a weary traveler seeking respite or an explorer on a quest for new horizons, Mingo Hotel Kayunga Ltd promises an unforgettable stay.
                     </p>
                 </div>
 
@@ -51,7 +62,7 @@ const Footer: React.FC = () => {
                         <ul className="space-y-3 text-gray-700 dark:text-gray-300">
                             {footerData.company.map((item, idx) => (
                                 <li key={idx}>
-                                    <a href="#" className="hover:text-orange-500 transition-colors flex items-center">
+                                    <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-orange-500 transition-colors flex items-center">
                                         <span className="mr-2">▶</span>
                                         <span>{item}</span>
                                     </a>
@@ -66,7 +77,7 @@ const Footer: React.FC = () => {
                         <ul className="space-y-3 text-gray-700 dark:text-gray-300">
                             {footerData.services.map((item, idx) => (
                                 <li key={idx}>
-                                    <a href="#" className="hover:text-orange-500 transition-colors flex items-center">
+                                    <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-orange-500 transition-colors flex items-center">
                                         <span className="mr-2">▶</span>
                                         <span>{item}</span>
                                     </a>
