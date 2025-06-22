@@ -13,8 +13,8 @@ import { Metadata } from "next";
 import HomePage from "@/components/home/HomePage"
 
 export const metadata: Metadata = {
-  title: "Mingo Hotel Kayunga Ltd",
-  description: "Mingo Hotel Kayunga Ltd is a 2-star hotel in Kayunga, Uganda, offering modern comfort, traditional charm, and access to top regional attractions.",
+  title: "Mingo Hotel",
+  description: "Mingo Hotel is a 5-star hotel in Kayunga, Uganda, offering modern comfort, traditional charm, and access to top regional attractions.",
   keywords: [
     "Mingo Hotel",
     "Kayunga Hotels",

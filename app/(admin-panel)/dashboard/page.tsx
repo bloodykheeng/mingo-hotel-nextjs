@@ -12,7 +12,7 @@ import StatisticsCards from "@/components/admin-panel/dashboard/statistics-cards
 // Metadata must be in a separate file for app router or used in a page.tsx file
 export const metadata: Metadata = {
   title: "Mingo Hotel Uganda",
-  description: "Mingo Hotel Uganda is a 2-star hotel in Kayunga, Uganda, offering modern comfort, traditional charm, and access to top regional attractions.",
+  description: "Mingo Hotel Uganda is a 5-star hotel in Kayunga, Uganda, offering modern comfort, traditional charm, and access to top regional attractions.",
   keywords: [
     "Mingo Hotel",
     "Kayunga Hotels",

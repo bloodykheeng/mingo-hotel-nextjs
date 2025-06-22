@@ -145,6 +145,10 @@ function RoomsListing({ checkIn, checkOut, adults, children, roomCategoryId }: R
         booked: boolean;
         number_of_adults: number;
         number_of_children: number;
+        room_category: {
+            id: number;
+            name: string;
+        };
         room_features: Array<{
             id: number;
             feature: {
@@ -347,7 +351,7 @@ function RoomsListing({ checkIn, checkOut, adults, children, roomCategoryId }: R
                                             /> */}
                                             <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
 
-                                                UGX {Number(room?.price).toLocaleString()}/night
+                                                UGX {Number(room?.price).toLocaleString()} {room?.room_category?.name !== "accomodation" && "/night"}
 
                                             </div>
                                             {room.booked && (

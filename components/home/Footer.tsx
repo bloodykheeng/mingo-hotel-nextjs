@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
                 <div className="bg-orange-500 p-8 text-white">
                     <h3 className="text-4xl font-bold mb-4">Mingo Hotel</h3>
                     <p>
-                        Mingo Hotel Uganda stands out as a delightful choice. Nestled in the heart of Kayunga, Uganda, this exquisite 2-star hotel seamlessly combines modern amenities with a touch of local charm. Whether you’re a weary traveler seeking respite or an explorer on a quest for new horizons, Mingo Hotel Kayunga Ltd promises an unforgettable stay.
+                        Mingo Hotel Uganda stands out as a delightful choice. Nestled in the heart of Kayunga, Uganda, this exquisite 5-star hotel seamlessly combines modern amenities with a touch of local charm. Whether you’re a weary traveler seeking respite or an explorer on a quest for new horizons, Mingo Hotel promises an unforgettable stay.
                     </p>
                 </div>
 
