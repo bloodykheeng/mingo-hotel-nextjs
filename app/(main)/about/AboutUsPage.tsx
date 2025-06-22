@@ -88,7 +88,7 @@ const AboutUsPage: React.FC = () => {
                             cuisines, our diverse menu caters to every palate.
                         </p>
                     </div>
-                    <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
+                    <div className="w-full md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
                         {/* Background Image */}
                         {/* <img
                             src="/mingo-hotel/about-us/meals-time.jpg"
@@ -103,6 +103,7 @@ const AboutUsPage: React.FC = () => {
                             fill
                             className="object-cover"
                             priority
+                            sizes="(max-width: 768px) 100vw, 50vw"
                         />
 
                         {/* Optional dark overlay (for text contrast or visual consistency) */}
@@ -122,10 +123,10 @@ const AboutUsPage: React.FC = () => {
                         </p>
                         <p>
                             For golf enthusiasts, Jinja Golf Course, a mere 49 km from the hotel, presents an
-                            opportunity to indulge in a leisurely game amidst breathtaking landscapes.
+                            opportunity to indulge in a leisurely game amidst breathtaking landscapess
                         </p>
                     </div>
-                    <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
+                    <div className="w-full md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
                         {/* Background Image */}
                         {/* <img
                             src="/mingo-hotel/about-us/spekemonument.jpg"
@@ -139,6 +140,7 @@ const AboutUsPage: React.FC = () => {
                             fill
                             className="object-cover"
                             priority // Optional: preload if it's above the fold
+                            sizes="(max-width: 768px) 100vw, 50vw"
                         />
 
                         {/* Optional dark overlay (for text contrast or visual consistency) */}
