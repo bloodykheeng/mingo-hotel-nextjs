@@ -85,7 +85,7 @@ const AppHeader: React.FC = () => {
           <Link href="/" className="lg:hidden">
 
             <Image
-              src="/mingo-hotel-logo/mongo-hotel-logo.png"
+              src="/mingo-hotel-logo/mongo-no-bg.png"
               alt="logo"
               width={140}
               height={30}
@@ -93,7 +93,7 @@ const AppHeader: React.FC = () => {
               className="w-full dark:hidden"
             />
             <Image
-              src="/mingo-hotel-logo/mongo-hotel-logo.png"
+              src="/mingo-hotel-logo/mongo-no-bg.png"
               alt="logo"
               width={140}
               height={30}

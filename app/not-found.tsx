@@ -13,14 +13,14 @@ const NotFound = () => {
             <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 md:p-12">
                 {/* Logo - Light/Dark Mode */}
                 <Image
-                    src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                    src="/mingo-hotel-logo/mongo-no-bg.png"
                     alt="PPDA Logo"
                     width={140}
                     height={30}
                     className="w-auto h-10 dark:hidden"
                 />
                 <Image
-                    src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                    src="/mingo-hotel-logo/mongo-no-bg.png"
                     alt="PPDA Logo"
                     width={140}
                     height={30}

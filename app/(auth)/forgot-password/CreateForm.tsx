@@ -57,7 +57,7 @@ function CreateForm() {
         <div className="w-full sm:w-96 md:w-[28rem] lg:w-[32rem] shadow-lg rounded-lg bg-white dark:bg-gray-800 p-6">
           <div className="flex flex-wrap flex-col items-center justify-center gap-3 text-center mb-1 w-full">
             <Image
-              src="/ppda/ppda_white-removebg-preview.png"
+              src="/mingo-hotel-logo/mongo-no-bg.png"
               alt="logo"
               width={140}
               height={30}
@@ -65,7 +65,7 @@ function CreateForm() {
               className="w-full dark:hidden"
             />
             <Image
-              src="/ppda/ppda_fb-removebg-preview.png"
+              src="/mingo-hotel-logo/mongo-no-bg.png"
               alt="logo"
               width={140}
               height={30}

@@ -19,10 +19,22 @@ import { ProgressSpinner } from "primereact/progressspinner";
 // Icons
 import { PrimeIcons } from "primereact/api";
 
+import { useRouter } from "next/navigation";
+
 // Services
 import {
     getAllFeatures,
 } from "@/services/features/features-service";
+
+import {
+    getAllRoomCategorys,
+    getRoomCategorysById,
+    postRoomCategorys,
+    updateRoomCategorys,
+    deleteRoomCategoryById,
+    postToBulkDestroyRoomCategorys,
+} from "@/services/room-categories/room-categories-service";
+
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
 // Filter form schema
@@ -31,6 +43,10 @@ const filterSchema = z.object({
     booked: z.boolean().optional(),
     stars: z.number().min(0).max(5).optional(),
     features: z.array(z.object({ id: z.number(), name: z.string() })).optional().nullable(),
+    room_categories: z
+        .array(z.object({ id: z.number(), name: z.string() }))
+        .optional()
+        .nullable(),
     number_of_adults: z.number().min(0).optional().nullable(),
     number_of_children: z.number().min(0).optional().nullable(),
     search: z.string().optional(),
@@ -58,6 +74,8 @@ interface RoomFiltersProps {
 
 function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFilterValues }: RoomFiltersProps) {
 
+    const router = useRouter();
+
     // Form setup with react-hook-form and zod validation
     const {
         control,
@@ -81,6 +99,13 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
     });
     useHandleQueryError(featuresQuery);
 
+    // Fetch Room Categories for filter dropdown
+    const roomCategoriesQuery = useQuery({
+        queryKey: ["room-categories"],
+        queryFn: () => getAllRoomCategorys(),
+    });
+    useHandleQueryError(roomCategoriesQuery);
+
     // Handle filter submission
     const submitFilters = (data: FilterFormValues) => {
         console.log("🚀 ~ testting submitFilters ~ data:", data)
@@ -98,12 +123,16 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
 
     // Suggestions state
     const [featureSuggestions, setFeatureSuggestions] = useState([]);
+    const [roomCategorySuggestions, setRoomCategorySuggestions] = useState([]);
 
     // Reset all filters
     const handleReset = () => {
         reset(defaultFilterValues);
         // Trigger filter submission with default values
         onFilterSubmit(defaultFilterValues);
+
+        // Clear URL query params
+        router.replace(window.location.pathname); // removes all ?query=params
     };
 
     // Room type options
@@ -133,6 +162,59 @@ function RoomFilters({ onFilterSubmit, onSearchChange, initialValues = defaultFi
                         )}
                     />
                 </div>
+
+                {/* Room Categories */}
+                <div className="col-span-1">
+                    <label className="block text-gray-900 dark:text-gray-100 font-medium mb-1">
+                        Room Categories
+                    </label>
+                    <Controller
+                        name="room_categories"
+                        control={control}
+                        render={({ field }) => {
+                            const fetchCategorySuggestions = (event: any) => {
+                                const query = event.query.toLowerCase();
+
+                                // Get the IDs of all currently selected categories
+                                const selectedIds = Array.isArray(field.value)
+                                    ? field.value.map((item) => item.id)
+                                    : [];
+
+                                const filtered =
+                                    roomCategoriesQuery?.data?.data?.data?.filter(
+                                        (category: any) =>
+                                            category?.name?.toLowerCase().includes(query) &&
+                                            !selectedIds.includes(category.id)
+                                    ) || [];
+
+                                setRoomCategorySuggestions(filtered);
+                            };
+
+                            return (
+                                <AutoComplete
+                                    {...field}
+                                    multiple
+                                    suggestions={roomCategorySuggestions}
+                                    completeMethod={fetchCategorySuggestions}
+                                    field="name"
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(e.value)}
+                                    placeholder="Search & Select Room Categories"
+                                    className={`w-full ${errors.room_categories ? "p-invalid" : ""}`}
+                                    disabled={roomCategoriesQuery?.isLoading}
+                                    dropdown
+                                />
+                            );
+                        }}
+                    />
+                    {errors.room_categories && (
+                        <small className="p-error">{errors?.room_categories?.message?.toString()}</small>
+                    )}
+                    {roomCategoriesQuery?.isLoading && (
+                        <ProgressSpinner style={{ width: "10px", height: "10px" }} strokeWidth="4" />
+                    )}
+                </div>
+
 
                 {/* Room Features */}
                 <div className="col-span-1">

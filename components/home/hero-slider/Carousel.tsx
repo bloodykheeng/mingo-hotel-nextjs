@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from 'nextjs-toploader/app';
 import dynamic from "next/dynamic";
 
+import Image from "next/image";
+
 import Slider from "react-slick";
 // Import css files
 import "slick-carousel/slick/slick.css";
@@ -229,10 +231,19 @@ export default function Carousel(): JSX.Element {
 
                     return (
                         <div key={`carousel-${index}-${item.title}`} className="relative w-full h-screen overflow-hidden">
-                            <img
+                            {/* <img
                                 src={item.img}
                                 alt={item.title}
                                 className="w-full h-full object-cover"
+                            /> */}
+
+                            <Image
+                                src={item.img}
+                                alt={item.title}
+                                layout="fill"
+                                objectFit="cover"
+                                priority={index === 0} // only prioritize the first image
+                                quality={75} // adjust for compression
                             />
                             <div className="absolute inset-0 bg-black/60 h-[100%]"></div>
                             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">

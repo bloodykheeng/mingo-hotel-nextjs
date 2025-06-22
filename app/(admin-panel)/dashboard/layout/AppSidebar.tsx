@@ -262,7 +262,7 @@ const AppSidebar: React.FC = () => {
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
-                src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                src="/mingo-hotel-logo/mongo-no-bg.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -270,7 +270,7 @@ const AppSidebar: React.FC = () => {
                 className="w-full dark:hidden"
               />
               <Image
-                src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                src="/mingo-hotel-logo/mongo-no-bg.png"
                 alt="logo"
                 width={140}
                 height={30}
@@ -281,7 +281,7 @@ const AppSidebar: React.FC = () => {
           ) : (
             <>
               <Image
-                src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                src="/mingo-hotel-logo/mongo-no-bg.png"
                 alt="logo"
                 width={80}
                 height={30}
@@ -289,7 +289,7 @@ const AppSidebar: React.FC = () => {
                 className="w-full dark:hidden"
               />
               <Image
-                src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                src="/mingo-hotel-logo/mongo-no-bg.png"
                 alt="logo"
                 width={80}
                 height={30}

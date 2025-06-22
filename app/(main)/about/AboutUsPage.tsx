@@ -20,7 +20,7 @@ const AboutUsPage: React.FC = () => {
 
                 <div className="w-full h-full bg-[url('/images/hotel-facade.jpg')] bg-cover bg-center"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-20">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-2">Mingo Hotel Kayunga</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-2">Mingo Hotel Uganda</h1>
                     <p className="text-xl md:text-2xl">Your Home Away From Home</p>
                 </div>
             </div>
@@ -28,12 +28,12 @@ const AboutUsPage: React.FC = () => {
             {/* Welcome Section */}
             <div className="container mx-auto px-4 py-12">
                 <div className="flex flex-col items-center mb-12">
-                    <h2 className="text-3xl font-bold mb-6 text-center">Welcome to Mingo Hotel Kayunga Ltd</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-center">Welcome to Mingo Hotel</h2>
                     <div className="w-24 h-1 bg-blue-600 mb-8"></div>
                     <p className="text-lg text-center max-w-3xl">
                         Nestled in the heart of Kayunga, Uganda, our exquisite 2-star hotel seamlessly combines
                         modern amenities with a touch of local charm. Whether you're a weary traveler seeking
-                        respite or an explorer on a quest for new horizons, Mingo Hotel Kayunga Ltd promises
+                        respite or an explorer on a quest for new horizons, Mingo Hotel promises
                         an unforgettable stay.
                     </p>
                 </div>
@@ -79,7 +79,7 @@ const AboutUsPage: React.FC = () => {
                     <div className="md:w-1/2">
                         <h2 className="text-3xl font-bold mb-6">A Culinary Journey to Remember</h2>
                         <p className="mb-4">
-                            The gastronomic experience at Mingo Hotel Kayunga Ltd is a journey that titillates your
+                            The gastronomic experience at Mingo Hotel is a journey that titillates your
                             taste buds. Indulge in delectable dishes at the hotel's restaurant, where every bite is
                             a fusion of flavors that showcase the region's culinary prowess.
                         </p>
@@ -90,10 +90,19 @@ const AboutUsPage: React.FC = () => {
                     </div>
                     <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
                         {/* Background Image */}
-                        <img
+                        {/* <img
                             src="/mingo-hotel/about-us/meals-time.jpg"
                             alt="Mingo Hotel Meals"
                             className="absolute top-0 left-0 w-full h-full object-cover"
+                        /> */}
+
+                        {/* Background Image */}
+                        <Image
+                            src="/mingo-hotel/about-us/meals-time.jpg"
+                            alt="Mingo Hotel Meals"
+                            fill
+                            className="object-cover"
+                            priority
                         />
 
                         {/* Optional dark overlay (for text contrast or visual consistency) */}
@@ -107,7 +116,7 @@ const AboutUsPage: React.FC = () => {
                     <div className="md:w-1/2">
                         <h2 className="text-3xl font-bold mb-6">Beyond the Hotel: Explore Kayunga</h2>
                         <p className="mb-4">
-                            Mingo Hotel Kayunga Ltd serves as a gateway to a world of exploration. The iconic Source
+                            Mingo Hotel serves as a gateway to a world of exploration. The iconic Source
                             of the Nile – Speke Monument is just 47 km away, offering a chance to witness the majesty
                             of one of Uganda's natural wonders.
                         </p>
@@ -118,10 +127,18 @@ const AboutUsPage: React.FC = () => {
                     </div>
                     <div className="md:w-1/2 h-72 relative rounded-lg overflow-hidden shadow-lg">
                         {/* Background Image */}
-                        <img
+                        {/* <img
                             src="/mingo-hotel/about-us/spekemonument.jpg"
                             alt="Speak Monument"
                             className="absolute top-0 left-0 w-full h-full object-cover"
+                        /> */}
+                        {/* Background Image */}
+                        <Image
+                            src="/mingo-hotel/about-us/spekemonument.jpg"
+                            alt="Speak Monument"
+                            fill
+                            className="object-cover"
+                            priority // Optional: preload if it's above the fold
                         />
 
                         {/* Optional dark overlay (for text contrast or visual consistency) */}
@@ -134,7 +151,7 @@ const AboutUsPage: React.FC = () => {
                     <h2 className="text-3xl font-bold mb-6">Our History</h2>
                     <div className="w-24 h-1 bg-blue-600 mb-8 mx-auto"></div>
                     <p className="text-lg mb-6">
-                        Since its inception on November 5, 2022, Mingo Hotel Kayunga Ltd has been extending warm
+                        Since its inception on November 5, 2022, Mingo Hotel has been extending warm
                         Ugandan hospitality to guests from around the world.
                     </p>
                     <p className="text-lg">

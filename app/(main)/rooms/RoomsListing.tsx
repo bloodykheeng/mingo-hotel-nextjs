@@ -1,15 +1,26 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from 'nextjs-toploader/app';
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ProgressSpinner } from "primereact/progressspinner";
+import Image from "next/image";
 
 // Services and Hooks
 import {
     getAllRooms,
     getRoomsById,
 } from "@/services/rooms/rooms-service";
+
+import {
+    getAllRoomCategorys,
+    getRoomCategorysById,
+    postRoomCategorys,
+    updateRoomCategorys,
+    deleteRoomCategoryById,
+    postToBulkDestroyRoomCategorys,
+} from "@/services/room-categories/room-categories-service";
+
 import useHandleQueryError from "@/hooks/useHandleQueryError";
 
 import {
@@ -36,15 +47,39 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 
 import Link from 'next/link';
 
+import { notFound } from "next/navigation";
+
 interface RoomsListingProps {
     checkIn?: string;
     checkOut?: string;
     adults?: string;
     children?: string;
+    roomCategoryId?: string;
 }
 
-function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps) {
+function RoomsListing({ checkIn, checkOut, adults, children, roomCategoryId }: RoomsListingProps) {
     const router = useRouter();
+
+    // ✅ Always call hooks unconditionally
+    const getRoomCategorysByIdQuery = useQuery({
+        queryKey: ["room-categories", "by-id", roomCategoryId],
+        queryFn: () => getRoomCategorysById(roomCategoryId),
+        enabled: !!roomCategoryId, // only run if ID is present
+    });
+
+    useHandleQueryError(getRoomCategorysByIdQuery);
+
+    useEffect(() => {
+        if (!getRoomCategorysByIdQuery.isLoading && getRoomCategorysByIdQuery.isError) {
+            notFound();
+        }
+    }, [getRoomCategorysByIdQuery.isLoading, getRoomCategorysByIdQuery.isError]);
+
+    const roomCategoryDetails = getRoomCategorysByIdQuery?.data?.data;
+
+
+
+
 
     const [accordionActiveIndex, setAccordionActiveIndex] = useState<number | null>(null);
 
@@ -58,6 +93,19 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
         ...defaultFilterValues,
         ...searchParamsAsDefaults,
     });
+
+    // ✅ Once room category is loaded, set it in filters
+    useEffect(() => {
+        if (roomCategoryDetails && roomCategoryId) {
+            setFilters((prev) => ({
+                ...prev,
+                room_categories: [{ id: roomCategoryDetails?.id, name: roomCategoryDetails?.name }],
+            }));
+        }
+    }, [roomCategoryDetails, roomCategoryId]);
+
+
+
 
     // Fetch Rooms data using useInfiniteQuery with filters
     const {
@@ -184,6 +232,21 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
         "single room": <FaHotel />,
     };
 
+
+    {/* Loading Spinner */ }
+    if (getRoomCategorysByIdQuery.isLoading && roomCategoryId) {
+        return (
+            <>
+                <div className="flex justify-center items-center p-8">
+                    <div className="max-w-md">
+                        <Lottie animationData={SkeletonLoadingLottie} loop autoplay />
+                    </div>
+                </div>
+            </>
+        )
+
+    }
+
     return (
         <div className="bg-gray-100 dark:bg-gray-900 min-h-screen">
 
@@ -191,10 +254,20 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
             {/* Hero Section */}
             <div className="relative h-96 w-full overflow-hidden">
                 {/* Background Image */}
-                <img
+                {/* <img
                     src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
                     alt="Rooms Background"
                     className="absolute top-0 left-0 w-full h-full object-cover"
+                /> */}
+
+                {/* Background Image */}
+                <Image
+                    src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
+                    alt="Rooms Background"
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority={true}
                 />
 
                 {/* Dark overlay - only visible in dark mode */}
@@ -258,12 +331,20 @@ function RoomsListing({ checkIn, checkOut, adults, children }: RoomsListingProps
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {roomsData.map((room) => (
                                     <div key={room.id} className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-                                        <div className="relative">
-                                            <img
+                                        <div className="relative h-64">
+                                            <Image
+                                                src={getRoomImage(room)}
+                                                alt={room.name}
+                                                fill
+                                                className="object-cover transition-transform duration-500 hover:scale-110"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                priority={false}
+                                            />
+                                            {/* <img
                                                 src={getRoomImage(room)}
                                                 alt={room.name}
                                                 className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
-                                            />
+                                            /> */}
                                             <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
 
                                                 UGX {Number(room?.price).toLocaleString()}/night

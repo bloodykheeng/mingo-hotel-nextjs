@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 
 interface StatsItemProps {
     icon: string;
@@ -99,7 +100,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                         </div>
                     </div> */}
 
-                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                    {/* <div className="lg:w-1/2 grid grid-cols-2 gap-4">
                         <div className="rounded overflow-hidden flex justify-end">
                             <div className="w-[75%]" style={{ marginTop: "25%" }}>
                                 <img
@@ -136,7 +137,60 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                                 />
                             </div>
                         </div>
+                    </div> */}
+
+
+                    <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div className="rounded overflow-hidden flex justify-end">
+                            <div className="w-[75%] relative" style={{ marginTop: "25%" }}>
+                                <Image
+                                    src="/mingo-hotel/about-us/meals-time.jpg"
+                                    alt="Mingo Hotel Meals Time"
+                                    fill
+                                    className="object-cover transition-transform duration-500 hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 37.5vw"
+                                    priority={false}
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden">
+                            <div className="w-[100%] relative aspect-square">
+                                <Image
+                                    src="/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"
+                                    alt="Mingo Hotel Day View"
+                                    fill
+                                    className="object-cover transition-transform duration-500 hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+                                    priority={true}
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden flex justify-end">
+                            <div className="w-[50%] relative aspect-square" style={{ marginBottom: "25%" }}>
+                                <Image
+                                    src="/mingo-hotel/about-us/conference-hall.jpg"
+                                    alt="Conference hall"
+                                    fill
+                                    className="object-cover transition-transform duration-500 hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                    priority={false}
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded overflow-hidden">
+                            <div className="w-[75%] relative aspect-square">
+                                <Image
+                                    src="/mingo-hotel/about-us/dinner-time.jpg"
+                                    alt="Dinner time"
+                                    fill
+                                    className="object-cover transition-transform duration-500 hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 37.5vw"
+                                    priority={false}
+                                />
+                            </div>
+                        </div>
                     </div>
+
 
                 </div>
             </div>

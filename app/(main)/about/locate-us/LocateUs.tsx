@@ -19,7 +19,7 @@ const LocateUs: React.FC = () => {
     const hotelLocation = {
         lat: 0.7079997054679262, // Replace with actual coordinates
         lng: 32.90102532819053, // Replace with actual coordinates
-        name: "Mingo Hotel Kayunga Ltd"
+        name: "Mingo Hotel"
     };
 
     return (
@@ -47,7 +47,7 @@ const LocateUs: React.FC = () => {
                             <div className="flex items-start">
                                 <i className="pi pi-map-marker text-blue-600 text-xl mt-1 mr-4"></i>
                                 <div>
-                                    <p>Mingo Hotel Kayunga Ltd</p>
+                                    <p>Mingo Hotel</p>
                                     <p>Kayunga District</p>
                                     <p>Uganda</p>
                                 </div>

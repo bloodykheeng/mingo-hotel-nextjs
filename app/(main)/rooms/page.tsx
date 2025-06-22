@@ -8,11 +8,12 @@ interface PageProps {
         check_out?: string;
         adults?: string;
         children?: string;
+        roomCategoryId?: string;
     }>;
 }
 
 async function RoomsPage({ params, searchParams }: PageProps) {
-    const { check_in, check_out, adults, children } = await searchParams;
+    const { check_in, check_out, adults, children, roomCategoryId } = await searchParams;
 
     return (
         <>
@@ -28,6 +29,7 @@ async function RoomsPage({ params, searchParams }: PageProps) {
                 checkOut={check_out}
                 adults={adults}
                 children={children}
+                roomCategoryId={roomCategoryId}
             />
         </>
     );

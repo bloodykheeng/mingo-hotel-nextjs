@@ -7,6 +7,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import Image from "next/image";
+
 // Services and Hooks
 import { getRoomsById } from "@/services/rooms/rooms-service";
 import useHandleQueryError from "@/hooks/useHandleQueryError";
@@ -199,13 +201,26 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
             {/* Room Banner */}
             <div className="relative h-96 w-full overflow-hidden">
                 {/* Background Image */}
-                <img
+                {/* <img
                     src={room?.photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${room?.photo_url}` : roomPhotos?.length > 0
                         ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0]?.file_path}`
                         : "/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"}
                     alt={room?.name}
                     className="absolute top-0 left-0 w-full h-full object-cover"
+                /> */}
+
+                <Image
+                    src={room?.photo_url ? `${process.env.NEXT_PUBLIC_BASE_URL}${room?.photo_url}` : roomPhotos?.length > 0
+                        ? `${process.env.NEXT_PUBLIC_BASE_URL}${roomPhotos[0]?.file_path}`
+                        : "/mingo-hotel/slider-photos/mingo-hotel-day-view.jpg"}
+                    alt={room?.name}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority={true}
                 />
+
+
 
                 {/* Dark overlay - only visible in dark mode */}
                 <div className="hidden dark:block absolute inset-0 bg-[#0F172B] opacity-70 z-10"></div>
@@ -269,10 +284,19 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                     <Slider {...sliderSettings}>
                                                         {roomPhotos.map((photo: any, index: number) => (
                                                             <div key={photo.id} className="relative h-96">
-                                                                <img
+                                                                {/* <img
                                                                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${photo.file_path}`}
                                                                     alt={photo.caption || `Room photo ${index + 1}`}
                                                                     className="w-full h-full object-cover"
+                                                                /> */}
+
+                                                                <Image
+                                                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${photo.file_path}`}
+                                                                    alt={photo.caption || `Room photo ${index + 1}`}
+                                                                    fill
+                                                                    className="object-cover"
+                                                                    sizes="100vw"
+                                                                    priority={index === 0}
                                                                 />
                                                                 {photo.caption && (
                                                                     <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-3">
@@ -290,7 +314,7 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                     </div> */}
 
                                                     <div className="mb-8 rounded-lg overflow-hidden h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                                                        <img
+                                                        {/* <img
                                                             src={
                                                                 room?.photo_url
                                                                     ? `${process.env.NEXT_PUBLIC_BASE_URL}${room.photo_url}`
@@ -298,6 +322,19 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
                                                             }
                                                             alt="Room"
                                                             className="w-full h-full object-cover"
+                                                        /> */}
+
+                                                        <Image
+                                                            src={
+                                                                room?.photo_url
+                                                                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${room.photo_url}`
+                                                                    : "/assets/img/carousel-1.jpg"
+                                                            }
+                                                            alt="Room"
+                                                            fill
+                                                            className="object-cover"
+                                                            sizes="100vw"
+                                                            priority={true}
                                                         />
                                                     </div>
                                                 </>

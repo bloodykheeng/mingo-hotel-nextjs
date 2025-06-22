@@ -94,7 +94,7 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
                 <div className="text-center flex items-center justify-center flex-col mb-6">
 
                     <Image
-                        src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                        src="/mingo-hotel-logo/mongo-no-bg.png"
                         alt="logo"
                         width={140}
                         height={30}
@@ -102,7 +102,7 @@ const CreateRecord: React.FC<CreateRecordProps> = ({
                         className="w-full dark:hidden"
                     />
                     <Image
-                        src="/mingo-hotel-logo/mongo-hotel-logo.png"
+                        src="/mingo-hotel-logo/mongo-no-bg.png"
                         alt="logo"
                         width={140}
                         height={30}

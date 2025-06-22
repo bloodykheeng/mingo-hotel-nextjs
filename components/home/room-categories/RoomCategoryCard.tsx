@@ -3,6 +3,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
+import Image from "next/image";
+
 // Icons
 import { FaStar, FaHotel, FaDoorOpen, FaWifi } from 'react-icons/fa';
 
@@ -35,12 +37,23 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
 
     return (
         <div className="bg-white dark:bg-gray-800 shadow-sm overflow-hidden rounded-lg">
-            <div className="relative">
-                <img
+            <div className="relative h-64">
+
+                {/* <img
                     src={imageUrl}
                     alt={name}
                     className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
+                /> */}
+
+                <Image
+                    src={imageUrl}
+                    alt={name}
+                    fill
+                    className="object-cover transition-transform duration-500 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={false}
                 />
+
                 {/* <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
                     UGX {price}/night
                 </div>
@@ -83,13 +96,13 @@ const RoomCategoryCard: React.FC<RoomCategoryProps> = ({
                     >
                         VIEW ROOMS
                     </button>
-                    <a
-                        href="#"
+                    <button
+                        onClick={handleViewRooms}
                         className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 inline-block transition duration-300
                         dark:bg-gray-100 dark:hover:bg-gray-300 dark:text-gray-900"
                     >
                         BOOK NOW
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
