@@ -61,9 +61,9 @@ const AboutUs: React.FC<AboutUsProps> = ({ hotelName, description }) => {
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <StatsItem icon="hotel" count="7861" label="Rooms" />
-                            <StatsItem icon="staff" count="1234" label="Staffs" />
-                            <StatsItem icon="clients" count="4321" label="Clients" />
+                            <StatsItem icon="hotel" count="40" label="Rooms" />
+                            <StatsItem icon="staff" count="20" label="Staffs" />
+                            <StatsItem icon="clients" count="500" label="Clients" />
                         </div>
                     </div>
 
