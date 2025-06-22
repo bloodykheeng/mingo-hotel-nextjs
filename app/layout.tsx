@@ -21,9 +21,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = {
-  title: "Mingo Hotel Kayunga Ltd | %s",
+  title: "Mingo Hotel Uganda",
   description:
-    "Mingo Hotel Kayunga Ltd is a charming 2-star hotel located in the heart of Kayunga, Uganda. Blending modern comfort with local warmth, the hotel offers cozy rooms, exceptional dining, and convenient access to top attractions like Mehta Golf Club and the Source of the Nile.",
+    "Mingo Hotel Uganda is a charming 2-star hotel located in the heart of Kayunga, Uganda. Blending modern comfort with local warmth, the hotel offers cozy rooms, exceptional dining, and convenient access to top attractions like Mehta Golf Club and the Source of the Nile.",
 };
 
 
