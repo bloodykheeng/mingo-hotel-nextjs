@@ -351,7 +351,7 @@ function RoomsListing({ checkIn, checkOut, adults, children, roomCategoryId }: R
                                             /> */}
                                             <div className="absolute top-4 left-4 bg-orange-500 text-white py-1 px-3 font-medium">
 
-                                                UGX {Number(room?.price).toLocaleString()}{room?.room_category?.name !== "conference_hall" && "/night"}
+                                                UGX {Number(room?.price).toLocaleString()}{room?.room_category?.name !== "Conference hall" && "/night"}
 
                                             </div>
                                             {room.booked && (
