@@ -405,8 +405,8 @@ export default function RoomDetails({ roomId }: RoomDetailsProps) {
 
                                                     {/* Price */}
                                                     <div className="flex justify-between items-center mb-4">
-                                                        <span className="text-gray-600 dark:text-gray-300">Price {room?.room_category?.name !== "Conference hall" && "per night"}:</span>
-                                                        <span className="text-2xl font-bold text-orange-500">UGX {Number(room?.price).toLocaleString()}/night</span>
+                                                        <span className="text-gray-600 dark:text-gray-300">Price:</span>
+                                                        <span className="text-2xl font-bold text-orange-500">UGX {Number(room?.price).toLocaleString()}{room?.room_category?.name !== "Conference hall" && "/night"}</span>
                                                     </div>
 
                                                     {/* Rating */}
