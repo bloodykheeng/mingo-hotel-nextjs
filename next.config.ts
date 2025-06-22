@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "ppdaacmsapi.nwtdemos.com"
+        hostname: "api.mingohoteluganda.com"
       }
     ]
   },
